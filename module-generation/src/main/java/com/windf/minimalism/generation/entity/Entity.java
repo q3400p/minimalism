@@ -11,6 +11,11 @@ public class Entity extends BaseModel implements Type {
         return this.code;
     }
 
+    @Override
+    public String getTypeName() {
+        return this.name;
+    }
+
     public String getCode() {
         return code;
     }
