@@ -1,9 +1,11 @@
 package com.windf.plugin.service.business;
 
-import com.windf.plugin.service.entity.BaseEntity;
-import com.windf.plugin.service.entity.Page;
-import com.windf.plugin.service.entity.SearchData;
-import com.windf.plugin.service.repository.ManageRepository;
+
+import com.windf.core.entity.BaseEntity;
+import com.windf.core.entity.Page;
+import com.windf.core.entity.SearchData;
+import com.windf.core.repository.ManageRepository;
+import com.windf.core.service.ManageService;
 
 import java.io.File;
 import java.util.List;
