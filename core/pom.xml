@@ -12,7 +12,7 @@
     <groupId>com.windf</groupId>    
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.0</version>
     <description>核心包，所有模块和插件都必须引用</description>
 
     <dependencies>
