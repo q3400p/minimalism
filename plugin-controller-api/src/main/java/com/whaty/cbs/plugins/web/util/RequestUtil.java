@@ -1,6 +1,6 @@
 package com.whaty.cbs.plugins.web.util;
 
-import com.whaty.cbs.core.util.StringUtil;
+import com.windf.core.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
