@@ -7,19 +7,40 @@ import java.util.Map;
 /**
  * 返回值，用于接口返回的json格式
  */
-public class ResultData implements Serializable{
+public class ResultData implements Serializable {
+
+    /**
+     * 正常的返回结果code
+     */
     public static final String CODE_SUCCESS = "200";
+    /**
+     * 地址重定向的code
+     */
     public static final String CODE_REDIRECT = "302";
+    /**
+     * 参数错误的code
+     */
     public static final String CODE_BAD_REQUEST = "400";
+    /**
+     * 找不到接口异常
+     */
     public static final String CODE_NOT_FOUND = "404";
+    /**
+     * 通用的错误异常
+     */
     public static final String CODE_NORMAL_ERROR = "500";
 
-    private static final String KEY_CODE = "errCode";   // meta的 code 的key
-    private static final String KEY_MESSAGE = "errMsg";   // meta的 message 的key
+    /**
+     * 参数正确的默认message
+     */
+    public static final String MESSAGE_SUCCESS = "success";
+    /**
+     * 参数错误的默认message
+     */
+    public static final String MESSAGE_ERROR = "error";
 
     private String code; // 0: 失败，1：成功
     private String message; //提示信息
-    private Map<String, Object> meta = new HashMap<>(); // 这里是为了兼容管理端的返回格式
     private Object data;// 结果数据
 
     public ResultData() {
@@ -30,8 +51,6 @@ public class ResultData implements Serializable{
         this.code = code;
         this.message = message;
         this.data = data;
-
-        this.meta.put(KEY_MESSAGE, message);
     }
 
     public String getCode() {
@@ -48,7 +67,6 @@ public class ResultData implements Serializable{
 
     public void setMessage(String message) {
         this.message = message;
-        this.meta.put(KEY_MESSAGE, message);
     }
 
     public Object getData() {
@@ -57,13 +75,5 @@ public class ResultData implements Serializable{
 
     public void setData(Object data) {
         this.data = data;
-    }
-
-    public Map<String, Object> getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Map<String, Object> meta) {
-        this.meta = meta;
     }
 }

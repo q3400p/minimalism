@@ -3,31 +3,6 @@ package com.whaty.cbs.plugins.web.response;
 import com.windf.core.entity.ResultData;
 
 public interface ResponseReturn {
-    /**
-     * 正常的返回结果code
-     */
-    String RESULT_SUCCESS_CODE = "200";
-    /**
-     * 地址重定向的code
-     */
-    String RESULT_PARAMETER_ERROR_CODE = "302";
-    /**
-     * 参数错误的code
-     */
-    String RESULT_REDIRECT_ERROR_CODE = "400";
-    /**
-     * 通用的错误异常
-     */
-    String RESULT_NORMAL_ERROR_CODE = "500";
-
-    /**
-     * 参数正确的默认message
-     */
-    String RESULT_SUCCESS_MESSAGE = "success";
-    /**
-     * 参数错误的默认message
-     */
-    String RESULT_ERROR_MESSAGE = "error";
 
     /**
      * 返回错误信息
@@ -45,7 +20,7 @@ public interface ResponseReturn {
 
     /**
      * 返回成功提示
-     * 默认的code为 {@link ResponseReturn#RESULT_SUCCESS_CODE}
+     * 默认的code为 {@link ResultData#CODE_SUCCESS}
      * 默认的data为 null
      *
      * @return
@@ -54,8 +29,8 @@ public interface ResponseReturn {
 
     /**
      * 返回带数据的成功信息
-     * 默认的code为 {@link ResponseReturn#RESULT_SUCCESS_CODE}
-     * 默认的message为code {@link ResponseReturn#RESULT_SUCCESS_MESSAGE}
+     * 默认的code为 {@link ResultData#CODE_SUCCESS}
+     * 默认的message为code {@link ResultData#MESSAGE_SUCCESS}
      *
      * @param data
      * @return
@@ -64,7 +39,7 @@ public interface ResponseReturn {
 
     /**
      * 返回通用的错误信息
-     * 默认的code为 {@link ResponseReturn#RESULT_NORMAL_ERROR_CODE}
+     * 默认的code为 {@link ResultData#CODE_NORMAL_ERROR}
      * 默认的data为 null
      *
      * @param message
@@ -94,6 +69,7 @@ public interface ResponseReturn {
 
     /**
      * 重定向到某个页面
+     * 默认的code为 {@link ResultData#CODE_REDIRECT}
      *
      * @param url
      * @return
@@ -102,6 +78,8 @@ public interface ResponseReturn {
 
     /**
      * 重定向到某个页面,携带参数
+     * 默认的code为 {@link ResultData#CODE_REDIRECT}
+     *
      * @param url
      * @param data
      * @return

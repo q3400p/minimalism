@@ -38,7 +38,7 @@ public abstract class BaseController<T extends BaseEntity> {
      * 用于返回数据
      * @return
      */
-    public ResponseReturn getResponseReturn() {
+    public ResponseReturn response() {
         return new JsonResponseReturn();
     }
 

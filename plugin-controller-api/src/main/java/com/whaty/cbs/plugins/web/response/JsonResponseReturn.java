@@ -12,22 +12,22 @@ public class JsonResponseReturn implements ResponseReturn {
 
     @Override
     public ResultData success() {
-        return success(RESULT_SUCCESS_MESSAGE);
+        return success(ResultData.CODE_SUCCESS);
     }
 
     @Override
     public ResultData success(String message) {
-        return returnData(RESULT_SUCCESS_CODE, message, null);
+        return returnData(ResultData.CODE_SUCCESS, message, null);
     }
 
     @Override
     public ResultData successData(Object data) {
-        return returnData(RESULT_SUCCESS_CODE, RESULT_SUCCESS_MESSAGE, data);
+        return returnData(ResultData.CODE_SUCCESS, ResultData.MESSAGE_SUCCESS, data);
     }
 
     @Override
     public ResultData error(String message) {
-        return error(RESULT_NORMAL_ERROR_CODE, message);
+        return error(ResultData.CODE_NORMAL_ERROR, message);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class JsonResponseReturn implements ResponseReturn {
 
     @Override
     public ResultData redirect(String url) {
-        return successData(url);
+        return returnData(ResultData.CODE_REDIRECT ,null, url);
     }
 
     @Override
