@@ -3,61 +3,53 @@ package com.whaty.cbs.plugins.web.response;
 import com.windf.core.entity.ResultData;
 import com.windf.core.util.StringUtil;
 
-public abstract class JsonResponseReturn implements ResponseReturn {
+public class JsonResponseReturn implements ResponseReturn {
 
     @Override
     public ResultData parameterError() {
-        return error("parameter error");
+        return null;
     }
 
     @Override
     public ResultData success() {
-        return returnData(true, "success");
+        return success(RESULT_SUCCESS_MESSAGE);
     }
 
     @Override
-    public ResultData error(String tip) {
-        return returnData(false, tip);
-    }
-
-    @Override
-    public ResultData success(String tip) {
-        return returnData(true, tip);
+    public ResultData success(String message) {
+        return returnData(RESULT_SUCCESS_CODE, message, null);
     }
 
     @Override
     public ResultData successData(Object data) {
-        return returnData(true, "success", data);
+        return returnData(RESULT_SUCCESS_CODE, RESULT_SUCCESS_MESSAGE, data);
     }
 
     @Override
-    public ResultData errorData(Object data) {
-        return returnData(true, "error", data);
+    public ResultData error(String message) {
+        return error(RESULT_NORMAL_ERROR_CODE, message);
     }
 
     @Override
-    public ResultData returnData(Object data) {
-        return returnData(true, null, data);
+    public ResultData error(String code, String message) {
+        return returnData(code, message, null);
     }
 
     @Override
-    public ResultData returnData(boolean success, String tip) {
-        return returnData(success, tip, null);
-    }
-
-    @Override
-    public ResultData returnData(boolean success, String tip, Object data) {
+    public ResultData returnData(String code, String message, Object data) {
         ResultData resultData = new ResultData();
-        if (success) {
-            resultData.setCode("200");
-        } else {
-            resultData.setCode("500");
-        }
+
+        // 设置返回的状态
+        resultData.setCode(code);
+
+        // 设置返回的数据
         if (data != null) {
             resultData.setData(data);
         }
-        if (StringUtil.isNotEmpty(tip)) {
-            resultData.setMessage(tip);
+
+        // 设置返回的消息
+        if (StringUtil.isNotEmpty(message)) {
+            resultData.setMessage(message);
         }
 
         return resultData;

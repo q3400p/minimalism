@@ -3,16 +3,31 @@ package com.whaty.cbs.plugins.web.response;
 import com.windf.core.entity.ResultData;
 
 public interface ResponseReturn {
-    static final String RESULT_SUCCESS_CODE = "200";
-    static final String RESULT_ERROR_CODE = "500";
+    /**
+     * 正常的返回结果code
+     */
+    String RESULT_SUCCESS_CODE = "200";
+    /**
+     * 地址重定向的code
+     */
+    String RESULT_PARAMETER_ERROR_CODE = "302";
+    /**
+     * 参数错误的code
+     */
+    String RESULT_REDIRECT_ERROR_CODE = "400";
+    /**
+     * 通用的错误异常
+     */
+    String RESULT_NORMAL_ERROR_CODE = "500";
 
     /**
-     * 设置页面返回，并直接返回
-     *
-     * @param page
-     * @return
+     * 参数正确的默认message
      */
-    ResultData page(String page);
+    String RESULT_SUCCESS_MESSAGE = "success";
+    /**
+     * 参数错误的默认message
+     */
+    String RESULT_ERROR_MESSAGE = "error";
 
     /**
      * 返回错误信息
@@ -30,21 +45,17 @@ public interface ResponseReturn {
 
     /**
      * 返回成功提示
+     * 默认的code为 {@link ResponseReturn#RESULT_SUCCESS_CODE}
+     * 默认的data为 null
      *
      * @return
      */
-    ResultData success(String tip);
-
-    /**
-     * 返回错误信息
-     *
-     * @param tip
-     * @return
-     */
-    ResultData error(String tip);
+    ResultData success(String message);
 
     /**
      * 返回带数据的成功信息
+     * 默认的code为 {@link ResponseReturn#RESULT_SUCCESS_CODE}
+     * 默认的message为code {@link ResponseReturn#RESULT_SUCCESS_MESSAGE}
      *
      * @param data
      * @return
@@ -52,47 +63,42 @@ public interface ResponseReturn {
     ResultData successData(Object data);
 
     /**
-     * 返回带数据的错误信息
+     * 返回通用的错误信息
+     * 默认的code为 {@link ResponseReturn#RESULT_NORMAL_ERROR_CODE}
+     * 默认的data为 null
      *
-     * @param data
+     * @param message
      * @return
      */
-    ResultData errorData(Object data);
+    ResultData error(String message);
 
     /**
-     * 只返回数据
+     * 返回指定code的错误信息
+     * 默认的data为 null
      *
-     * @param data
+     * @param code
+     * @param message
      * @return
      */
-    ResultData returnData(Object data);
-
-    /**
-     * 返回map信息,没有数据
-     *
-     * @param success
-     * @param tip
-     * @return
-     */
-    ResultData returnData(boolean success, String tip);
+    ResultData error(String code, String message);
 
     /**
      * 返回带数据和提示的信息
      *
-     * @param success
-     * @param tip
+     * @param code
+     * @param message
      * @param data
      * @return
      */
-    ResultData returnData(boolean success, String tip, Object data);
+    ResultData returnData(String code, String message, Object data);
 
     /**
      * 重定向到某个页面
      *
-     * @param string
+     * @param url
      * @return
      */
-    ResultData redirect(String string);
+    ResultData redirect(String url);
 
     /**
      * 重定向到某个页面,携带参数
