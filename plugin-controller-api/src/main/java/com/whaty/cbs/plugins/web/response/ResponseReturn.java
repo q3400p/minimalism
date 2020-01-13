@@ -1,15 +1,10 @@
 package com.whaty.cbs.plugins.web.response;
 
-public interface ResponseReturn {
-    public static final String RESULT_KEY = "result";
-    public static final String RESULT_SUCCESS_KEY = "success";
-    public static final String RESULT_DATA_KEY = "data";
-    public static final String RESULT_MESSAGE_KEY = "message";
+import com.windf.core.entity.ResultData;
 
-    public static final String JSON_PAGE = "/common/info/json";
-    public static final String PARAMETER_ERROR_PAGE = "/common/error/parameter";
-    public static final String ERROR_PAGE = "/common/error";
-    public static final String SUCCESS_MESSAGE_PAGE = "/common/info/success";
+public interface ResponseReturn {
+    static final String RESULT_SUCCESS_CODE = "200";
+    static final String RESULT_ERROR_CODE = "500";
 
     /**
      * 设置页面返回，并直接返回
@@ -17,28 +12,28 @@ public interface ResponseReturn {
      * @param page
      * @return
      */
-    public String page(String page);
+    ResultData page(String page);
 
     /**
      * 返回错误信息
      *
      * @return
      */
-    public String parameterError();
+    ResultData parameterError();
 
     /**
      * 返回成功提示
      *
      * @return
      */
-    public String success();
+    ResultData success();
 
     /**
      * 返回成功提示
      *
      * @return
      */
-    public String success(String tip);
+    ResultData success(String tip);
 
     /**
      * 返回错误信息
@@ -46,7 +41,7 @@ public interface ResponseReturn {
      * @param tip
      * @return
      */
-    public String error(String tip);
+    ResultData error(String tip);
 
     /**
      * 返回带数据的成功信息
@@ -54,7 +49,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    public String successData(Object data);
+    ResultData successData(Object data);
 
     /**
      * 返回带数据的错误信息
@@ -62,7 +57,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    public String errorData(Object data);
+    ResultData errorData(Object data);
 
     /**
      * 只返回数据
@@ -70,7 +65,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    public String returnData(Object data);
+    ResultData returnData(Object data);
 
     /**
      * 返回map信息,没有数据
@@ -79,7 +74,7 @@ public interface ResponseReturn {
      * @param tip
      * @return
      */
-    public String returnData(boolean success, String tip);
+    ResultData returnData(boolean success, String tip);
 
     /**
      * 返回带数据和提示的信息
@@ -89,7 +84,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    public String returnData(boolean success, String tip, Object data);
+    ResultData returnData(boolean success, String tip, Object data);
 
     /**
      * 重定向到某个页面
@@ -97,7 +92,7 @@ public interface ResponseReturn {
      * @param string
      * @return
      */
-    public String redirect(String string);
+    ResultData redirect(String string);
 
     /**
      * 重定向到某个页面,携带参数
@@ -105,5 +100,5 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    public String redirectData(String url, Object data);
+    ResultData redirectData(String url, Object data);
 }
