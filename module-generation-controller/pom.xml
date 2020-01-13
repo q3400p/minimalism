@@ -17,6 +17,11 @@
             <artifactId>module-generation</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.windf</groupId>
+            <artifactId>plugin-controller-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 
