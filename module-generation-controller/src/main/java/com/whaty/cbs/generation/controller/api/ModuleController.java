@@ -1,4 +1,4 @@
-package com.whaty.cbs.plugins.web;
+package com.whaty.cbs.generation.controller.api;
 
 import com.windf.core.entity.BaseEntity;
 import com.windf.core.entity.Page;

@@ -1,6 +1,6 @@
-package com.windf.core.frame;
+package com.whaty.cbs.plugins.web.session;
 
-public interface Session extends Orderable {
+public interface Session {
 	/**
 	 * 根据key获取存储的对象 如果找不到，返回null
 	 * 

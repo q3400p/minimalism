@@ -2,8 +2,6 @@ package com.whaty.cbs.plugins.web.session;
 
 import javax.servlet.http.HttpSession;
 
-import com.whaty.cbs.core.frame.Session;
-
 public class WebSession implements Session {
 
     private HttpSession session;
@@ -34,11 +32,6 @@ public class WebSession implements Session {
     @Override
     public void invalidate() {
         session.invalidate();
-    }
-
-    @Override
-    public int getOrder() {
-        return NORMAL;
     }
 
 }
