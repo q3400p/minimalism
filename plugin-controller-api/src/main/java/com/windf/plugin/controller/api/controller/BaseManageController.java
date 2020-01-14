@@ -5,10 +5,12 @@ import com.windf.core.entity.Page;
 import com.windf.core.entity.ResultData;
 import com.windf.core.entity.SearchData;
 import com.windf.core.service.ManageService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.windf.core.util.ParameterUtil;
+import com.windf.core.util.StringUtil;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.ws.rs.POST;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +32,12 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @param id    根据id查询
      * @return
      */
-    @GetMapping("/detail")
-    public ResultData detail(String id) {
+    @GetMapping("/{id}")
+    public ResultData detail(@RequestParam String id) {
+        ParameterUtil.assertNotEmpty(id);
+
         T data = this.getManageService().detail(id);
+
         return response().successData(data);
     }
 
@@ -41,18 +46,23 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @param searchData    搜索信息
      * @return
      */
-    @GetMapping("/search")
-    public ResultData search(SearchData searchData) {
+    @GetMapping("/")
+    public ResultData search(@RequestBody SearchData searchData) {
         Page<T> data = this.getManageService().search(searchData);
+
         return response().successData(data);
     }
+
     /**
      * 创建
      * @param entity    要添加的信息
      */
-    @GetMapping("/")
-    public ResultData create(T entity) {
+    @PostMapping("/")
+    public ResultData create(@RequestBody T entity) {
+        ParameterUtil.assertNotEmpty(entity);
+
         this.getManageService().create(entity);
+
         return response().success();
     }
 
@@ -60,30 +70,44 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * 修改
      * @param entity    要修改的信息
      */
-    @PostMapping("/update")
-    public ResultData update(T entity) {
+    @PutMapping("/")
+    public ResultData update(@RequestBody T entity) {
+        ParameterUtil.assertNotEmpty(entity);
+
         this.getManageService().update(entity);
+
         return response().success();
     }
 
     /**
      * 删除
-     * @param ids   更具id进行搜索
      */
-    @DeleteMapping("")
-    public ResultData delete(List<String> ids) {
-        this.getManageService().delete(ids);
+    @DeleteMapping("/")
+    public ResultData delete(@RequestParam String ids) {
+        ParameterUtil.assertNotEmpty(ids);
+
+        List<String> idList = ParameterUtil.ids(ids);
+
+        this.getManageService().delete(idList);
+
         return response().success();
     }
 
     /**
      * 批量创建
-     * @param file      要导入的文件
-     * @param fieldMap  字段对应关系，自定名，对应的实体字段
+     * @param multipartFile 要导入的文件
+     * @param fieldMap      字段对应关系，自定名，对应的实体字段
      */
     @PostMapping("/import")
-    public ResultData batchImport(File file, Map<String, String> fieldMap) {
+    public ResultData batchImport(MultipartFile multipartFile, @RequestBody Map<String, String> fieldMap) {
+        // TODO 需要做成异步式的
+
+        ParameterUtil.assertNotEmpty(fieldMap);
+
+        File file = this.saveFile(multipartFile, null);
+
         this.getManageService().batchImport(file, fieldMap);
+
         return response().success();
     }
 
@@ -93,9 +117,13 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @return
      */
     @GetMapping("/export")
-    public ResultData export(SearchData searchData) {
-        // TODO 获取文件下载
+    public ResultData export(@RequestBody SearchData searchData) {
+        // TODO 需要做成异步式的
+        ParameterUtil.assertNotEmpty(searchData);
+
         File data = this.getManageService().batchExport(searchData);
+
+        // 返回文件会直接下载
         return response().successData(data);
     }
 }
