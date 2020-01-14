@@ -1,4 +1,4 @@
-package com.whaty.cbs.generation.controller.api;
+package com.windf.minimalism.generation.controller.api;
 
 import com.windf.plugin.controller.api.controller.BaseManageController;
 import com.windf.minimalism.generation.entity.Module;
