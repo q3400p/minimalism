@@ -1,16 +1,15 @@
 package com.windf.plugin.controller.api.controller;
 
+import com.windf.core.Constant;
+import com.windf.core.entity.BaseEntity;
 import com.windf.core.exception.CodeException;
 import com.windf.core.util.DateUtil;
 import com.windf.core.util.FileUtil;
 import com.windf.core.util.StringUtil;
-import com.windf.core.util.UUIDUtil;
 import com.windf.plugin.controller.api.response.JsonResponseReturn;
 import com.windf.plugin.controller.api.response.ResponseReturn;
 import com.windf.plugin.controller.api.session.Session;
 import com.windf.plugin.controller.api.session.WebSession;
-import com.windf.core.Constant;
-import com.windf.core.entity.BaseEntity;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -101,7 +100,7 @@ public abstract class BaseController<T extends BaseEntity> {
             saveFileName.append(type).append("/");  // 可能会指定类型
         }
         saveFileName.append(DateUtil.format("yyyy/MM/dd/hhmmss"))   // 日期部分
-                .append(UUIDUtil.getRandomPrime(4))
+                .append(StringUtil.getRandomString(4))
                 .append(".").append(ext);
 
         File file = new File(saveFileName.toString());
