@@ -17,7 +17,7 @@ import java.util.Map;
  * 基本的管理端控制类，实现增删改查
  * @param <T>
  */
-public abstract class ManageController<T extends BaseEntity> extends BaseController {
+public abstract class BaseManageController<T extends BaseEntity> extends BaseController {
 
     /**
      * 获得管理端的service
