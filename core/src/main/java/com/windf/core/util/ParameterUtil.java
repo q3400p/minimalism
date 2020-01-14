@@ -145,8 +145,7 @@ public class ParameterUtil {
      * @param ids
      * @return
      */
-    @Deprecated
-    public static List<String> getIds(String ids) {
+    public static List<String> ids(String ids) {
         return Arrays.asList(StringUtil.split(ids, ","));
     }
 
