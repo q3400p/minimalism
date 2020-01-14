@@ -240,7 +240,7 @@ public class FileUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public static String getPrefix(String fileName) {
+	public static String getSuffix(String fileName) {
 		int lastPointIndex = fileName.lastIndexOf(".");
 		String prefix = null;
 		if (lastPointIndex > 0) {
