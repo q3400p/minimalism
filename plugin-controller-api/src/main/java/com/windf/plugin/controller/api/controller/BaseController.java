@@ -1,5 +1,10 @@
 package com.windf.plugin.controller.api.controller;
 
+import com.windf.core.exception.CodeException;
+import com.windf.core.util.DateUtil;
+import com.windf.core.util.FileUtil;
+import com.windf.core.util.StringUtil;
+import com.windf.core.util.UUIDUtil;
 import com.windf.plugin.controller.api.response.JsonResponseReturn;
 import com.windf.plugin.controller.api.response.ResponseReturn;
 import com.windf.plugin.controller.api.session.Session;
@@ -19,12 +24,16 @@ import java.io.*;
  * @param <T>
  */
 public abstract class BaseController<T extends BaseEntity> {
+    /**
+     * 文件上传的路径
+     */
+    private static final String INCOMING_PATH = "/incoming";
 
     /**
      * 获取request
      * @return
      */
-    public HttpServletRequest getRequest() {
+    protected HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
@@ -32,7 +41,7 @@ public abstract class BaseController<T extends BaseEntity> {
      * 获取response
      * @return
      */
-    public HttpServletResponse getResponse() {
+    protected HttpServletResponse getResponse() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
     }
 
@@ -41,7 +50,7 @@ public abstract class BaseController<T extends BaseEntity> {
      * 用于返回数据
      * @return
      */
-    public ResponseReturn response() {
+    protected ResponseReturn response() {
         return new JsonResponseReturn();
     }
 
@@ -49,7 +58,7 @@ public abstract class BaseController<T extends BaseEntity> {
      * 获取session
      * @return
      */
-    public Session getSession() {
+    protected Session getSession() {
         return new WebSession(this.getRequest().getSession());
     }
 
@@ -58,16 +67,57 @@ public abstract class BaseController<T extends BaseEntity> {
      * @param multipartFile
      * @return
      */
-    public File getFile(MultipartFile multipartFile) {
-        // TODO 通用文件上传修改
-        return null;
+    protected File saveFile(MultipartFile multipartFile, String type) {
+        String ext = FileUtil.getSuffix(multipartFile.getOriginalFilename());
+        File file = this.createIncomingFile(null, null, type, ext);
+
+        try {
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            throw new CodeException(e);
+        }
+
+        return file;
+    }
+
+    /**
+     * 创建一个用于上传的文件
+     * @param siteCode
+     * @param moduleCode
+     * @param type
+     * @param ext
+     * @return
+     */
+    protected File createIncomingFile(String siteCode, String moduleCode, String type, String ext) {
+
+        // 生成上传目录
+        // eg：/webapp/product/incoming/{siteCode}/{module}/[{type}/]/2010/01/14/195609
+        StringBuffer saveFileName = new StringBuffer();
+        saveFileName.append(FileUtil.getWebappPath())   // 服务器路径
+                .append(INCOMING_PATH).append("/")  // incoming文件
+                .append(siteCode).append("/")       // 站点编号
+                .append(moduleCode).append("/");    // 模块code
+        if (StringUtil.isNotEmpty(type)) {
+            saveFileName.append(type).append("/");  // 可能会指定类型
+        }
+        saveFileName.append(DateUtil.format("yyyy/MM/dd/hhmmss"))   // 日期部分
+                .append(UUIDUtil.getRandomPrime(4))
+                .append(".").append(ext);
+
+        File file = new File(saveFileName.toString());
+
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        return file;
     }
 
     /**
      * 文件下载
      * @param file
      */
-    public void download(File file, String fileName) {
+    protected void download(File file, String fileName) {
         HttpServletRequest request = this.getRequest();
         HttpServletResponse response = this.getResponse();
 
