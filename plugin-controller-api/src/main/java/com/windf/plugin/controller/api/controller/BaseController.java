@@ -1,9 +1,9 @@
-package com.whaty.cbs.plugins.web.controller;
+package com.windf.plugin.controller.api.controller;
 
-import com.whaty.cbs.plugins.web.response.JsonResponseReturn;
-import com.whaty.cbs.plugins.web.response.ResponseReturn;
-import com.whaty.cbs.plugins.web.session.Session;
-import com.whaty.cbs.plugins.web.session.WebSession;
+import com.windf.plugin.controller.api.response.JsonResponseReturn;
+import com.windf.plugin.controller.api.response.ResponseReturn;
+import com.windf.plugin.controller.api.session.Session;
+import com.windf.plugin.controller.api.session.WebSession;
 import com.windf.core.Constant;
 import com.windf.core.entity.BaseEntity;
 import org.springframework.web.context.request.RequestContextHolder;

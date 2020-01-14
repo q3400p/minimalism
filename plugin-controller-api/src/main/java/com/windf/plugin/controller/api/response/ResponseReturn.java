@@ -1,4 +1,4 @@
-package com.whaty.cbs.plugins.web.response;
+package com.windf.plugin.controller.api.response;
 
 import com.windf.core.entity.ResultData;
 

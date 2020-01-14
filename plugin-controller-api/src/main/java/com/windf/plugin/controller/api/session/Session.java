@@ -1,4 +1,4 @@
-package com.whaty.cbs.plugins.web.session;
+package com.windf.plugin.controller.api.session;
 
 public interface Session {
 	/**

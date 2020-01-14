@@ -1,4 +1,4 @@
-package com.whaty.cbs.plugins.web.util;
+package com.windf.plugin.controller.api.util;
 
 import com.windf.core.util.StringUtil;
 

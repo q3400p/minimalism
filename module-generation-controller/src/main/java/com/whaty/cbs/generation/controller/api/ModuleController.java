@@ -1,6 +1,6 @@
 package com.whaty.cbs.generation.controller.api;
 
-import com.whaty.cbs.plugins.web.controller.ManageController;
+import com.windf.plugin.controller.api.controller.ManageController;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;

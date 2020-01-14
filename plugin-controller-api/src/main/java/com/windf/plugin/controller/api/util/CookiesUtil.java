@@ -1,4 +1,4 @@
-package com.whaty.cbs.plugins.web.util;
+package com.windf.plugin.controller.api.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
