@@ -17,6 +17,8 @@ import java.util.Map;
  * 基本的管理端控制类，实现增删改查
  * @param <T>
  */
+@RestController
+@RequestMapping("/manage")
 public abstract class BaseManageController<T extends BaseEntity> extends BaseController {
 
     /**
@@ -25,12 +27,18 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      */
     public abstract ManageService<T> getManageService();
 
+
+    @GetMapping("/test2")
+    public ResultData test2() {
+        return response().success("hahah");
+    }
+
     /**
      * 查看详情
      * @param id    根据id查询
      * @return
      */
-    @GetMapping("/{id}")
+    @RequestMapping("/{id}")
     public ResultData detail(@RequestParam String id) {
         ParameterUtil.assertNotEmpty(id);
 
