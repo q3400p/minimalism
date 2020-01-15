@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParameterServiceImpl extends BaseManageService<Parameter> implements ParameterService {
 
-    @Autowired
     private ParameterRepository parameterRepository;
 
     @Override

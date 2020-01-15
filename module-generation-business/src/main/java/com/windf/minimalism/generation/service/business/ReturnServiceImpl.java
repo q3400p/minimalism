@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReturnServiceImpl extends BaseManageService<Return> implements ReturnService {
 
-    @Autowired
     private ReturnRepository returnRepository;
 
     @Override

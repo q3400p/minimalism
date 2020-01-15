@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FieldServiceImpl extends BaseManageService<Field> implements FieldService {
 
-    @Autowired
     private FieldRepository fieldRepository;
 
     @Override
