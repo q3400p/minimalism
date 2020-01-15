@@ -31,4 +31,35 @@ public class SearchData extends PageParameter implements Serializable {
 	 */
 	private PageParameter pageParameter;
 
+	public Map<String, Object> getFieldMap() {
+		return fieldMap;
+	}
+
+	public void setFieldMap(Map<String, Object> fieldMap) {
+		this.fieldMap = fieldMap;
+	}
+
+	public List<OrderItem> getOrder() {
+		return order;
+	}
+
+	public void setOrder(List<OrderItem> order) {
+		this.order = order;
+	}
+
+	public Map<String, Object> getCondition() {
+		return condition;
+	}
+
+	public void setCondition(Map<String, Object> condition) {
+		this.condition = condition;
+	}
+
+	public PageParameter getPageParameter() {
+		return pageParameter;
+	}
+
+	public void setPageParameter(PageParameter pageParameter) {
+		this.pageParameter = pageParameter;
+	}
 }
