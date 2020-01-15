@@ -4,10 +4,12 @@ import com.windf.plugin.controller.api.controller.BaseManageController;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ModuleControllerBase extends BaseManageController<Module> {
+@RequestMapping("/module")
+public class ModuleManageController extends BaseManageController<Module> {
 
     @Autowired
     private ModuleService moduleService;
