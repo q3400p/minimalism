@@ -6,11 +6,9 @@ import com.windf.core.entity.ResultData;
 import com.windf.core.entity.SearchData;
 import com.windf.core.service.ManageService;
 import com.windf.core.util.ParameterUtil;
-import com.windf.core.util.StringUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.ws.rs.POST;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
