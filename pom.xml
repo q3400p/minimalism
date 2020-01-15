@@ -25,12 +25,15 @@
         <module>./core</module>
 
         <module>./plugin-service-business</module>
+        <module>./plugin-controller-api</module>
 
         <module>./module-generation</module>
         <module>./module-generation-business</module>
         <module>./module-generation-controller</module>
         <!--<module>./module-generation-repository-mysql</module>-->
         <!--<module>./client-generation</module>-->
+
+        <module>./project</module>
 
     </modules>
 
