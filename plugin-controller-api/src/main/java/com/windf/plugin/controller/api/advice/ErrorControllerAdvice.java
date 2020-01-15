@@ -1,0 +1,55 @@
+package com.windf.plugin.controller.api.advice;
+
+import com.windf.core.entity.ResultData;
+import com.windf.core.exception.ParameterException;
+import com.windf.core.exception.UserException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class ErrorControllerAdvice {
+    /**
+     * 通用用户异常的错误返回
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = {UserException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultData handleUserException(UserException e) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(e.getType());    // 设置错误编号
+        resultData.setMessage(e.getMessage());  // 设置异常信息
+        return resultData;
+    }
+
+    /**
+     * 参数错误
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = {ParameterException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResultData handleParameterException(ParameterException e) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(ResultData.CODE_BAD_REQUEST);
+        resultData.setMessage("错误的请求");
+        return resultData;
+    }
+
+    /**
+     * 通用异常返回
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = {Throwable.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultData handleNormalException(Throwable e) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(ResultData.CODE_NORMAL_ERROR);
+        resultData.setMessage("发生了未知错误");
+        return resultData;
+    }
+
+}
