@@ -33,6 +33,8 @@
         <!--<module>./module-generation-repository-mysql</module>-->
         <!--<module>./client-generation</module>-->
 
+        <module>./project</module>
+
     </modules>
 
 
