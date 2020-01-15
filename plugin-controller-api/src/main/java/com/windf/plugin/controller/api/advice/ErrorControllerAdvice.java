@@ -2,6 +2,7 @@ package com.windf.plugin.controller.api.advice;
 
 import com.windf.core.entity.ResultData;
 import com.windf.core.exception.ParameterException;
+import com.windf.core.exception.UnsupportException;
 import com.windf.core.exception.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,6 +50,20 @@ public class ErrorControllerAdvice {
         ResultData resultData = new ResultData();
         resultData.setCode(ResultData.CODE_NORMAL_ERROR);
         resultData.setMessage("发生了未知错误");
+        return resultData;
+    }
+
+    /**
+     * 拦截UnsupportException，不支持的异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = {UnsupportException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResultData handleUnsupportException(Throwable e) {
+        ResultData resultData = new ResultData();
+        resultData.setCode(ResultData.CODE_NOT_FOUND);
+        resultData.setMessage("资源不存在");
         return resultData;
     }
 
