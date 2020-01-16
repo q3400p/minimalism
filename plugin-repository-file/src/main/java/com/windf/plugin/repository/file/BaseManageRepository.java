@@ -1,35 +1,26 @@
 package com.windf.plugin.repository.file;
 
 import com.windf.core.entity.BaseEntity;
-import com.windf.core.entity.Page;
-import com.windf.core.entity.SearchData;
 import com.windf.core.repository.ManageRepository;
+import com.windf.plugin.repository.file.config.RepositoryConfig;
+import com.windf.plugin.repository.file.util.JSONRepositoryUtil;
 
-import java.util.List;
+public abstract class BaseManageRepository<T extends BaseEntity> implements ManageRepository<T> {
 
-public class BaseManageRepository<T extends BaseEntity> implements ManageRepository<T> {
-
-    @Override
-    public void create(T entity) {
+    /**
+     * 保存json文件
+     * @param relativePath  相对路径
+     * @param object        要保存的对象
+     */
+    protected void saveJsonFile(String relativePath, Object object) {
+        JSONRepositoryUtil.saveJsonFile(this.getHomePath() + "/" + relativePath, object);
     }
 
-    @Override
-    public void update(T entity) {
-
-    }
-
-    @Override
-    public void delete(List<String> ids) {
-
-    }
-
-    @Override
-    public T detail(String id) {
-        return null;
-    }
-
-    @Override
-    public Page<T> search(SearchData searchData) {
-        return null;
+    /**
+     * 获取文件保存的路径
+     * @return
+     */
+    protected String getHomePath() {
+        return new RepositoryConfig().getHomePath();
     }
 }
