@@ -18,7 +18,6 @@ import java.util.Map;
  * @param <T>
  */
 @RestController
-@RequestMapping("/manage")
 public abstract class BaseManageController<T extends BaseEntity> extends BaseController {
 
     /**
@@ -27,19 +26,13 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      */
     public abstract ManageService<T> getManageService();
 
-
-    @GetMapping("/test2")
-    public ResultData test2() {
-        return response().success("hahah");
-    }
-
     /**
      * 查看详情
      * @param id    根据id查询
      * @return
      */
-    @RequestMapping("/{id}")
-    public ResultData detail(@RequestParam String id) {
+    @GetMapping("/{id}")
+    public ResultData detail(@PathVariable String id) {
         ParameterUtil.assertNotEmpty(id);
 
         T data = this.getManageService().detail(id);
