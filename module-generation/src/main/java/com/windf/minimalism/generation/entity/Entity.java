@@ -1,10 +1,14 @@
 package com.windf.minimalism.generation.entity;
 
+import java.util.List;
+
 public class Entity extends BaseModel implements Type {
     private String code;
     private String name;
     private String layout;
     private Module module;
+    private List<Field> fields;
+    private List<Method> methods;
 
     @Override
     public String getTypeCode() {
@@ -46,5 +50,21 @@ public class Entity extends BaseModel implements Type {
 
     public void setModule(Module module) {
         this.module = module;
+    }
+
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<Field> fields) {
+        this.fields = fields;
+    }
+
+    public List<Method> getMethods() {
+        return methods;
+    }
+
+    public void setMethods(List<Method> methods) {
+        this.methods = methods;
     }
 }
