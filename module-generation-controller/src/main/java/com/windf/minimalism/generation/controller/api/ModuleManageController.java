@@ -19,9 +19,4 @@ public class ModuleManageController extends BaseManageController<Module> {
     public ModuleService getManageService() {
         return this.moduleService;
     }
-
-    @RequestMapping("/test")
-    public ResultData test() {
-        return response().success("test222");
-    }
 }
