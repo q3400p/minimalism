@@ -1,5 +1,7 @@
 package com.windf.plugin.repository.file.util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.windf.core.exception.CodeException;
 import com.windf.core.util.JSONUtil;
 
@@ -20,6 +22,9 @@ public class JSONRepositoryUtil {
     public static File saveJsonFile(String realPath, Object object) {
         // 转换为内容
         String content = JSONUtil.toJSONStr(object);
+
+        // JSON格式化
+        content = prettyJSON(content);
 
         // 创建文件，用于保存的文件
         File file = new File(realPath);
@@ -52,7 +57,7 @@ public class JSONRepositoryUtil {
 
         FileWriter fileWritter = null;
         try {
-            fileWritter = new FileWriter(file.getName(),append);
+            fileWritter = new FileWriter(file, append);
             fileWritter.write(content);
         } catch (IOException e) {
             throw new CodeException(e);
@@ -85,5 +90,15 @@ public class JSONRepositoryUtil {
                 }
             }
         }
+    }
+
+    /**
+     * 美化JSON
+     * @param json
+     * @return
+     */
+    public static String prettyJSON(String json) {
+        JSONObject jsonObject = JSONObject.parseObject(json, Feature.OrderedField);
+        return JSONObject.toJSONString(jsonObject,true);
     }
 }
