@@ -3,7 +3,10 @@ package com.windf.plugin.repository.file;
 import com.windf.core.entity.BaseEntity;
 import com.windf.core.repository.ManageRepository;
 import com.windf.plugin.repository.file.config.RepositoryConfig;
+import com.windf.plugin.repository.file.util.FileManageUtil;
 import com.windf.plugin.repository.file.util.JSONRepositoryUtil;
+
+import java.io.File;
 
 public abstract class BaseManageRepository<T extends BaseEntity> implements ManageRepository<T> {
 
@@ -28,10 +31,30 @@ public abstract class BaseManageRepository<T extends BaseEntity> implements Mana
     }
 
     /**
+     * 删除文件
+     * @param relativePath
+     * @return
+     */
+    protected boolean deleteFile(String relativePath) {
+        String realFilePath = this.getHomePath() + "/" + relativePath;
+
+        // 检测文件是否存在，如果不存在，删除失败，返回false
+        File file = new File(realFilePath);
+        if (!file.exists()) {
+            return false;
+        }
+
+        FileManageUtil.deleteFile(realFilePath);
+        // 删除成功，返回true
+        return true;
+    }
+
+    /**
      * 获取文件保存的路径
      * @return
      */
     protected String getHomePath() {
         return new RepositoryConfig().getHomePath();
     }
+
 }
