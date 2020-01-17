@@ -34,7 +34,7 @@ public class JSONUtil {
 	 * @param <T>
 	 * @return
 	 */
-	public static <T> T pasrseJSONStr(String text, Class<T> clazz) {
+	public static <T> T parseJSONStr(String text, Class<T> clazz) {
 		return JSONObject.parseObject(text, clazz);
 	}
 
@@ -46,7 +46,7 @@ public class JSONUtil {
 	 * @param <T>
 	 * @return
 	 */
-	public static <T> List<T> pasrseJSONStrToList(String text, Class<T> clazz) {
+	public static <T> List<T> parseJSONStrToList(String text, Class<T> clazz) {
 		return JSONArray.parseArray(text, clazz);
 	}
 

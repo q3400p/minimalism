@@ -80,4 +80,19 @@ public class CollectionUtil {
 		result.add(obj);
 		return result;
 	}
+
+	/**
+	 * 将字符集合转换为一个字符创
+	 * @param lines
+	 * @return
+	 */
+	public static String readCollectionAsString(List<String> lines) {
+		StringBuffer result = new StringBuffer();
+
+		for (int i = 0; i < lines.size(); i++) {
+			result.append(lines.get(i));
+		}
+
+		return result.toString();
+	}
 }

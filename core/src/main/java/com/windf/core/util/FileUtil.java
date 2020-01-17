@@ -94,13 +94,10 @@ public class FileUtil {
 
 	/**
 	 * 复制文件夹
-	 *
 	 * 如果目标目录不存在创建 复制文件、递归复制文件夹
-	 *
-	 * @param source
-	 *            源目录
-	 * @param target
-	 *            目标目录
+	 * @param source 源目录
+	 * @param target 目标目录
+	 * @return 内容列表
 	 */
 	public static List<File> copyFolder(String source, String target) {
 
@@ -316,47 +313,42 @@ public class FileUtil {
      * @return
      */
     public static List<String> readLine(String filePath) {
-        List<String> result = new ArrayList<String>();
-
+		// 获取文件
         File file = FileUtil.getFile(filePath);
 
-        BufferedReader reader = null;
-        String lineContent = null;
-        try {
-            InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
-            reader = new BufferedReader(isr);
-
-            while ((lineContent = reader.readLine()) != null) {
-                result.add(lineContent);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
-
-        return result;
+        // 文件转换
+        return readLine(file);
     }
 
-    /**
-     * 读取文件的内容作为字符串
-     *
-     * @param filePath
-     * @return
-     */
-    public static String readFileAsString(String filePath) {
-        StringBuffer result = new StringBuffer();
+	/**
+	 * 读取文件，转换为一行一行的文件
+	 * @param file
+	 * @return
+	 */
+	public static List<String> readLine(File file) {
+		List<String> result = new ArrayList<>();
 
-        List<String> lines = readLine(filePath);
-        for (int i = 0; i < lines.size(); i++) {
-            result.append(lines.get(i));
-        }
+		BufferedReader reader = null;
+		String lineContent = null;
+		try {
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
+			reader = new BufferedReader(isr);
 
-        return result.toString();
-    }
+			while ((lineContent = reader.readLine()) != null) {
+				result.add(lineContent);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e1) {
+				}
+			}
+		}
+
+		return result;
+	}
+
 }

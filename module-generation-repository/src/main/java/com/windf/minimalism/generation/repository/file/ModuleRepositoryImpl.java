@@ -2,6 +2,7 @@ package com.windf.minimalism.generation.repository.file;
 
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
+import com.windf.core.util.FileUtil;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.repository.ModuleRepository;
 import com.windf.minimalism.generation.repository.file.config.ModuleConfig;
@@ -16,7 +17,7 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
     @Override
     public void create(Module module) {
         // 获取模块路径
-        String modulePath = this.getModuleSavePath(module);
+        String modulePath = this.getModuleSavePath(module.getId());
 
         // 保存文件
         this.saveJsonFile(modulePath, module);
@@ -34,7 +35,11 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
 
     @Override
     public Module detail(String id) {
-        return null;
+        // 读取文件路径
+        String filePath = this.getModuleSavePath(id);
+
+        // 读取json文件
+        return this.readObjectByJSONFile(filePath, Module.class);
     }
 
     @Override
@@ -42,12 +47,12 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
         return null;
     }
 
-    public String getModuleSavePath(Module module) {
+    public String getModuleSavePath(String moduleId) {
         return ModuleConfig.getInstance().getModulePath() + "/" +
-                module.getId() + "." + ModuleConfig.getInstance().getFileSuffix();
+                moduleId + "." + ModuleConfig.getInstance().getFileSuffix();
     }
 
-    public String getModuleListFile(Module module) {
+    public String getModuleListFile() {
         return ModuleConfig.getInstance().getModulePath() + "/" +
                 ModuleConfig.getInstance().getModuleListFileName();
     }
