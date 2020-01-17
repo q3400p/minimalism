@@ -5,6 +5,7 @@ import com.windf.core.entity.Page;
 import com.windf.core.entity.ResultData;
 import com.windf.core.entity.SearchData;
 import com.windf.core.service.ManageService;
+import com.windf.core.util.CollectionUtil;
 import com.windf.core.util.ParameterUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -78,11 +79,26 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
         return response().success();
     }
 
+
     /**
      * 删除
      */
+    @DeleteMapping("/{id}")
+    public ResultData delete(@PathVariable String id) {
+        ParameterUtil.assertNotEmpty(id);
+
+        List<String> idList = CollectionUtil.asList(id);
+
+        this.getManageService().delete(idList);
+
+        return response().success();
+    }
+
+    /**
+     * 删除,多个删除
+     */
     @DeleteMapping("/")
-    public ResultData delete(@RequestParam String ids) {
+    public ResultData deleteByIds(@RequestParam String ids) {
         ParameterUtil.assertNotEmpty(ids);
 
         List<String> idList = ParameterUtil.ids(ids);
