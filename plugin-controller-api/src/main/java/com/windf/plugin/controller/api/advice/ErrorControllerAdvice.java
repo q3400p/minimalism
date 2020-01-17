@@ -4,6 +4,7 @@ import com.windf.core.entity.ResultData;
 import com.windf.core.exception.ParameterException;
 import com.windf.core.exception.UnsupportException;
 import com.windf.core.exception.UserException;
+import com.windf.core.util.StringUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,8 +21,10 @@ public class ErrorControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultData handleUserException(UserException e) {
         ResultData resultData = new ResultData();
-        resultData.setCode(e.getType());    // 设置错误编号
-        resultData.setMessage(e.getMessage());  // 设置异常信息
+        // 设置错误编号，如果没有异常编号，设置为500
+        resultData.setCode(StringUtil.fixNull(e.getType(), ResultData.CODE_NORMAL_ERROR));
+        // 设置异常信息
+        resultData.setMessage(e.getMessage());
         return resultData;
     }
 
