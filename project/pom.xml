@@ -32,6 +32,11 @@
             <artifactId>module-generation-business</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.windf.minimalism</groupId>
+            <artifactId>module-generation-repository</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
