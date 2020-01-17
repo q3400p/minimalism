@@ -44,7 +44,19 @@ public class StringUtil extends StringUtils {
      * @return
      */
     public static String fixNull(String str) {
-        return str == null ? "" : str;
+        return fixNull(str, "");
+    }
+
+
+    /**
+     * 如果字符串为null返回特定字符串，否则返回该字符串
+     *
+     * @param str
+     * @param defaultString 默认的字符串
+     * @return
+     */
+    public static String fixNull(String str, String defaultString) {
+        return str == null ? defaultString : str;
     }
 
     /**
