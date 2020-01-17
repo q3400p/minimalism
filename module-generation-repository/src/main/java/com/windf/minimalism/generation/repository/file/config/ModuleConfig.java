@@ -16,7 +16,20 @@ public class ModuleConfig {
      */
     private String moduleListFileName = "modules.json";
 
+    /**
+     * 保存文件的后缀名
+     */
+    private String fileSuffix = "json";
+
     public String getModulePath() {
         return modulePath;
+    }
+
+    public String getModuleListFileName() {
+        return moduleListFileName;
+    }
+
+    public String getFileSuffix() {
+        return fileSuffix;
     }
 }

@@ -16,7 +16,7 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
     @Override
     public void create(Module module) {
         // 获取模块路径
-        String modulePath = this.getModuleListFile(module);
+        String modulePath = this.getModuleSavePath(module);
 
         // 保存文件
         this.saveJsonFile(modulePath, module);
@@ -43,11 +43,12 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
     }
 
     public String getModuleSavePath(Module module) {
-        return ModuleConfig.getInstance().getModulePath() + "/" + module.getId();
+        return ModuleConfig.getInstance().getModulePath() + "/" +
+                module.getId() + "." + ModuleConfig.getInstance().getFileSuffix();
     }
 
     public String getModuleListFile(Module module) {
         return ModuleConfig.getInstance().getModulePath() + "/" +
-                ModuleConfig.getInstance().getModulePath();
+                ModuleConfig.getInstance().getModuleListFileName();
     }
 }
