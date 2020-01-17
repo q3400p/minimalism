@@ -50,6 +50,7 @@ public class ErrorControllerAdvice {
         ResultData resultData = new ResultData();
         resultData.setCode(ResultData.CODE_NORMAL_ERROR);
         resultData.setMessage("发生了未知错误");
+        e.printStackTrace();
         return resultData;
     }
 
