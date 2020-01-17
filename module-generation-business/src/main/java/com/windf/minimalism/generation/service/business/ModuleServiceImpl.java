@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ModuleServiceImpl extends BaseManageService<Module> implements ModuleService {
 
+    @Autowired
     private ModuleRepository moduleRepository;
 
     @Override
