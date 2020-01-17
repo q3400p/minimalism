@@ -12,7 +12,7 @@ public class JsonResponseReturn implements ResponseReturn {
 
     @Override
     public ResultData success() {
-        return success(ResultData.CODE_SUCCESS);
+        return returnData(ResultData.CODE_SUCCESS, ResultData.MESSAGE_SUCCESS, null);
     }
 
     @Override
