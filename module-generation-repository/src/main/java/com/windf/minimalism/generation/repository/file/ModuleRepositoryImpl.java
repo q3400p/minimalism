@@ -2,6 +2,7 @@ package com.windf.minimalism.generation.repository.file;
 
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
+import com.windf.core.exception.UserException;
 import com.windf.core.util.FileUtil;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.repository.ModuleRepository;
@@ -30,7 +31,19 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
 
     @Override
     public void delete(List<String> ids) {
+        for (String id : ids) {
+            // 读取文件
+            String filePath = this.getModuleSavePath(id);
 
+            // 删除文件
+            boolean success = this.deleteFile(filePath);
+
+            // 如果文件不存在，抛出异常
+            if (!success) {
+                throw new UserException("模块不存在");
+            }
+
+        }
     }
 
     @Override
