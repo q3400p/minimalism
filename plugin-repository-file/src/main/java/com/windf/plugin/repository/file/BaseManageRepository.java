@@ -17,6 +17,17 @@ public abstract class BaseManageRepository<T extends BaseEntity> implements Mana
     }
 
     /**
+     * 根据路径读取文件中的json
+     * 转换为对象
+     * @param relativePath 相对路径
+     * @param clazz
+     * @return
+     */
+    protected T readObjectByJSONFile(String relativePath, Class<T> clazz) {
+        return JSONRepositoryUtil.readObjectByJSONFile(this.getHomePath() + "/" + relativePath, clazz);
+    }
+
+    /**
      * 获取文件保存的路径
      * @return
      */

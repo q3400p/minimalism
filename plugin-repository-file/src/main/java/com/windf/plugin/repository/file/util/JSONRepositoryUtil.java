@@ -3,11 +3,14 @@ package com.windf.plugin.repository.file.util;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.windf.core.exception.CodeException;
+import com.windf.core.util.CollectionUtil;
+import com.windf.core.util.FileUtil;
 import com.windf.core.util.JSONUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 用户json持久化的工具
@@ -42,6 +45,24 @@ public class JSONRepositoryUtil {
     public static File write(String path, String content, boolean append) {
         File file = new File(path);
         return write(file, content, append);
+    }
+
+    /**
+     * 获取json文件，转变为对象
+     * @param path
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T readObjectByJSONFile(String path, Class<T> clazz) {
+        // 读取json文件的每一行
+        List<String> jsonFileLines = FileUtil.readLine(new File(path));
+
+        // 读取每一行为字符串
+        String content = CollectionUtil.readCollectionAsString(jsonFileLines);
+
+        // json装换为字符串
+        return JSONUtil.parseJSONStr(content, clazz);
     }
 
     /**
@@ -101,4 +122,5 @@ public class JSONRepositoryUtil {
         JSONObject jsonObject = JSONObject.parseObject(json, Feature.OrderedField);
         return JSONObject.toJSONString(jsonObject,true);
     }
+
 }
