@@ -2,7 +2,7 @@ package com.windf.core.util;
 
 import java.security.MessageDigest;
 
-public class Encrypt {
+public class EncryptUtil {
 	 public static String MD5(String pwd) {  
 	        //用于加密的字符  
 	        char md5String[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };  
