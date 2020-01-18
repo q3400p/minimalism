@@ -20,9 +20,8 @@ import java.io.*;
 
 /**
  * 控制层的父类，用于提供api，基于spring MVC
- * @param <T>
  */
-public abstract class BaseController<T extends BaseEntity> {
+public abstract class BaseController {
     /**
      * 文件上传的路径
      */
