@@ -47,7 +47,7 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @return
      */
     @GetMapping("/")
-    public ResultData search(@RequestBody SearchData searchData) {
+    public ResultData search(@RequestBody(required = false) SearchData searchData) {
         Page<T> data = this.getManageService().search(searchData);
 
         return response().successData(data);
