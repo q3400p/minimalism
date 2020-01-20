@@ -56,7 +56,13 @@ public class JSONRepositoryUtil {
      */
     public static <T> T readObjectByJSONFile(String path, Class<T> clazz) {
         // 读取json文件的每一行
-        List<String> jsonFileLines = FileUtil.readLine(new File(path));
+        List<String> jsonFileLines;
+        try {
+            jsonFileLines = FileUtil.readLine(new File(path));
+        } catch (CodeException e) {
+            // 如果文件读取发生异常，则没有
+            return null;
+        }
 
         // 读取每一行为字符串
         String content = CollectionUtil.readCollectionAsString(jsonFileLines);
