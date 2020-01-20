@@ -300,7 +300,7 @@ public class FileUtil {
      * @param filePath
      * @return
      */
-    public static List<String> readLine(String filePath) {
+    public static List<String> readLine(String filePath) throws FileNotFoundException {
 		// 获取文件
         File file = FileUtil.getFile(filePath);
 
@@ -313,19 +313,21 @@ public class FileUtil {
 	 * @param file
 	 * @return
 	 */
-	public static List<String> readLine(File file) {
-		List<String> result = new ArrayList<>();
+	public static List<String> readLine(File file) throws FileNotFoundException {
+        List<String> result = new ArrayList<>();
 
-		BufferedReader reader = null;
-		String lineContent = null;
-		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(file), Constant.DEFAULT_ENCODING);
-			reader = new BufferedReader(isr);
+        BufferedReader reader = null;
+        String lineContent = null;
+        try {
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(file), Constant.DEFAULT_ENCODING);
+            reader = new BufferedReader(isr);
 
-			while ((lineContent = reader.readLine()) != null) {
-				result.add(lineContent);
-			}
-		} catch (IOException e) {
+            while ((lineContent = reader.readLine()) != null) {
+                result.add(lineContent);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException();
+        } catch (IOException e) {
 			throw new CodeException(e);
 		} finally {
 			if (reader != null) {
