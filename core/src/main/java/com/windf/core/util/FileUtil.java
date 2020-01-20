@@ -1,5 +1,6 @@
 package com.windf.core.util;
 
+import com.windf.core.Constant;
 import com.windf.core.exception.CodeException;
 
 import java.io.*;
@@ -124,16 +125,13 @@ public class FileUtil {
 				}
 
 				if (file.isFile()) {
+					// 复制文件
 					String targetFilePath = target + "/" + file.getName();
-					boolean success = copyFile(file.getPath(), targetFilePath);
+					copyFile(file.getPath(), targetFilePath);
 
-					/*
-					 * 添加复制的文件到文件列表
-					 */
-					if (success) {
-						File targetFile = new File(targetFilePath);
-						list.add(targetFile);
-					}
+					// 添加复制的文件到文件列表
+					File targetFile = new File(targetFilePath);
+					list.add(targetFile);
 				} else if (file.isDirectory()) {
 					String targetDirectoryPath = target + "/" + file.getName();
 					List<File> tempList = copyFolder(file.getPath(), targetDirectoryPath);
@@ -156,7 +154,6 @@ public class FileUtil {
 		}
 
 		return list;
-
 	}
 
 	/**
@@ -165,9 +162,7 @@ public class FileUtil {
 	 * @param source
 	 * @param target
 	 */
-	public static boolean copyFile(String source, String target) throws CodeException {
-		boolean result = false;
-
+	public static void copyFile(String source, String target) throws CodeException {
 		/*
 		 * 复制文件
 		 */
@@ -181,7 +176,6 @@ public class FileUtil {
 				printStream.println(s);
 				printStream.flush();
 			}
-			result = true;
 		} catch (IOException e) {
 			throw new CodeException(e);
 		} finally {
@@ -193,11 +187,7 @@ public class FileUtil {
 			} catch (IOException e) {
 				throw new CodeException(e);
 			}
-
 		}
-
-		return result;
-
 	}
 
 	/**
@@ -298,11 +288,9 @@ public class FileUtil {
         String [] names = file.list();
         if(names != null)
             fileName.addAll(Arrays.asList(names));
-        for(File a:files)
-        {
-            if(a.isDirectory())
-            {
-                getAllFileName(a.getAbsolutePath(),fileName);
+        for(File f : files) {
+            if(f.isDirectory()) {
+                getAllFileName(f.getAbsolutePath(),fileName);
             }
         }
     }
@@ -331,19 +319,20 @@ public class FileUtil {
 		BufferedReader reader = null;
 		String lineContent = null;
 		try {
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(file), Constant.DEFAULT_ENCODING);
 			reader = new BufferedReader(isr);
 
 			while ((lineContent = reader.readLine()) != null) {
 				result.add(lineContent);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CodeException(e);
 		} finally {
 			if (reader != null) {
 				try {
 					reader.close();
-				} catch (IOException e1) {
+				} catch (IOException e) {
+					throw new CodeException(e);
 				}
 			}
 		}
