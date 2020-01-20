@@ -8,6 +8,7 @@ import com.windf.core.util.FileUtil;
 import com.windf.core.util.JSONUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -59,7 +60,7 @@ public class JSONRepositoryUtil {
         List<String> jsonFileLines;
         try {
             jsonFileLines = FileUtil.readLine(new File(path));
-        } catch (CodeException e) {
+        } catch (FileNotFoundException e) {
             // 如果文件读取发生异常，则没有
             return null;
         }
