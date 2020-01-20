@@ -26,7 +26,7 @@ public abstract class BaseManageRepository<T extends BaseEntity> implements Mana
      * @param clazz
      * @return
      */
-    protected T readObjectByJSONFile(String relativePath, Class<T> clazz) {
+    protected <T> T readObjectByJSONFile(String relativePath, Class<T> clazz) {
         return JSONRepositoryUtil.readObjectByJSONFile(this.getHomePath() + "/" + relativePath, clazz);
     }
 
