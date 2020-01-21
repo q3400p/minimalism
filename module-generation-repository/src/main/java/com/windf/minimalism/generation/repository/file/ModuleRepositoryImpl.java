@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.repository.file;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
 import com.windf.core.exception.UserException;
@@ -13,6 +14,7 @@ import com.windf.plugin.repository.file.BaseManageRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -49,11 +51,32 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
             // 删除文件
             boolean success = this.deleteFile(filePath);
 
+            // 维护模块列表
+            this.removeModuleFromList(id);
+
             // 如果文件不存在，抛出异常
             if (!success) {
                 throw new UserException("模块不存在");
             }
         }
+    }
+
+    /**
+     * 从模块列表中，删除指定id的模块，并且进行持久化
+     * @param id
+     */
+    private void removeModuleFromList(String id) {
+        Iterator<Module> iterator = moduleListPO.getModules().iterator();
+        while (iterator.hasNext()) {
+            Module module = iterator.next();
+            if (module.getId().equals(id)) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        // 模块列表持久化
+        this.saveModuleList();
     }
 
     @Override
@@ -142,6 +165,13 @@ public class ModuleRepositoryImpl extends BaseManageRepository<Module> implement
             modules.add(module);
         }
 
+        this.saveModuleList();
+    }
+
+    /**
+     * 存储模块列表
+     */
+    private void saveModuleList() {
         // 读取列表文件路径
         String filePath = this.getModuleListFile();
         // 保存文件
