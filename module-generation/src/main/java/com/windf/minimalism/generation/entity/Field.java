@@ -7,7 +7,11 @@ public class Field extends BaseModel {
     private Type type;
 
     public String getId() {
-        return this.entity.getId() + ID_POINT + this.code;
+        String id = super.getId();
+        if (id == null) {
+            id = this.entity.getId() + ID_POINT + this.code;
+        }
+        return id;
     }
 
     public String getCode() {

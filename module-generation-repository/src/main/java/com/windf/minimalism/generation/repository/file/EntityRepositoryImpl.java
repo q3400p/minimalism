@@ -26,12 +26,12 @@ public class EntityRepositoryImpl implements EntityRepository {
 
     @Override
     public void delete(List<String> ids) {
-
+        Modules.getInstance().deleteEntity(ids);
     }
 
     @Override
     public Entity detail(String id) {
-        return null;
+        return Modules.getInstance().getEntity(id);
     }
 
     @Override

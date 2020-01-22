@@ -21,7 +21,11 @@ public class Entity extends BaseModel implements Type {
     }
 
     public String getId() {
-        return this.getModule().getId() + ID_POINT + this.code;
+        String id = super.getId();
+        if (id == null) {
+            id = this.getModule().getId() + ID_POINT + this.code;
+        }
+        return id;
     }
 
     public String getCode() {

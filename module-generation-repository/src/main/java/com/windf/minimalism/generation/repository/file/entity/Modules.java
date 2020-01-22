@@ -5,6 +5,7 @@ import com.windf.core.util.BeanUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.entity.Parameter;
+import com.windf.minimalism.generation.exception.ModuleNotFountException;
 import com.windf.minimalism.generation.repository.file.config.ModuleConfig;
 import com.windf.plugin.repository.file.BaseJSONFileRepository;
 
@@ -69,7 +70,7 @@ public class Modules extends BaseJSONFileRepository {
 
             // 如果文件不存在，抛出异常
             if (!success) {
-                throw new UserException("模块不存在");
+                throw new ModuleNotFountException();
             }
         }
     }
@@ -113,10 +114,13 @@ public class Modules extends BaseJSONFileRepository {
         // 设置实体的module为空，不进行重复保存
         entity.setModule(null);
 
+        // 设置id
+        entity.setId(module.getId() + Entity.ID_POINT + entity.getCode());
+
         // 获取模块
         ModulePO modulePO = this.getModule(module.getId());
         if (modulePO == null) {
-            throw new UserException("模块找不到");
+            throw new ModuleNotFountException();
         }
 
         // 获取该模块的实体列表
@@ -148,41 +152,49 @@ public class Modules extends BaseJSONFileRepository {
         this.saveModule(modulePO);
     }
 
-    /**
-     * 删除实体
-     * @param moduleId
-     * @param ids
-     */
-    public void deleteEntity(String moduleId, List<String> ids) {
+    public Entity getEntity(String id) {
+        String moduleId = id.substring(0, id.lastIndexOf("."));
+
         ModulePO modulePO = this.getModule(moduleId);
-        if (modulePO == null) {
-            throw new UserException("模块不存在");
+        List<Entity> entities = modulePO.getEntities();
+        for (Entity entity : entities) {
+            if (entity.getId().equals(id)) {
+                return entity;
+            }
         }
 
-        // 遍历模块中的实体，进行删除
-        List<Entity> entities = modulePO.getEntities();
-        Iterator<Entity> iterator = entities.iterator();
-        while (iterator.hasNext()) {
-            Entity entity = iterator.next();
+        return null;
+    }
 
-            // 遍历ids，找到要删除的id和entity
-            Iterator<String> idIterator = ids.iterator();
-            while (idIterator.hasNext()) {
-                String deleteId = idIterator.next();
+    /**
+     * 删除实体
+     * @param ids
+     */
+    public void deleteEntity(List<String> ids) {
+        for (String id : ids) {
+            String moduleId = id.substring(0, id.lastIndexOf("."));
+
+            ModulePO modulePO = this.getModule(moduleId);
+            if (modulePO == null) {
+                throw new ModuleNotFountException();
+            }
+
+            // 遍历模块中的实体，进行删除
+            List<Entity> entities = modulePO.getEntities();
+            Iterator<Entity> iterator = entities.iterator();
+            while (iterator.hasNext()) {
+                Entity entity = iterator.next();
+
                 // 匹配要删除的entity和id
-                if (deleteId.equals(entity.getId())) {
+                if (id.equals(entity.getId())) {
                     // 删除要删除的entity
                     iterator.remove();
-                    // 要删除的id中去除
-                    idIterator.remove();
                     break;
                 }
             }
 
-            // 如果没有要移除的id，结束遍历
-            if (ids.size() == 0) {
-                break;
-            }
+            // 保存模块
+            this.saveModule(modulePO);
         }
     }
 

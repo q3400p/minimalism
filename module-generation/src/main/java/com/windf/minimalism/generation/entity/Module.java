@@ -9,7 +9,11 @@ public class Module extends BaseModel {
     private String description;
 
     public String getId() {
-        return this.namespace + ID_POINT + this.code;
+        String id = super.getId();
+        if (id == null) {
+            id = this.namespace + ID_POINT + this.code;
+        }
+        return id;
     }
 
     public String getNamespace() {
