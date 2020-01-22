@@ -38,6 +38,10 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
 
         T data = this.getManageService().detail(id);
 
+        if (data == null) {
+            return response().error(ResultData.CODE_NOT_FOUND, "模块找不到");
+        }
+
         return response().successData(data);
     }
 
