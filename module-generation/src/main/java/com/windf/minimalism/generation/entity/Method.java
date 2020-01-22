@@ -9,6 +9,10 @@ public class Method extends BaseModel {
     private Return methodReturn;
     private List<Parameter> parameters;
 
+    public String getId() {
+        return this.entity.getId() + ID_POINT + this.code;
+    }
+
     public String getCode() {
         return code;
     }

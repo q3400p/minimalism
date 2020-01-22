@@ -2,9 +2,11 @@ package com.windf.minimalism.generation.repository.file;
 
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
+import com.windf.core.util.BeanUtil;
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.repository.ModuleRepository;
+import com.windf.minimalism.generation.repository.file.entity.ModulePO;
 import com.windf.minimalism.generation.repository.file.entity.Modules;
 import com.windf.plugin.repository.file.BaseJSONFileManageRepository;
 import org.springframework.stereotype.Repository;
@@ -17,7 +19,16 @@ public class ModuleRepositoryImpl extends BaseJSONFileManageRepository<Module> i
 
     @Override
     public void create(Module module) {
-        Modules.getInstance().saveModule(module);
+        Modules modules = Modules.getInstance();
+
+        // 复制bean的属性
+        ModulePO modulePO = modules.getModule(module.getId());
+        if (modulePO == null) {
+            modulePO = new ModulePO();
+        }
+        BeanUtil.copyProperties(modulePO, module);
+
+        modules.saveModule(modulePO);
     }
 
     @Override

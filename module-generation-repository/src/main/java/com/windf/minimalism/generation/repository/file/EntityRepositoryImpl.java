@@ -5,6 +5,7 @@ import com.windf.core.entity.SearchData;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.repository.EntityRepository;
 import com.windf.minimalism.generation.repository.ModuleRepository;
+import com.windf.minimalism.generation.repository.file.entity.Modules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,17 +14,14 @@ import java.util.List;
 @Repository
 public class EntityRepositoryImpl implements EntityRepository {
 
-    @Autowired
-    private ModuleRepository moduleRepository;
-
     @Override
     public void create(Entity entity) {
-
+        Modules.getInstance().saveEntity(entity);
     }
 
     @Override
     public void update(Entity entity) {
-
+        this.create(entity);
     }
 
     @Override

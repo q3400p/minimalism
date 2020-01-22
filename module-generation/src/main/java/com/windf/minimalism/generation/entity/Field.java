@@ -6,6 +6,10 @@ public class Field extends BaseModel {
     private Entity entity;
     private Type type;
 
+    public String getId() {
+        return this.entity.getId() + ID_POINT + this.code;
+    }
+
     public String getCode() {
         return code;
     }

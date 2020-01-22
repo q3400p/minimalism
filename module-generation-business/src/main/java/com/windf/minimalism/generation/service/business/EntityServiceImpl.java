@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EntityServiceImpl extends BaseManageService<Entity> implements EntityService {
 
+    @Autowired
     private EntityRepository entityRepository;
 
     @Override

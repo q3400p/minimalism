@@ -20,6 +20,10 @@ public class Entity extends BaseModel implements Type {
         return this.name;
     }
 
+    public String getId() {
+        return this.getModule().getId() + ID_POINT + this.code;
+    }
+
     public String getCode() {
         return code;
     }

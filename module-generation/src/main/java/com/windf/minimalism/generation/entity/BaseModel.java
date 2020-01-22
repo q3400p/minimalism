@@ -7,6 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
+    /**
+     * id之间隔离的字符串
+     */
+    public static final String ID_POINT = ".";
+
     private Date createTime;
     private Date updateTime;
     private String description;

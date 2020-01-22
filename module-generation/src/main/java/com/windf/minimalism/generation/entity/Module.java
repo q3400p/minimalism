@@ -2,11 +2,15 @@ package com.windf.minimalism.generation.entity;
 
 public class Module extends BaseModel {
     private String namespace;
-    private String id;
+    private String code;
     private String version;
     private boolean isInterface;
     private String name;
     private String description;
+
+    public String getId() {
+        return this.namespace + ID_POINT + this.code;
+    }
 
     public String getNamespace() {
         return namespace;
@@ -16,12 +20,12 @@ public class Module extends BaseModel {
         this.namespace = namespace;
     }
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getVersion() {
