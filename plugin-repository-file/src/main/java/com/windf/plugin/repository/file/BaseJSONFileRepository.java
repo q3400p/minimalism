@@ -1,21 +1,19 @@
 package com.windf.plugin.repository.file;
 
-import com.windf.core.entity.BaseEntity;
-import com.windf.core.repository.ManageRepository;
 import com.windf.plugin.repository.file.config.RepositoryConfig;
 import com.windf.plugin.repository.file.util.FileManageUtil;
 import com.windf.plugin.repository.file.util.JSONRepositoryUtil;
 
 import java.io.File;
 
-public abstract class BaseManageRepository<T extends BaseEntity> implements ManageRepository<T> {
+public class BaseJSONFileRepository {
 
     /**
      * 保存json文件
      * @param relativePath  相对路径
      * @param object        要保存的对象
      */
-    protected void saveJsonFile(String relativePath, Object object) {
+    protected void write(String relativePath, Object object) {
         JSONRepositoryUtil.saveJsonFile(this.getHomePath() + "/" + relativePath, object);
     }
 
@@ -26,7 +24,7 @@ public abstract class BaseManageRepository<T extends BaseEntity> implements Mana
      * @param clazz
      * @return
      */
-    protected <T> T readObjectByJSONFile(String relativePath, Class<T> clazz) {
+    protected <T> T read(String relativePath, Class<T> clazz) {
         return JSONRepositoryUtil.readObjectByJSONFile(this.getHomePath() + "/" + relativePath, clazz);
     }
 
@@ -35,7 +33,7 @@ public abstract class BaseManageRepository<T extends BaseEntity> implements Mana
      * @param relativePath
      * @return
      */
-    protected boolean deleteFile(String relativePath) {
+    protected boolean delete(String relativePath) {
         String realFilePath = this.getHomePath() + "/" + relativePath;
 
         // 检测文件是否存在，如果不存在，删除失败，返回false
