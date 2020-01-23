@@ -1,10 +1,11 @@
 package com.windf.minimalism.generation.repository.file.entity;
 
-import com.windf.core.exception.UserException;
 import com.windf.core.util.BeanUtil;
 import com.windf.minimalism.generation.entity.Entity;
+import com.windf.minimalism.generation.entity.Field;
+import com.windf.minimalism.generation.entity.Method;
 import com.windf.minimalism.generation.entity.Module;
-import com.windf.minimalism.generation.entity.Parameter;
+import com.windf.minimalism.generation.exception.EntityNotFountException;
 import com.windf.minimalism.generation.exception.ModuleNotFountException;
 import com.windf.minimalism.generation.repository.file.config.ModuleConfig;
 import com.windf.plugin.repository.file.BaseJSONFileRepository;
@@ -153,7 +154,7 @@ public class Modules extends BaseJSONFileRepository {
     }
 
     public Entity getEntity(String id) {
-        String moduleId = id.substring(0, id.lastIndexOf("."));
+        String moduleId = this.getParentId(id);
 
         ModulePO modulePO = this.getModule(moduleId);
         List<Entity> entities = modulePO.getEntities();
@@ -172,7 +173,7 @@ public class Modules extends BaseJSONFileRepository {
      */
     public void deleteEntity(List<String> ids) {
         for (String id : ids) {
-            String moduleId = id.substring(0, id.lastIndexOf("."));
+            String moduleId = this.getParentId(id);
 
             ModulePO modulePO = this.getModule(moduleId);
             if (modulePO == null) {
@@ -197,6 +198,200 @@ public class Modules extends BaseJSONFileRepository {
             this.saveModule(modulePO);
         }
     }
+
+
+    /**
+     * 保存字段
+     * @param field
+     */
+    public void saveField(Field field) {
+        // 获取实体id
+        String entityId = field.getEntity().getId();
+
+        // 设置实体，不进行保存
+        field.setEntity(null);
+
+        // 设置fieldId
+        field.setId(entityId + Field.ID_POINT + field.getCode());
+
+        // 获取实体
+        Entity entity = this.getEntity(entityId);
+
+        // 获取字段，如果没有，创建
+        List<Field> fields = entity.getFields();
+        if (fields == null) {
+            fields = new ArrayList<>();
+            entity.setFields(fields);
+        }
+
+        // 去当前实体的字段中，寻找字段，进行修改
+        boolean hasField = false;
+        for (Field f : fields) {
+            if (f.getId().equals(field.getId())) {
+                BeanUtil.copyProperties(f, field);
+                hasField = true;
+                break;
+            }
+        }
+
+        // 如果没有找到字段，进行添加
+        if (!hasField) {
+            fields.add(field);
+        }
+
+        // 保存模块
+        this.saveModule(modulePOMap.get(this.getParentId(entityId)));
+    }
+
+    /**
+     * 获取字段
+     * @param id
+     * @return
+     */
+    public Field getField(String id) {
+        // 获取实体
+        String entityId = this.getParentId(id);
+        Entity entity = this.getEntity(entityId);
+
+        // 去当前实体的字段中，寻找字段，进行修改
+        List<Field> fields = entity.getFields();
+        for (Field f : fields) {
+            if (f.getId().equals(id)) {
+                return f;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 删除字段
+     * @param ids
+     */
+    public void deleteField(List<String> ids) {
+        for (String id : ids) {
+            String entityId = this.getParentId(id);
+
+            Entity entity = this.getEntity(entityId);
+            if (entity == null) {
+                throw new EntityNotFountException();
+            }
+
+            // 遍历模块中的实体，进行删除
+            List<Field> fields = entity.getFields();
+            Iterator<Field> iterator = fields.iterator();
+            while (iterator.hasNext()) {
+                Field field = iterator.next();
+
+                // 匹配要删除的entity和id
+                if (id.equals(field.getId())) {
+                    // 删除要删除的entity
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            // 保存模块
+            this.saveModule(modulePOMap.get(this.getParentId(entityId)));
+        }
+    }
+
+    /**
+     * 保存方法
+     * @param method
+     */
+    public void saveMethod(Method method) {
+        // 获取实体id
+        String entityId = method.getEntity().getId();
+
+        // 设置实体，不进行保存
+        method.setEntity(null);
+
+        // 设置methodId
+        method.setId(entityId + Field.ID_POINT + method.getCode());
+
+        // 获取实体
+        Entity entity = this.getEntity(entityId);
+
+        // 获取字段，如果没有，创建
+        List<Method> methods = entity.getMethods();
+        if (methods == null) {
+            methods = new ArrayList<>();
+            entity.setMethods(methods);
+        }
+
+        // 去当前实体的字段中，寻找字段，进行修改
+        boolean hasField = false;
+        for (Method m : methods) {
+            if (m.getId().equals(method.getId())) {
+                BeanUtil.copyProperties(m, method);
+                hasField = true;
+                break;
+            }
+        }
+
+        // 如果没有找到字段，进行添加
+        if (!hasField) {
+            methods.add(method);
+        }
+
+        // 保存模块
+        this.saveModule(modulePOMap.get(this.getParentId(entityId)));
+    }
+
+    /**
+     * 获取方法
+     * @param id
+     * @return
+     */
+    public Method getMethod(String id) {
+        // 获取实体
+        String entityId = this.getParentId(id);
+        Entity entity = this.getEntity(entityId);
+
+        // 去当前实体的方法中，寻找方法，进行修改
+        List<Method> methods = entity.getMethods();
+        for (Method m : methods) {
+            if (m.getId().equals(id)) {
+                return m;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 删除方法
+     * @param ids
+     */
+    public void deleteMethod(List<String> ids) {
+        for (String id : ids) {
+            String entityId = this.getParentId(id);
+
+            Entity entity = this.getEntity(entityId);
+            if (entity == null) {
+                throw new EntityNotFountException();
+            }
+
+            // 遍历模块中的实体，进行删除
+            List<Method> methods = entity.getMethods();
+            Iterator<Method> iterator = methods.iterator();
+            while (iterator.hasNext()) {
+                Method method = iterator.next();
+
+                // 匹配要删除的method和id
+                if (id.equals(method.getId())) {
+                    // 删除要删除的method
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            // 保存模块
+            this.saveModule(modulePOMap.get(this.getParentId(entityId)));
+        }
+    }
+
 
     /**
      * 读取文件列表
@@ -285,5 +480,14 @@ public class Modules extends BaseJSONFileRepository {
     protected String getModuleListFile() {
         return ModuleConfig.getInstance().getModulePath() + "/" +
                 ModuleConfig.getInstance().getModuleListFileName();
+    }
+
+    /**
+     * 根据获取父级id
+     * @param id
+     * @return
+     */
+    protected String getParentId(String id) {
+        return id.substring(0, id.lastIndexOf("."));
     }
 }
