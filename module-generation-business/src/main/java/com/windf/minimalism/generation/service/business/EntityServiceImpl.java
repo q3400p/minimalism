@@ -18,4 +18,14 @@ public class EntityServiceImpl extends BaseManageService<Entity> implements Enti
     public ManageRepository<Entity> getManageRepository() {
         return entityRepository;
     }
+
+    @Override
+    public void create(Entity entity) {
+        String moduleId = entity.getModule().getId();
+
+        // 设置id
+        entity.setId(moduleId + Entity.ID_POINT + entity.getCode());
+
+        super.create(entity);
+    }
 }

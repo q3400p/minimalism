@@ -115,9 +115,6 @@ public class Modules extends BaseJSONFileRepository {
         // 设置实体的module为空，不进行重复保存
         entity.setModule(null);
 
-        // 设置id
-        entity.setId(module.getId() + Entity.ID_POINT + entity.getCode());
-
         // 获取模块
         ModulePO modulePO = this.getModule(module.getId());
         if (modulePO == null) {
