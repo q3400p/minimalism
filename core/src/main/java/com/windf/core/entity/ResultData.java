@@ -1,13 +1,11 @@
 package com.windf.core.entity;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 返回值，用于接口返回的json格式
  */
-public class ResultData implements Serializable {
+public class ResultData<T> implements Serializable {
 
     /**
      * 正常的返回结果code
@@ -41,13 +39,13 @@ public class ResultData implements Serializable {
 
     private String code; // 0: 失败，1：成功
     private String message; //提示信息
-    private Object data;// 结果数据
+    private T data;// 结果数据
 
     public ResultData() {
 
     }
 
-    public ResultData(String code, String message, Object data) {
+    public ResultData(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -69,11 +67,11 @@ public class ResultData implements Serializable {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

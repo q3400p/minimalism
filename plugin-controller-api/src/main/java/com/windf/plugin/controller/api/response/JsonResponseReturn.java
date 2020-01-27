@@ -1,5 +1,6 @@
 package com.windf.plugin.controller.api.response;
 
+import com.windf.core.entity.BaseEntity;
 import com.windf.core.entity.ResultData;
 import com.windf.core.util.StringUtil;
 
@@ -21,7 +22,7 @@ public class JsonResponseReturn implements ResponseReturn {
     }
 
     @Override
-    public ResultData successData(Object data) {
+    public <T> ResultData<T> successData(T data) {
         return returnData(ResultData.CODE_SUCCESS, ResultData.MESSAGE_SUCCESS, data);
     }
 
@@ -36,7 +37,7 @@ public class JsonResponseReturn implements ResponseReturn {
     }
 
     @Override
-    public ResultData returnData(String code, String message, Object data) {
+    public <T> ResultData<T> returnData(String code, String message, T data) {
         ResultData resultData = new ResultData();
 
         // 设置返回的状态
@@ -56,12 +57,12 @@ public class JsonResponseReturn implements ResponseReturn {
     }
 
     @Override
-    public ResultData redirect(String url) {
+    public ResultData<String> redirect(String url) {
         return returnData(ResultData.CODE_REDIRECT ,null, url);
     }
 
     @Override
-    public ResultData redirectData(String url, Object data) {
+    public ResultData<String> redirectData(String url, Object data) {
         return successData(url);
     }
 }
