@@ -28,6 +28,8 @@
         <module>./plugin-controller-api</module>
         <module>./plugin-repository-file</module>
 
+        <module>./test-controller-api</module>
+
         <module>./module-generation</module>
         <module>./module-generation-business</module>
         <module>./module-generation-controller</module>

@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.repository.file.entity;
 
+import com.windf.core.exception.CodeException;
 import com.windf.core.util.BeanUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
@@ -155,6 +156,13 @@ public class Modules extends BaseJSONFileRepository {
 
         ModulePO modulePO = this.getModule(moduleId);
         List<Entity> entities = modulePO.getEntities();
+
+        // 如果没有实体，设置一个空的实体集合
+        if (entities == null) {
+            entities = new ArrayList<>();
+            modulePO.setEntities(entities);
+        }
+
         for (Entity entity : entities) {
             if (entity.getId().equals(id)) {
                 return entity;
@@ -485,6 +493,10 @@ public class Modules extends BaseJSONFileRepository {
      * @return
      */
     protected String getParentId(String id) {
-        return id.substring(0, id.lastIndexOf("."));
+        int lastPoint = id.lastIndexOf(".");
+        if (lastPoint == -1) {
+            throw new CodeException("找不到" + id + "对应的父级id");
+        }
+        return id.substring(0, lastPoint);
     }
 }

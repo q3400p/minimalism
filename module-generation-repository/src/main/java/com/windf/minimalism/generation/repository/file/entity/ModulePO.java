@@ -2,6 +2,7 @@ package com.windf.minimalism.generation.repository.file.entity;
 
 import com.windf.minimalism.generation.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,23 +12,23 @@ public class ModulePO extends Module {
     /**
      * 模块的所有实体
      */
-    private List<Entity> entities;
+    private List<Entity> entities = new ArrayList<>();
     /**
      * 模块的所有配置
      */
-    private List<Configuration> configurations;
+    private List<Configuration> configurations = new ArrayList<>();
     /**
      * 模块的所有常量
      */
-    private List<Constant> constants;
+    private List<Constant> constants = new ArrayList<>();
     /**
      * 发出的事件列表
      */
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
     /**
      * 模块的所属依赖
      */
-    private List<Depend> depends;
+    private List<Depend> depends = new ArrayList<>();
 
     public List<Entity> getEntities() {
         return entities;
