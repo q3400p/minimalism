@@ -317,6 +317,9 @@ public class Modules extends BaseJSONFileRepository {
 
         // 获取实体
         Entity entity = this.getEntity(entityId);
+        if (entity == null) {
+            throw new EntityNotFountException();
+        }
 
         // 获取字段，如果没有，创建
         List<Method> methods = entity.getMethods();
