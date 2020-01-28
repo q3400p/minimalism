@@ -6,14 +6,6 @@ public class Field extends BaseModel {
     private Entity entity;
     private Type type;
 
-    public String getId() {
-        String id = super.getId();
-        if (id == null) {
-            id = this.entity.getId() + ID_POINT + this.code;
-        }
-        return id;
-    }
-
     public String getCode() {
         return code;
     }
