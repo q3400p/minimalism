@@ -1,24 +1,19 @@
 package com.windf;
 
 import com.windf.core.entity.ResultData;
-import com.windf.core.util.CollectionUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.plugin.controller.api.BaseManageControllerTest;
-import com.windf.plugin.controller.api.SpringUtil;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityManageControllerTest extends BaseManageControllerTest<Entity> {
 
-    @BeforeClass
-    public static void readyModule() {
+    @Test
+    public void t000Ready() {
         // 创建模块
         Module module = new Module();
         module.setNamespace("com.windf");
@@ -27,14 +22,12 @@ public class EntityManageControllerTest extends BaseManageControllerTest<Entity>
         module.setDescription("测试用的模块，一会就删除了");
         module.setStatus("1");
 
-        TestRestTemplate restTemplate = SpringUtil.getBean(TestRestTemplate.class);
         restTemplate.postForEntity("/module/", module, ResultData.class);
     }
 
-    @AfterClass
-    public static void destroy() {
+    @Test
+    public void t999Destroy() {
         // 删除模块
-        TestRestTemplate restTemplate = SpringUtil.getBean(TestRestTemplate.class);
         restTemplate.delete("/module/{id}", "com.windf.test");
     }
 
