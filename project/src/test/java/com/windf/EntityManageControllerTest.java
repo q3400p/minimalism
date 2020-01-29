@@ -4,32 +4,12 @@ import com.windf.core.entity.ResultData;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.plugin.controller.api.BaseManageControllerTest;
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntityManageControllerTest extends BaseManageControllerTest<Entity> {
-
-    @Test
-    public void t000Ready() {
-        // 创建模块
-        Module module = new Module();
-        module.setNamespace("com.windf");
-        module.setCode("test");
-        module.setName("测试模块");
-        module.setDescription("测试用的模块，一会就删除了");
-        module.setStatus("1");
-
-        restTemplate.postForEntity("/module/", module, ResultData.class);
-    }
-
-    @Test
-    public void t999Destroy() {
-        // 删除模块
-        restTemplate.delete("/module/{id}", "com.windf.test");
-    }
 
     @Test
     public void t401Search() {
@@ -42,7 +22,7 @@ public class EntityManageControllerTest extends BaseManageControllerTest<Entity>
     }
 
     @Override
-    protected List<Entity> getReadyData() {
+    protected List<Entity> getCreateData() {
         List<Entity> entities = new ArrayList<>();
 
         Entity data = new Entity();
@@ -94,5 +74,24 @@ public class EntityManageControllerTest extends BaseManageControllerTest<Entity>
     @Override
     protected Class<Entity> getDataType() {
         return Entity.class;
+    }
+
+    @Override
+    protected void ready() {
+        // 创建模块
+        Module module = new Module();
+        module.setNamespace("com.windf");
+        module.setCode("test");
+        module.setName("测试模块");
+        module.setDescription("测试用的模块，一会就删除了");
+        module.setStatus("1");
+
+        restTemplate.postForEntity("/module/", module, ResultData.class);
+    }
+
+    @Override
+    protected void destroy() {
+        // 删除模块
+        restTemplate.delete("/module/{id}", "com.windf.test");
     }
 }

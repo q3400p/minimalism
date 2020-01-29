@@ -260,6 +260,11 @@ public class Modules extends BaseJSONFileRepository {
 
         // 去当前实体的字段中，寻找字段，进行修改
         List<Field> fields = entity.getFields();
+        if (fields == null) {
+            fields = new ArrayList<>();
+            entity.setFields(fields);
+        }
+
         for (Field f : fields) {
             if (f.getId().equals(id)) {
                 return f;

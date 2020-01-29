@@ -15,7 +15,7 @@ public class ModuleManageControllerTest extends BaseManageControllerTest<Module>
     }
 
     @Override
-    protected List<Module> getReadyData() {
+    protected List<Module> getCreateData() {
         List<Module> modules = new ArrayList<>();
 
         Module data = new Module();
@@ -58,5 +58,15 @@ public class ModuleManageControllerTest extends BaseManageControllerTest<Module>
     @Override
     protected Class<Module> getDataType() {
         return Module.class;
+    }
+
+    @Override
+    protected void ready() {
+
+    }
+
+    @Override
+    protected void destroy() {
+
     }
 }
