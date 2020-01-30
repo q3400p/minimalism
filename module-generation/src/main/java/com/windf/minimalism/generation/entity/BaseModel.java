@@ -12,6 +12,7 @@ public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
      */
     public static final String ID_POINT = ".";
 
+    // TODO 和baseEntity中的冲突了
     private Date createTime;
     private Date updateTime;
     private String description;

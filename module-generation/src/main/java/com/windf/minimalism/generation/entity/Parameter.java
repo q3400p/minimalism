@@ -1,8 +1,19 @@
 package com.windf.minimalism.generation.entity;
 
 public class Parameter extends BaseModel {
+    /**
+     * 方法参数和方法参数类型之间隔离的字符串
+     */
+    public static final String ID_POINT = "#param_";
+
+    /**
+     * 参数数字之间的分隔
+     */
+    public static final String PARAM_NUMBER_POINT = "#";
+
     private Type type;
-    private String name;
+    private String typeCode;    // 用于存储类型code的
+    private String code;
     private String verify;
 
     public Type getType() {
@@ -13,12 +24,20 @@ public class Parameter extends BaseModel {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getTypeCode() {
+        return typeCode;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getVerify() {

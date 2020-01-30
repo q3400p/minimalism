@@ -12,7 +12,7 @@ public class Entity extends BaseModel implements Type {
 
     @Override
     public String getTypeCode() {
-        return this.code;
+        return this.id;
     }
 
     @Override

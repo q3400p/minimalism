@@ -1,5 +1,7 @@
 package com.windf.minimalism.generation.entity.type;
 
+import com.windf.minimalism.generation.entity.Type;
+
 public enum LangType {
     SHORT("short", "短整型"),
     INTEGER("integer", "整型"),
@@ -19,10 +21,26 @@ public enum LangType {
 
     private String code;
     private String name;
+    private Type type;
 
     LangType(String code, String name) {
         this.code = code;
         this.name = name;
+    }
+
+    public Type getType() {
+        if (type == null) {
+            LangType langType = this;
+            this.type = new BaseType() {
+
+                @Override
+                public LangType getLangType() {
+                    return langType;
+                }
+            };
+        }
+
+        return type;
     }
 
     public String getCode() {

@@ -1,14 +1,9 @@
 package com.windf;
 
 import com.windf.core.entity.ResultData;
-import com.windf.minimalism.generation.entity.Entity;
-import com.windf.minimalism.generation.entity.Method;
-import com.windf.minimalism.generation.entity.Module;
-import com.windf.minimalism.generation.service.ModuleService;
+import com.windf.minimalism.generation.entity.*;
 import com.windf.plugin.controller.api.BaseManageControllerTest;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +33,23 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         Entity entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
+        // 设置参数
+        List<Parameter> parameters = new ArrayList<>();
+        Parameter parameter = new Parameter();
+        parameter.setTypeCode("string");
+        parameter.setCode("id");
+        parameter.setVerify("0-20");
+        parameters.add(parameter);
+        parameter = new Parameter();
+        parameter.setTypeCode("com.windf.test.test");
+        parameter.setCode("test");
+        parameter.setVerify("not null");
+        parameters.add(parameter);
+        data.setParameters(parameters);
+        // 设置返回值
+        Return methodReturn = new Return();
+        methodReturn.setTypeCode("String");
+        data.setMethodReturn(methodReturn);
         methods.add(data);
 
         data = new Method();
@@ -49,6 +61,11 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
+        // 没有参数
+        // 设置返回值
+        methodReturn = new Return();
+        methodReturn.setTypeCode("String");
+        data.setMethodReturn(methodReturn);
         methods.add(data);
 
         data = new Method();
@@ -60,6 +77,15 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
+        // 设置参数
+        parameters = new ArrayList<>();
+        parameter = new Parameter();
+        parameter.setTypeCode("string");
+        parameter.setCode("id");
+        parameter.setVerify("0-20");
+        parameters.add(parameter);
+        data.setParameters(parameters);
+        // 没返回值
         methods.add(data);
 
         return methods;
@@ -83,7 +109,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
 
     @Override
     protected void ready() {
-// TODO 需要重构，这些代码会有重复，考虑提取到service中
+        // TODO 需要重构，这些代码会有重复，考虑提取到service中
         // 创建模块
         Module module = new Module();
         module.setId("com.windf.test");

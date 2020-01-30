@@ -2,10 +2,7 @@ package com.windf.minimalism.generation.repository.file.entity;
 
 import com.windf.core.exception.CodeException;
 import com.windf.core.util.BeanUtil;
-import com.windf.minimalism.generation.entity.Entity;
-import com.windf.minimalism.generation.entity.Field;
-import com.windf.minimalism.generation.entity.Method;
-import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.entity.*;
 import com.windf.minimalism.generation.exception.EntityNotFountException;
 import com.windf.minimalism.generation.exception.ModuleNotFountException;
 import com.windf.minimalism.generation.repository.file.config.ModuleConfig;
@@ -155,6 +152,10 @@ public class Modules extends BaseJSONFileRepository {
         String moduleId = this.getParentId(id);
 
         ModulePO modulePO = this.getModule(moduleId);
+        if (modulePO == null) {
+            throw new ModuleNotFountException();
+        }
+
         List<Entity> entities = modulePO.getEntities();
 
         // 如果没有实体，设置一个空的实体集合
@@ -215,6 +216,8 @@ public class Modules extends BaseJSONFileRepository {
 
         // 设置实体，不进行保存
         field.setEntity(null);
+        // 设置type不保存
+        field.setType(null);
 
         // 设置fieldId
         field.setId(entityId + Field.ID_POINT + field.getCode());
@@ -257,6 +260,9 @@ public class Modules extends BaseJSONFileRepository {
         // 获取实体
         String entityId = this.getParentId(id);
         Entity entity = this.getEntity(entityId);
+        if (entity == null) {
+            throw new EntityNotFountException();
+        }
 
         // 去当前实体的字段中，寻找字段，进行修改
         List<Field> fields = entity.getFields();
@@ -326,14 +332,14 @@ public class Modules extends BaseJSONFileRepository {
             throw new EntityNotFountException();
         }
 
-        // 获取字段，如果没有，创建
+        // 获取方法，如果没有，创建
         List<Method> methods = entity.getMethods();
         if (methods == null) {
             methods = new ArrayList<>();
             entity.setMethods(methods);
         }
 
-        // 去当前实体的字段中，寻找字段，进行修改
+        // 去当前实体的方法中，寻找方法，进行修改
         boolean hasField = false;
         for (Method m : methods) {
             if (m.getId().equals(method.getId())) {
@@ -506,5 +512,22 @@ public class Modules extends BaseJSONFileRepository {
             throw new CodeException("找不到" + id + "对应的父级id");
         }
         return id.substring(0, lastPoint);
+    }
+
+    /**
+     * 获取所有实体
+     * @return
+     */
+    public List<Type> listAllEntity() {
+        List<Type> entities = new ArrayList<>();
+
+        for (Module module : this.listAllModules()) {
+            ModulePO modulePO = this.getModule(module.getId());
+            for (Entity entity : modulePO.getEntities()) {
+                entities.add(entity);
+            }
+        }
+
+        return entities;
     }
 }
