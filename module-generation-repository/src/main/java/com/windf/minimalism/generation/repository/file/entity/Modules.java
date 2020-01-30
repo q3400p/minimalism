@@ -10,6 +10,7 @@ import com.windf.plugin.repository.file.BaseJSONFileRepository;
 
 import java.util.*;
 
+// TODO 存储的数据应该用专门的PO
 public class Modules extends BaseJSONFileRepository {
     private static Modules modules = new Modules();
 

@@ -8,9 +8,11 @@ import java.util.List;
 public interface TypeService {
     /**
      * 查询所有类型
+     * 根据关键字搜索
+     * @param key
      * @return
      */
-    List<Type> listAll();
+    List<Type> listAll(String key);
 
     /**
      * 单个类型的详情

@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.service.business;
 
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.entity.type.LangType;
@@ -16,11 +17,37 @@ public class TypeServiceImpl implements TypeService {
     @Autowired
     private EntityService entityService;
 
+    /**
+     * 保存所有的类型和map映射关系
+     */
     private Map<String, Type> typeMap;
 
     @Override
-    public List<Type> listAll() {
-        return new ArrayList<>(typeMap.values());
+    public List<Type> listAll(String key) {
+        // 获取所有类型
+        List<Type> types = new ArrayList<>(this.listAllBaseType().values());
+
+        // 如果没有搜索关键字，直接返回
+        if (StringUtil.isEmpty(key)) {
+            return types;
+        }
+
+        // 根据关键字进行筛选
+        List<Type> result = new ArrayList<>();
+        for (Type type : types) {
+            // code筛选
+            if (type.getTypeCode().indexOf(key) > -1) {
+                result.add(type);
+                break;
+            }
+
+            // name筛选
+            if (type.getTypeName().indexOf(key) > -1) {
+                result.add(type);
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
