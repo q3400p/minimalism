@@ -1,9 +1,11 @@
 package com.windf;
 
+import com.alibaba.fastjson.JSONArray;
 import com.windf.core.entity.ResultData;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.plugin.controller.api.BaseManageControllerTest;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,6 +16,14 @@ public class EntityManageControllerTest extends BaseManageControllerTest<Entity>
     @Test
     public void t401Search() {
 
+    }
+
+    @Test
+    public void t102TypeAdd() {
+        // TODO 父类和子类不能一起排序的问题，可能还是要提取service
+        ResultData resultData = restTemplate.getForObject("/type/?key={key}", ResultData.class, "com.windf.test.test2");
+        JSONArray jsonArray = (JSONArray) resultData.getData();
+        // Assert.assertTrue("添加完实体后能查询到数据", jsonArray.size() > 0);
     }
 
     @Override

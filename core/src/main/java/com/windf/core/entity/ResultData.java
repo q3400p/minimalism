@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * 返回值，用于接口返回的json格式
  */
+// TODO 要删除泛型
 public class ResultData<T> implements Serializable {
 
     /**

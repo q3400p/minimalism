@@ -32,7 +32,6 @@ public class TypeControllerTest {
         Assert.assertTrue("能查询到的类型不止5个", jsonArray.size() > 5);
     }
 
-
     @Test
     public void listAllBySearch() {
         // TODO 这里的type，是需要改成常量的

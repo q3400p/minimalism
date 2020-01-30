@@ -46,7 +46,7 @@ public abstract class BaseManageControllerTest<T extends BaseEntity> {
             Assert.assertEquals(ResultData.CODE_SUCCESS, resultData.getCode());
 
             T testData = this.getDataById(data.getId());
-            Assert.assertNotNull(testData);
+            Assert.assertNotNull(testData); // TODO 设置断言的消息
             Assert.assertEquals(testData.getId(), data.getId());
         }
     }
