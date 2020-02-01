@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Entity extends BaseModel implements Type {
@@ -7,8 +8,8 @@ public class Entity extends BaseModel implements Type {
     private String name;
     private String layout;
     private Module module;
-    private List<Field> fields;
-    private List<Method> methods;
+    private List<Field> fields = new ArrayList<>();
+    private List<Method> methods = new ArrayList<>();
 
     @Override
     public String getTypeCode() {

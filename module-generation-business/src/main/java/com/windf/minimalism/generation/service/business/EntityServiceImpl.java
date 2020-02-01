@@ -43,4 +43,9 @@ public class EntityServiceImpl extends BaseManageService<Entity> implements Enti
     public List<Type> listAllEntityType() {
         return entityRepository.listAllEntityType();
     }
+
+    @Override
+    public List<Entity> getByModuleId(String moduleId) {
+        return this.entityRepository.getByModuleId(moduleId);
+    }
 }

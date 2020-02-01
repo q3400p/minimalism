@@ -27,5 +27,11 @@
             <artifactId>plugin-service-business</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.29</version>
+        </dependency>
     </dependencies>
 </project>

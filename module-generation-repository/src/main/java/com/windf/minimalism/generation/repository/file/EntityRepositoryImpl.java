@@ -42,6 +42,11 @@ public class EntityRepositoryImpl implements EntityRepository {
 
     @Override
     public List<Type> listAllEntityType() {
-            return Modules.getInstance().listAllEntity();
+        return Modules.getInstance().listAllEntity();
+    }
+
+    @Override
+    public List<Entity> getByModuleId(String moduleId) {
+        return Modules.getInstance().getModule(moduleId).getEntities();
     }
 }

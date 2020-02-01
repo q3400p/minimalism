@@ -12,4 +12,11 @@ public interface EntityRepository extends ManageRepository<Entity> {
      * @return
      */
     List<Type> listAllEntityType();
+
+    /**
+     * 根据模块id获取模块下的所有实体
+     * @param moduleId
+     * @return
+     */
+    List<Entity> getByModuleId(String moduleId);
 }
