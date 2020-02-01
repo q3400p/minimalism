@@ -1,6 +1,9 @@
 package com.windf.minimalism.generation.service.business;
 
+import com.windf.core.Constant;
 import com.windf.core.repository.ManageRepository;
+import com.windf.core.util.CollectionUtil;
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.repository.ModuleRepository;
@@ -8,6 +11,7 @@ import com.windf.minimalism.generation.service.EntityService;
 import com.windf.minimalism.generation.service.ModuleService;
 import com.windf.minimalism.generation.service.business.config.CodeTemplate;
 import com.windf.plugin.service.business.BaseManageService;
+import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,6 +26,7 @@ import java.util.Map;
 
 @Service
 public class ModuleServiceImpl extends BaseManageService<Module> implements ModuleService {
+    private static final String DEFAULT_TEMPLATE_NAME = "default";
 
     @Autowired
     private ModuleRepository moduleRepository;
@@ -57,10 +62,15 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
      * @param targetPathStr
      * @param model  具体的数据 TODO 不应该传递，应该设置对象传输
      */
-    private void analyzePath(String templatePathStr, String targetPathStr, Object model) {
+    private void analyzePath(String templatePathStr, String targetPathStr, Map<String, Object> model) {
+        // 如果是描述文件，直接返回
+        if (templatePathStr.endsWith(codeTemplate.getDefineFileExt())) {
+            return;
+        }
+
         File templatePath = new File(templatePathStr);
         if (!templatePath.isDirectory()) {  // 如果不是文件夹，直接解析文件
-            analyzeFile(templatePath, new File(targetPathStr), model);
+            analyzeFile(templatePath, targetPathStr, model);
             return;
         }
 
@@ -76,27 +86,133 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
     /**
      * 解析模板，将模板文件解析为目标文件
      * @param templateFile
-     * @param targetFile
+     * @param targetFileStr 目标文件路径，中间可能会有变量
      */
-    private void analyzeFile(File templateFile, File targetFile, Object model) {
-        if (!targetFile.exists()) {
+    private void analyzeFile(File templateFile, String targetFileStr, Map<String, Object> model) {
+        // 如果有描述文件，按照描述文件的返回进行循环实体
+        File defineFile = new File(templateFile.getPath() + codeTemplate.getDefineFileExt());
+
+        if (defineFile.exists()) {
+            String defineString = analyzeFileToString(defineFile, model);
+            String[] entitiesIds = defineString.trim().split("\n");
+            // 循环所有实体
+            for (String entityId : entitiesIds) {
+                Map<String, Object> entityMap = new HashMap<>();
+                entityMap.putAll(model);
+                // TODO 需要设置常量到配置文件中
+                entityMap.put("entity", entityService.detail(entityId.trim()));
+                analyzeFileAndCopy(templateFile, targetFileStr, entityMap);
+            }
+        } else {
+            // 如果没有描述文件，直接解析
+            analyzeFileAndCopy(templateFile, targetFileStr, model);
+        }
+
+    }
+
+    /**
+     * 解析文件并且复制到目标文件
+     * @param templateFile
+     * @param targetFileStr
+     * @param model
+     */
+    private void analyzeFileAndCopy(File templateFile, String targetFileStr, Map<String, Object> model) {
+        // 解析目标路径
+        targetFileStr = this.analyzePathValue(targetFileStr, model);
+        File targetFile = new File(targetFileStr);
+
+        // 创建目标文件的目录
+        if (!targetFile.getParentFile().exists()) {
             // 如果文件不存在，先创建
             targetFile.getParentFile().mkdirs();
         }
 
         Configuration cfg = this.getConfig(templateFile.getParentFile().getPath());
 
+        Writer out = null;
         try {
             Template temp = cfg.getTemplate(templateFile.getName());
 
-            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetFile)));
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetFile)));
             temp.process(model, out);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 解析文件内容到string
+     * @param templateFile
+     * @param model
+     */
+    private String analyzeFileToString(File templateFile, Map<String, Object> model) {
+        Configuration cfg = this.getConfig(templateFile.getParentFile().getPath());
+
+        // 写入到字符中
+        StringWriter writer = new StringWriter();
+        try {
+            Template temp = cfg.getTemplate(templateFile.getName());
+            temp.process(model, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
+        return writer.toString();
+    }
+
+
+    /**
+     * 解析路径中的变量，转换为真实的targetPath
+     * @param targetPath
+     * @param model
+     * @return
+     */
+    private String analyzePathValue(String targetPath, Object model) {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
+        StringTemplateLoader templateLoader = new StringTemplateLoader();
+        templateLoader.putTemplate(DEFAULT_TEMPLATE_NAME, targetPath);
+        cfg.setTemplateLoader(templateLoader);
+        cfg.setDefaultEncoding(Constant.DEFAULT_ENCODING);
+
+        StringWriter writer = new StringWriter();
+        try {
+            Template template = cfg.getTemplate(DEFAULT_TEMPLATE_NAME);
+            template.process(model, writer);
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return writer.toString();
     }
 
     /**
