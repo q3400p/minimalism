@@ -16,4 +16,10 @@ public interface Type extends Entitiable {
      * @return
      */
     String getTypeName();
+
+    /**
+     * 是否是实体
+     * @return
+     */
+    boolean isEntity();
 }

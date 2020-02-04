@@ -23,4 +23,9 @@ public abstract class BaseType implements Type {
     public String getTypeName() {
         return getLangType().getName();
     }
+
+    @Override
+    public boolean isEntity() {
+        return false;
+    }
 }

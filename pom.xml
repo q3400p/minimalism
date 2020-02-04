@@ -37,6 +37,8 @@
         <!--<module>./module-generation-repository-mysql</module>-->
         <!--<module>./client-generation</module>-->
 
+        <module>./module-generation-java</module>
+
         <module>./project</module>
 
     </modules>

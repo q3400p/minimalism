@@ -3,21 +3,21 @@ package com.windf.minimalism.generation.entity.type;
 import com.windf.minimalism.generation.entity.Type;
 
 public enum LangType {
-    SHORT("short", "短整型"),
-    INTEGER("integer", "整型"),
-    FLOAT("float", "浮点型"),
-    DOUBLE("double", "双精度"),
-    LONG("long", "长整形"),
-    BOOLEAN("boolean", "布尔类型"),
-    CHARACTER("char", "字符"),
-    BYTE("byte", "字节"),
+    SHORT("Short", "短整型"),
+    INTEGER("Integer", "整型"),
+    FLOAT("Float", "浮点型"),
+    DOUBLE("Double", "双精度"),
+    LONG("Long", "长整形"),
+    BOOLEAN("Boolean", "布尔类型"),
+    CHARACTER("Char", "字符"),
+    BYTE("Byte", "字节"),
 
     VOID("void", "空"),
 
-    STRING("string", "字符串"),
-    DECIMAL("decimal", "高精度"),
-    LIST("list", "有序列表"),
-    SET("set", "无顺列表");
+    STRING("String", "字符串"),
+    DECIMAL("Decimal", "高精度"),
+    LIST("List", "有序列表"),
+    SET("Set", "无顺列表");
 
     private String code;
     private String name;

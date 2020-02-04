@@ -9,34 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>module-generation-business</artifactId>
+    <artifactId>module-generation-java</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>com.windf</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.windf.minimalism</groupId>
             <artifactId>module-generation</artifactId>
             <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.windf.minimalism</groupId>
-            <artifactId>module-generation-javamin</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.windf</groupId>
-            <artifactId>plugin-service-business</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.29</version>
         </dependency>
     </dependencies>
 </project>

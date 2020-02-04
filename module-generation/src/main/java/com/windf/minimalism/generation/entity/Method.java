@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Method extends BaseModel {
@@ -7,7 +8,7 @@ public class Method extends BaseModel {
     private String name;
     private Entity entity;
     private Return methodReturn;
-    private List<Parameter> parameters;
+    private List<Parameter> parameters = new ArrayList<>();
 
     public String getCode() {
         return code;

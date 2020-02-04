@@ -2,14 +2,13 @@ package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.Constant;
 import com.windf.core.repository.ManageRepository;
-import com.windf.core.util.CollectionUtil;
-import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.repository.ModuleRepository;
 import com.windf.minimalism.generation.service.EntityService;
 import com.windf.minimalism.generation.service.ModuleService;
 import com.windf.minimalism.generation.service.business.config.CodeTemplate;
+import com.windf.minimalism.generation.template.DataProcess;
 import com.windf.plugin.service.business.BaseManageService;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
@@ -45,8 +44,11 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
         Map<String, Object> data = new HashMap<>();
         Module module = this.getManageRepository().detail(moduleId);
         List<Entity> entities = entityService.getByModuleId(moduleId);
+        // TODO 添加深度复制，防止污染元数据
+        // TODO 添加属性覆盖方法，使用每个模块自己的属性（属性可以继承原始属性）
         data.put("module", module);
         data.put("entities", entities);
+
 
         // 获取目标文件和模板文件
         String templatePath = codeTemplate.getTemplatePath();
@@ -97,10 +99,11 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             String[] entitiesIds = defineString.trim().split("\n");
             // 循环所有实体
             for (String entityId : entitiesIds) {
+                // TODO 需要设置常量到配置文件中
                 Map<String, Object> entityMap = new HashMap<>();
                 entityMap.putAll(model);
-                // TODO 需要设置常量到配置文件中
-                entityMap.put("entity", entityService.detail(entityId.trim()));
+                Entity entity = entityService.detail(entityId.trim());
+                entityMap.put("entity", new DataProcess().processEntity(entity));
                 analyzeFileAndCopy(templateFile, targetFileStr, entityMap);
             }
         } else {
