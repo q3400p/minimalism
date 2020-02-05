@@ -79,7 +79,7 @@ public class TypeServiceImpl implements TypeService {
         // 实体类型
         List<Type> entityTypes = entityService.listAllEntityType();
         for (Type type : entityTypes) {
-            typeMap.put(type.getTypeCode(), type);
+            typeMap.put(type.getId(), type);
         }
 
         return typeMap;

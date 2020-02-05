@@ -11,7 +11,7 @@ public abstract class BaseType implements Type {
 
     @Override
     public String getId() {
-        return getTypeCode();
+        return getLangType().getId();
     }
 
     @Override
@@ -22,10 +22,5 @@ public abstract class BaseType implements Type {
     @Override
     public String getTypeName() {
         return getLangType().getName();
-    }
-
-    @Override
-    public boolean isEntity() {
-        return false;
     }
 }

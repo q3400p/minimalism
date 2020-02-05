@@ -4,21 +4,25 @@ import com.windf.core.util.BeanUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.service.DataModelHandler;
 import com.windf.minimalism.generation.template.entity.JavaMinEntity;
 import com.windf.minimalism.generation.template.entity.JavaMinField;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataProcess {
+public class JavaDataModelHandler implements DataModelHandler {
 
-    public void processModule(Module module) {
+    @Override
+    public Module processModule(Module module) {
+        return module;
     }
 
     /**
      * 处理实体
      * @param entity
      */
+    @Override
     public Entity processEntity(Entity entity) {
         JavaMinEntity javaMinEntity = new JavaMinEntity();
         BeanUtil.copyProperties(javaMinEntity, entity);

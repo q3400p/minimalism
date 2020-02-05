@@ -46,5 +46,4 @@ public class Field extends BaseModel {
     public void setType(Type type) {
         this.type = type;
     }
-
 }

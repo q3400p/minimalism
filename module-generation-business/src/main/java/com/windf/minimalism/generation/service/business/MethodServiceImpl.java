@@ -2,9 +2,11 @@ package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.repository.ManageRepository;
 import com.windf.core.util.CollectionUtil;
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.*;
 import com.windf.minimalism.generation.repository.MethodRepository;
 import com.windf.minimalism.generation.service.MethodService;
+import com.windf.minimalism.generation.service.TypeService;
 import com.windf.plugin.service.business.BaseManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class MethodServiceImpl extends BaseManageService<Method> implements Meth
 
     @Autowired
     private MethodRepository methodRepository;
+
+    @Autowired
+    private TypeService typeService;
 
     @Override
     public ManageRepository<Method> getManageRepository() {
@@ -45,5 +50,30 @@ public class MethodServiceImpl extends BaseManageService<Method> implements Meth
         }
 
         super.create(method);
+    }
+
+    @Override
+    public Method detail(String id) {
+        Method method = super.detail(id);
+
+        // 补全type TODO 总是这样设置不好吧
+        if (method != null) {
+            // 设置返回值的id
+            Return methodReturn = method.getMethodReturn();
+            if (methodReturn != null) {
+                methodReturn.setType(this.typeService.detail(methodReturn.getTypeCode()));
+            }
+
+            // 设置参数id
+            List<Parameter> parameterList = method.getParameters();
+            if (CollectionUtil.isNotEmpty(parameterList)) {
+                for (int i = 0; i < parameterList.size(); i++) {
+                    Parameter parameter = parameterList.get(i);
+                    parameter.setType(this.typeService.detail(parameter.getTypeCode()));
+                }
+            }
+        }
+
+        return method;
     }
 }

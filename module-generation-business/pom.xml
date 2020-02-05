@@ -23,11 +23,6 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.windf.minimalism</groupId>
-            <artifactId>module-generation-javamin</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.windf</groupId>
             <artifactId>plugin-service-business</artifactId>
             <version>1.0.0</version>

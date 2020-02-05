@@ -1,6 +1,7 @@
 package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.repository.ManageRepository;
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Type;
@@ -37,5 +38,19 @@ public class FieldServiceImpl extends BaseManageService<Field> implements FieldS
         field.setType(type);
 
         super.create(field);
+    }
+
+    @Override
+    public Field detail(String id) {
+        Field field = super.detail(id);
+
+        // 补全type
+        if (field != null && StringUtil.isNotEmpty(field.getTypeCode())) {
+            String typeCode = field.getTypeCode();
+            Type type = typeService.detail(typeCode);
+            field.setType(type);
+        }
+
+        return field;
     }
 }
