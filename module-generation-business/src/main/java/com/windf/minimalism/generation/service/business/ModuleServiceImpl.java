@@ -2,13 +2,15 @@ package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.Constant;
 import com.windf.core.repository.ManageRepository;
-import com.windf.minimalism.generation.entity.DataModelProcess;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.model.CodeTemplateHandler;
+import com.windf.minimalism.generation.model.CodeTemplateHandlerProcess;
 import com.windf.minimalism.generation.repository.ModuleRepository;
 import com.windf.minimalism.generation.service.EntityService;
 import com.windf.minimalism.generation.service.ModuleService;
 import com.windf.minimalism.generation.service.business.config.CodeTemplate;
+import com.windf.minimalism.generation.service.business.model.ResourceFile;
 import com.windf.plugin.service.business.BaseManageService;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
@@ -40,21 +42,25 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
 
     @Override
     public void commit(String moduleId) {
-        // 组织数据
-        Map<String, Object> data = new HashMap<>();
         Module module = this.getManageRepository().detail(moduleId);
         List<Entity> entities = entityService.getByModuleId(moduleId);
-        // TODO 添加深度复制，防止污染元数据
-        // TODO 添加属性覆盖方法，使用每个模块自己的属性（属性可以继承原始属性）
-        data.put("module", DataModelProcess.getInstance().processModule(module));
-        data.put("entities", entities);
 
-        // 获取目标文件和模板文件
-        String templatePath = codeTemplate.getTemplatePath();
-        String targetPath = codeTemplate.getTargetPath();
+        for (CodeTemplateHandler handler : CodeTemplateHandlerProcess.getInstance().getAllCodeTemplateHandler()) {
 
-        // 递归遍历文件，进行解析
-        analyzePath(templatePath, targetPath, data);
+            // 组织数据
+            Map<String, Object> data = new HashMap<>();
+            // TODO 添加深度复制，防止污染元数据
+            // TODO 添加属性覆盖方法，使用每个模块自己的属性（属性可以继承原始属性）
+            data.put("module", handler.processModule(module));
+            data.put("entities", entities);
+
+            // 获取目标文件和模板文件
+            String templatePath = handler.getTemplatePath();
+            String targetPath = codeTemplate.getTargetPath();
+
+            // 递归遍历文件，进行解析
+            analyzePath(templatePath, targetPath, data, handler);
+        }
     }
 
     /**
@@ -62,39 +68,41 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
      * @param templatePathStr
      * @param targetPathStr
      * @param model  具体的数据 TODO 不应该传递，应该设置对象传输
+     * @param handler
      */
-    private void analyzePath(String templatePathStr, String targetPathStr, Map<String, Object> model) {
+    private void analyzePath(String templatePathStr, String targetPathStr, Map<String, Object> model, CodeTemplateHandler handler) {
         // 如果是描述文件，直接返回
         if (templatePathStr.endsWith(codeTemplate.getDefineFileExt())) {
             return;
         }
 
-        File templatePath = new File(templatePathStr);
-        if (!templatePath.isDirectory()) {  // 如果不是文件夹，直接解析文件
-            analyzeFile(templatePath, targetPathStr, model);
+        ResourceFile templateResource = new ResourceFile(templatePathStr, handler.getClass());
+        if (!templateResource.isDirectory()) {  // 如果不是文件夹，直接解析文件
+            analyzeFile(templatePathStr, targetPathStr, model, handler);
             return;
         }
 
         // 遍历目录的子文件
-        for (File file : templatePath.listFiles()) {
-            String subTemplatePathStr = templatePathStr + "/" + file.getName();
-            String subTargetPathStr = targetPathStr + "/" + file.getName();
+        for (String path : templateResource.listPath()) {
+            String subTemplatePathStr = templatePathStr + "/" + path;
+            String subTargetPathStr = targetPathStr + "/" + path;
             // 递归遍历
-            analyzePath(subTemplatePathStr, subTargetPathStr, model);
+            analyzePath(subTemplatePathStr, subTargetPathStr, model, handler);
         }
     }
 
     /**
      * 解析模板，将模板文件解析为目标文件
-     * @param templateFile
+     * @param templatePath
      * @param targetFileStr 目标文件路径，中间可能会有变量
+     * @param handler
      */
-    private void analyzeFile(File templateFile, String targetFileStr, Map<String, Object> model) {
+    private void analyzeFile(String templatePath, String targetFileStr, Map<String, Object> model, CodeTemplateHandler handler) {
         // 如果有描述文件，按照描述文件的返回进行循环实体
-        File defineFile = new File(templateFile.getPath() + codeTemplate.getDefineFileExt());
+        ResourceFile defineFile = new ResourceFile(templatePath + codeTemplate.getDefineFileExt(), handler.getClass());
 
         if (defineFile.exists()) {
-            String defineString = analyzeFileToString(defineFile, model);
+            String defineString = analyzePathValue(defineFile.readFile(), model);
             String[] entitiesIds = defineString.trim().split("\n");
             // 循环所有实体
             for (String entityId : entitiesIds) {
@@ -102,23 +110,23 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
                 Map<String, Object> entityMap = new HashMap<>();
                 entityMap.putAll(model);
                 Entity entity = entityService.detail(entityId.trim());
-                entityMap.put("entity", DataModelProcess.getInstance().processEntity(entity));
-                analyzeFileAndCopy(templateFile, targetFileStr, entityMap);
+                entityMap.put("entity", handler.processEntity(entity));
+                analyzeFileAndCopy(templatePath, targetFileStr, entityMap, handler);
             }
         } else {
             // 如果没有描述文件，直接解析
-            analyzeFileAndCopy(templateFile, targetFileStr, model);
+            analyzeFileAndCopy(templatePath, targetFileStr, model, handler);
         }
 
     }
 
     /**
      * 解析文件并且复制到目标文件
-     * @param templateFile
+     * @param templatePath
      * @param targetFileStr
      * @param model
      */
-    private void analyzeFileAndCopy(File templateFile, String targetFileStr, Map<String, Object> model) {
+    private void analyzeFileAndCopy(String templatePath, String targetFileStr, Map<String, Object> model, CodeTemplateHandler handler) {
         // 解析目标路径
         targetFileStr = this.analyzePathValue(targetFileStr, model);
         File targetFile = new File(targetFileStr);
@@ -129,7 +137,8 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             targetFile.getParentFile().mkdirs();
         }
 
-        Configuration cfg = this.getConfig(templateFile.getParentFile().getPath());
+        ResourceFile templateFile = new ResourceFile(templatePath, handler.getClass());
+        Configuration cfg = this.getConfig(templateFile.getParentPath());
 
         Writer out = null;
         try {
@@ -151,37 +160,6 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             }
         }
     }
-
-    /**
-     * 解析文件内容到string
-     * @param templateFile
-     * @param model
-     */
-    private String analyzeFileToString(File templateFile, Map<String, Object> model) {
-        Configuration cfg = this.getConfig(templateFile.getParentFile().getPath());
-
-        // 写入到字符中
-        StringWriter writer = new StringWriter();
-        try {
-            Template temp = cfg.getTemplate(templateFile.getName());
-            temp.process(model, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return writer.toString();
-    }
-
 
     /**
      * 解析路径中的变量，转换为真实的targetPath
@@ -225,11 +203,7 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
     private Configuration getConfig(String path) {
 
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-        try {
-            cfg.setDirectoryForTemplateLoading(new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cfg.setClassForTemplateLoading(ModuleServiceImpl.class, path);
         // Recommended settings for new projects:
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

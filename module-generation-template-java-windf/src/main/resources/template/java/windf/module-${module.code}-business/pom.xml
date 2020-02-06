@@ -3,26 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.windf.minimalism</groupId>
-        <artifactId>generation</artifactId>
+        <groupId>com.windf</groupId>
+        <artifactId>abstract-combination</artifactId>
         <version>1.0.0</version>
+        <relativePath>../abstract-combination/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>module-generation-java</artifactId>
-    <packaging>jar</packaging>
+    <groupId>com.windf</groupId>
+    <artifactId>module-user-business</artifactId>
     <version>1.0.0</version>
-
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.windf</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>module-user</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.windf.minimalism</groupId>
-            <artifactId>module-generation</artifactId>
+            <groupId>com.windf</groupId>
+            <artifactId>plugin-service-business</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
+
+
 </project>

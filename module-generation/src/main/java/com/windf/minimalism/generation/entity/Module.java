@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.entity;
 
+// TODO 这里还是需要把各个实体都装进来，方便获取
 public class Module extends BaseModel {
     private String namespace;
     private String code;

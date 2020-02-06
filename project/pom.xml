@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>com.windf.minimalism</groupId>
-            <artifactId>module-generation-java</artifactId>
+            <artifactId>module-generation-template-java-windf</artifactId>
             <version>1.0.0</version>
         </dependency>
 
