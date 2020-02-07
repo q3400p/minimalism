@@ -23,6 +23,11 @@ import java.io.*;
  */
 public abstract class BaseController {
     /**
+     * 基础路径，所有api都需要以这个开头
+     */
+    public static final String BASE_API_PATH = "/api";
+
+    /**
      * 文件上传的路径
      */
     private static final String INCOMING_PATH = "/incoming";
