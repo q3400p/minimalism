@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.windf</groupId>
+        <groupId>${module.namespace}</groupId>
         <artifactId>abstract-combination</artifactId>
         <version>1.0.0</version>
         <relativePath>../abstract-combination/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.windf</groupId>
-    <artifactId>module-user-business</artifactId>
-    <version>1.0.0</version>
+    <groupId>${module.namespace}</groupId>
+    <artifactId>module-${module.code}-business</artifactId>
+    <version>${module.version}</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -20,8 +20,8 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.windf</groupId>
-            <artifactId>module-user</artifactId>
+            <groupId>${module.namespace}</groupId>
+            <artifactId>module-${module.code}</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
