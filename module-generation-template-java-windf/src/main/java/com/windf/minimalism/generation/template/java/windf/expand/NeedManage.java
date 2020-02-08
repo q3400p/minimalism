@@ -1,4 +1,4 @@
-package com.windf.module.generation.template.java.windf.expand;
+package com.windf.minimalism.generation.template.java.windf.expand;
 
 import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;

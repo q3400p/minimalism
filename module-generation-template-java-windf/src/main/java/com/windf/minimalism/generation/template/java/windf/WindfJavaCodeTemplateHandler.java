@@ -1,4 +1,4 @@
-package com.windf.module.generation.template.java.windf;
+package com.windf.minimalism.generation.template.java.windf;
 
 import com.windf.minimalism.generation.template.java.JavaCodeTemplateHandler;
 
