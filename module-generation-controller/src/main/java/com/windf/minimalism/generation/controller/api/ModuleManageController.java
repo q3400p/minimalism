@@ -5,6 +5,7 @@ import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.service.ModuleService;
 import com.windf.plugin.controller.api.controller.BaseManageController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +21,9 @@ public class ModuleManageController extends BaseManageController<Module> {
         return this.moduleService;
     }
 
-    @RequestMapping("/commit")
-    public ResultData commit() {
-        this.moduleService.commit("com.windf.user");
+    @RequestMapping("/commit/{id}")
+    public ResultData commit(@PathVariable String id) {
+        this.moduleService.commit(id);
         return response().success();
     }
 }

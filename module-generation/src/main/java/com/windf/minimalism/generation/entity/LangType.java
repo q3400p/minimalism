@@ -13,7 +13,13 @@ public enum LangType {
 
     VOID("void", "空", null),
 
+    DATE("Date", "日期", "java.util.Date"),
+    TIME("Time", "时间", "java.util.Date"),
+    DATETIME("DateTime", "日期时间", "java.util.Date"),
+
     STRING("String", "字符串", "java.lang.String"),
+    TEXTAREA("Textarea", "文件域", "java.lang.String"),
+
     DECIMAL("BigDecimal", "高精度", "java.math.BigDecimal"),
     MAP("Map", "有序列表", "java.util.Map"),
     LIST("List", "有序列表", "java.util.List"),
