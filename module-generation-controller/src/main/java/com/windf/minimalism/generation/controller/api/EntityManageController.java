@@ -27,7 +27,7 @@ public class EntityManageController extends BaseManageController<Entity> {
 
     @GetMapping("/expand")
     public ResultData getExpandItemList() {
-        List<EntityExpandItem> data = entityService.getExpandItemList();
+        List<ExpandItem> data = entityService.getExpandItemList();
 
         return response().successData(data);
     }

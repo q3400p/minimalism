@@ -4,6 +4,7 @@ import com.windf.core.entity.ResultData;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.model.expand.EntityExpandItem;
+import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.expand.FieldExpandItem;
 import com.windf.minimalism.generation.service.FieldService;
 import com.windf.minimalism.generation.service.ModuleService;
@@ -29,7 +30,7 @@ public class FieldManageController extends BaseManageController<Field> {
 
     @GetMapping("/expand")
     public ResultData getExpandItemList() {
-        List<FieldExpandItem> data = fieldService.getExpandItemList();
+        List<ExpandItem> data = fieldService.getExpandItemList();
 
         return response().successData(data);
     }

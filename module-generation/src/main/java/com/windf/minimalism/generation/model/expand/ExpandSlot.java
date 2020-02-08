@@ -1,21 +1,20 @@
 package com.windf.minimalism.generation.model.expand;
 
+import java.util.List;
+
 /**
- * 拓展的插槽
- * 用于对拓展属性进行设置和获取属性的值
+ * 拓展的插槽列表，获取该该实体的所有插槽
  */
 public interface ExpandSlot {
     /**
-     * 设置拓展属性的值
-     * @param itemCode
-     * @param value
+     * 获取拓展列表
      */
-    void setExpandValue(String itemCode, Object value);
+    List<ExpandItem> getExpandItemList();
 
     /**
-     * 获取拓展项的值
+     * 根据code加载拓展属性
      * @param code
      * @return
      */
-    Object getExpandValue(String code);
+    ExpandItem getExpandItem(String code);
 }

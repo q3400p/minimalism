@@ -1,14 +1,14 @@
 package com.windf.minimalism.generation.entity;
 
 import com.windf.core.entity.BaseEntity;
-import com.windf.minimalism.generation.model.expand.ExpandSlot;
+import com.windf.minimalism.generation.model.expand.ExpandValue;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
+public class BaseModel extends BaseEntity implements ExpandValue, Serializable {
     /**
      * id之间隔离的字符串
      */
@@ -27,6 +27,7 @@ public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
 
     @Override
     public Object getExpandValue(String code) {
+        // TODO 设置这个值
         return expandValueMap.get(code);
     }
 

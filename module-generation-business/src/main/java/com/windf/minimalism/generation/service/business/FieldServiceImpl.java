@@ -5,6 +5,7 @@ import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Type;
+import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.expand.ExpandItemListProcess;
 import com.windf.minimalism.generation.model.expand.FieldExpandItem;
 import com.windf.minimalism.generation.repository.FieldRepository;
@@ -59,7 +60,12 @@ public class FieldServiceImpl extends BaseManageService<Field> implements FieldS
     }
 
     @Override
-    public List<FieldExpandItem> getExpandItemList() {
+    public List<ExpandItem> getExpandItemList() {
         return ExpandItemListProcess.getInstance().getExpandItemList(FieldExpandItem.class);
+    }
+
+    @Override
+    public ExpandItem getExpandItem(String code) {
+        return ExpandItemListProcess.getInstance().getExpandItem(FieldExpandItem.class, code);
     }
 }

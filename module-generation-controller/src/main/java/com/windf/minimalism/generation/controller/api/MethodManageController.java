@@ -3,6 +3,7 @@ package com.windf.minimalism.generation.controller.api;
 import com.windf.core.entity.ResultData;
 import com.windf.minimalism.generation.entity.Method;
 import com.windf.minimalism.generation.model.expand.EntityExpandItem;
+import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.expand.MethodExpandItem;
 import com.windf.minimalism.generation.service.MethodService;
 import com.windf.plugin.controller.api.controller.BaseManageController;
@@ -27,7 +28,7 @@ public class MethodManageController extends BaseManageController<Method> {
 
     @GetMapping("/expand")
     public ResultData getExpandItemList() {
-        List<MethodExpandItem> data = methodService.getExpandItemList();
+        List<ExpandItem> data = methodService.getExpandItemList();
 
         return response().successData(data);
     }

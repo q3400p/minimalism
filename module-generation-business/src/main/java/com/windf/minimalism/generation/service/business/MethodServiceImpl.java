@@ -4,6 +4,7 @@ import com.windf.core.repository.ManageRepository;
 import com.windf.core.util.CollectionUtil;
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.*;
+import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.expand.ExpandItemListProcess;
 import com.windf.minimalism.generation.model.expand.MethodExpandItem;
 import com.windf.minimalism.generation.repository.MethodRepository;
@@ -80,7 +81,12 @@ public class MethodServiceImpl extends BaseManageService<Method> implements Meth
     }
 
     @Override
-    public List<MethodExpandItem> getExpandItemList() {
+    public List<ExpandItem> getExpandItemList() {
         return ExpandItemListProcess.getInstance().getExpandItemList(MethodExpandItem.class);
+    }
+
+    @Override
+    public ExpandItem getExpandItem(String code) {
+        return ExpandItemListProcess.getInstance().getExpandItem(MethodExpandItem.class, code);
     }
 }
