@@ -1,11 +1,12 @@
 package com.windf.minimalism.generation.entity;
 
 import com.windf.core.entity.BaseEntity;
-import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.expand.ExpandSlot;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
     /**
@@ -17,29 +18,16 @@ public class BaseModel extends BaseEntity implements ExpandSlot, Serializable {
     private Date createTime;
     private Date updateTime;
     private String description;
-    private LinkedHashMap<String, ExpandItem> expandItemMap = new LinkedHashMap<>();
+    private Map<String, Object> expandValueMap = new HashMap<>();
 
     @Override
-    public List<ExpandItem> getExpandItems() {
-        return new ArrayList<>(expandItemMap.values());
+    public void setExpandValue(String itemCode, Object value) {
+        expandValueMap.put(itemCode, value);
     }
 
     @Override
-    public void setExpandItems(List<ExpandItem> expandItems) {
-        expandItemMap = new LinkedHashMap<>();
-        for (ExpandItem expandItem : expandItems) {
-            expandItemMap.put(expandItem.getCode(), expandItem);
-        }
-    }
-
-    @Override
-    public ExpandItem getExpandItem(String code) {
-        return expandItemMap.get(code);
-    }
-
-    @Override
-    public void setExpandItem(String code, ExpandItem expandItem) {
-        expandItemMap.put(code, expandItem);
+    public Object getExpandValue(String code) {
+        return expandValueMap.get(code);
     }
 
     public Date getCreateTime() {
