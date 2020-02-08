@@ -4,7 +4,7 @@ import com.windf.core.util.BeanUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Module;
-import com.windf.minimalism.generation.model.CodeTemplateHandler;
+import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
 import com.windf.minimalism.generation.template.java.entity.JavaMinEntity;
 import com.windf.minimalism.generation.template.java.entity.JavaMinField;
 
