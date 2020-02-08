@@ -1,3 +1,0 @@
-<#list entities as entity>
-    ${entity.id}
-</#list>
