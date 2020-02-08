@@ -1,6 +1,5 @@
 package com.windf.module.${module.code}.service.impl;
 
-
 <#list entity.imports('com.windf.module.${module.code}.service.impl') as imp>
 import ${imp};
 </#list>

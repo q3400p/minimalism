@@ -1,6 +1,8 @@
-package com.windf.${user}.controller.api;
+package com.windf.${module.code}.controller.api;
 
 import com.windf.core.entity.ResultData;
+import com.windf.${module.code}.entity.${entity.code?cap_first};
+import com.windf.${module.code}.entity.service.${entity.code?cap_first}Service;
 import com.windf.plugin.controller.api.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
