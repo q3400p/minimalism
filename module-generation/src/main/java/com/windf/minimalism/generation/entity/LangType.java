@@ -1,6 +1,4 @@
-package com.windf.minimalism.generation.entity.type;
-
-import com.windf.minimalism.generation.entity.Type;
+package com.windf.minimalism.generation.entity;
 
 // TODO java.lang.*这些好像都是java的，不能这么写，还要放到实现类里
 public enum LangType {

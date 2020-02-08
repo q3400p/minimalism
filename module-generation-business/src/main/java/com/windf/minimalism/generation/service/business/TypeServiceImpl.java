@@ -3,7 +3,7 @@ package com.windf.minimalism.generation.service.business;
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Type;
-import com.windf.minimalism.generation.entity.type.LangType;
+import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.service.EntityService;
 import com.windf.minimalism.generation.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;

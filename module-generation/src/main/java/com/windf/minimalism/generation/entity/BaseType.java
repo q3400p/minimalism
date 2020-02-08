@@ -1,6 +1,4 @@
-package com.windf.minimalism.generation.entity.type;
-
-import com.windf.minimalism.generation.entity.Type;
+package com.windf.minimalism.generation.entity;
 
 public abstract class BaseType implements Type {
     /**
