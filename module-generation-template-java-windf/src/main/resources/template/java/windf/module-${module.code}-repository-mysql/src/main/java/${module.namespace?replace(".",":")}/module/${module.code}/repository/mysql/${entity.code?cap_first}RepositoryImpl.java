@@ -1,6 +1,6 @@
-package com.windf.module.${module.code}.repository.mysql;
+package ${module.namespace}.module.${module.code}.repository.mysql;
 
-import com.windf.${module.code}.entity.${entity.code?cap_first};
+import ${module.namespace}.${module.code}.entity.${entity.code?cap_first};
 import com.windf.plugin.repository.mysql.BaseMysqlRepository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;

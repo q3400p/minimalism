@@ -1,13 +1,10 @@
-package com.windf.module.${module.code}.service;
+package ${module.namespace}.module.${module.code}.repository;
 
-<#list entity.imports('com.windf.module.${module.code}.service') as imp>
+<#list entity.imports('com.windf.module.${module.code}.repository') as imp>
 import ${imp};
 </#list>
 
-/**
- * ${entity.description!}提供的服务
- */
-public interface ${entity.classCode}Service {
+public interface ${entity.code?cap_first}Repository {
   <#list entity.methods as method>
     /**
      * ${method.name!}

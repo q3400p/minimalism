@@ -1,4 +1,4 @@
-package com.windf.module.${entity.code}.entity;
+package ${module.namespace}.module.${entity.code}.entity;
 
 <#list entity.imports('com.windf.module.${module.code}.entity') as imp>
 import ${imp};

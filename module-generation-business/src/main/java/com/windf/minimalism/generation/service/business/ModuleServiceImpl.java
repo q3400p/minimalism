@@ -2,6 +2,7 @@ package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.Constant;
 import com.windf.core.repository.ManageRepository;
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.model.CodeTemplateHandler;
@@ -192,7 +193,12 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             }
         }
 
-        return writer.toString();
+        String path = writer.toString();
+        if (StringUtil.isNotEmpty(path)) {  // 恢复路径标记
+            path = path.replace(":", "/");
+        }
+
+        return path;
     }
 
     /**
