@@ -170,6 +170,8 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
                 e.printStackTrace();
             }
         }
+
+        handler.processFile(targetFile);
     }
 
     /**

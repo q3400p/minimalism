@@ -1,9 +1,10 @@
 package ${module.namespace}.module.${entity.code}.entity;
 
+
 /**
  * ${entity.description!}
  */
-public class ${entity.classCode} {
+public class ${entity.classId} {
   <#list entity.fields as field>
     /**
      * ${field.name}

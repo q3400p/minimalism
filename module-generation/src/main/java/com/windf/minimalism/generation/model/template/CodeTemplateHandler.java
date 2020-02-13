@@ -2,6 +2,7 @@ package com.windf.minimalism.generation.model.template;
 
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -21,5 +22,11 @@ public interface CodeTemplateHandler {
      */
     List<ExpandItem> getExpandItems();
 
-
+    /**
+     * 处理文件
+     * @param file
+     */
+    default void processFile(File file) {
+        // 什么都不做
+    }
 }
