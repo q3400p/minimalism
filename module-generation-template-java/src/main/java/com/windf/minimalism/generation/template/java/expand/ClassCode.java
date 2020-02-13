@@ -1,24 +1,25 @@
-package com.windf.minimalism.generation.template.java.windf.expand;
+package com.windf.minimalism.generation.template.java.expand;
 
+import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class NeedManage implements ExpandItem<Entity> {
+public class ClassCode implements ExpandItem<Entity> {
     @Override
     public String getName() {
-        return "是否需要管理";
+        return "类名";
     }
 
     @Override
     public String getCode() {
-        return "needManage";
+        return "classCode";
     }
 
     @Override
     public Type getType() {
-        return LangType.BOOLEAN.getType();
+        return LangType.STRING.getType();
     }
 
     @Override
@@ -28,7 +29,7 @@ public class NeedManage implements ExpandItem<Entity> {
 
     @Override
     public Object getDefaultValue(Entity expandSlot) {
-        return false;
+        return StringUtil.firstLetterUppercase(expandSlot.getCode());
     }
 
     @Override

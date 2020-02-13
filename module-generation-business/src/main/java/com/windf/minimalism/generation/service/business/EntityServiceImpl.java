@@ -5,9 +5,9 @@ import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
 import com.windf.minimalism.generation.entity.Method;
 import com.windf.minimalism.generation.entity.Type;
-import com.windf.minimalism.generation.model.expand.EntityExpandItem;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
-import com.windf.minimalism.generation.model.expand.ExpandItemListProcess;
+import com.windf.minimalism.generation.model.expand.ExpandItemManager;
+import com.windf.minimalism.generation.model.expand.ExpandItemManagerProcess;
 import com.windf.minimalism.generation.repository.EntityRepository;
 import com.windf.minimalism.generation.service.EntityService;
 import com.windf.minimalism.generation.service.FieldService;
@@ -92,11 +92,11 @@ public class EntityServiceImpl extends BaseManageService<Entity> implements Enti
 
     @Override
     public List<ExpandItem> getExpandItemList() {
-        return ExpandItemListProcess.getInstance().getExpandItemList(EntityExpandItem.class);
+        return ExpandItemManagerProcess.getInstance().getExpandItemList(Entity.class);
     }
 
     @Override
     public ExpandItem getExpandItem(String code) {
-        return ExpandItemListProcess.getInstance().getExpandItem(EntityExpandItem.class, code);
+        return ExpandItemManagerProcess.getInstance().getExpandItem(Entity.class, code);
     }
 }

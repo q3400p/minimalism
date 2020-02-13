@@ -1,9 +1,5 @@
 package ${module.namespace}.module.${module.code}.repository;
 
-<#list entity.imports('com.windf.module.${module.code}.repository') as imp>
-import ${imp};
-</#list>
-
 public interface ${entity.code?cap_first}Repository {
   <#list entity.methods as method>
     /**

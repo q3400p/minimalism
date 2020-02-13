@@ -2,11 +2,10 @@ package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.repository.ManageRepository;
 import com.windf.core.util.CollectionUtil;
-import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.*;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
-import com.windf.minimalism.generation.model.expand.ExpandItemListProcess;
-import com.windf.minimalism.generation.model.expand.MethodExpandItem;
+import com.windf.minimalism.generation.model.expand.ExpandItemManager;
+import com.windf.minimalism.generation.model.expand.ExpandItemManagerProcess;
 import com.windf.minimalism.generation.repository.MethodRepository;
 import com.windf.minimalism.generation.service.MethodService;
 import com.windf.minimalism.generation.service.TypeService;
@@ -82,11 +81,11 @@ public class MethodServiceImpl extends BaseManageService<Method> implements Meth
 
     @Override
     public List<ExpandItem> getExpandItemList() {
-        return ExpandItemListProcess.getInstance().getExpandItemList(MethodExpandItem.class);
+        return ExpandItemManagerProcess.getInstance().getExpandItemList(Method.class);
     }
 
     @Override
     public ExpandItem getExpandItem(String code) {
-        return ExpandItemListProcess.getInstance().getExpandItem(MethodExpandItem.class, code);
+        return ExpandItemManagerProcess.getInstance().getExpandItem(Method.class, code);
     }
 }

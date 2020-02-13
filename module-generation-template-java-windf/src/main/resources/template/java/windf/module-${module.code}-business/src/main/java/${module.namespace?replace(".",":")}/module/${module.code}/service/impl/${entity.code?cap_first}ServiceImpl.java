@@ -1,8 +1,5 @@
 package ${module.namespace}.module.${module.code}.service.impl;
 
-<#list entity.imports('com.windf.module.${module.code}.service.impl') as imp>
-import ${imp};
-</#list>
 import ${module.namespace}.module.${module.code}.repository.${entity.code};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

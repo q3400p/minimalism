@@ -5,6 +5,7 @@ import com.windf.core.repository.ManageRepository;
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.model.expand.ExpandItemManagerProcess;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandlerProcess;
 import com.windf.minimalism.generation.repository.ModuleRepository;
@@ -52,7 +53,10 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             Map<String, Object> data = new HashMap<>();
             // TODO 添加深度复制，防止污染元数据
             // TODO 添加属性覆盖方法，使用每个模块自己的属性（属性可以继承原始属性）
-            data.put("module", handler.processModule(module));
+            // 获取实体，以及所有扩展值
+            Map<String, Object> entityValues =
+                    ExpandItemManagerProcess.getInstance().getExpandedMap(handler, module);
+            data.put("module", entityValues);
             data.put("entities", entities);
 
             // 获取目标文件和模板文件
@@ -111,7 +115,13 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
                 Map<String, Object> entityMap = new HashMap<>();
                 entityMap.putAll(model);
                 Entity entity = entityService.detail(entityId.trim());
-                entityMap.put("entity", handler.processEntity(entity));
+
+                // 获取实体，以及所有扩展值
+                Map<String, Object> entityValues =
+                        ExpandItemManagerProcess.getInstance().getExpandedMap(handler, entity);
+                entityMap.put("entity", entityValues);
+
+                // 解析模板
                 analyzeFileAndCopy(templatePath, targetFileStr, entityMap, handler);
             }
         } else {

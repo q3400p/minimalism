@@ -1,9 +1,5 @@
 package ${module.namespace}.module.${module.code}.service;
 
-<#list entity.imports('com.windf.module.${module.code}.service') as imp>
-import ${imp};
-</#list>
-
 /**
  * ${entity.description!}提供的服务
  */

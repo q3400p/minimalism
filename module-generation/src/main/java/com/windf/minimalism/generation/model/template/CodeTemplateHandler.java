@@ -1,7 +1,8 @@
 package com.windf.minimalism.generation.model.template;
 
-import com.windf.minimalism.generation.entity.Entity;
-import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.model.expand.ExpandItem;
+
+import java.util.List;
 
 /**
  * 代码生成的模板，用于定于代码生成的模板路径，以及自定义处理数据等
@@ -15,15 +16,10 @@ public interface CodeTemplateHandler {
     String getTemplatePath();
 
     /**
-     * 处理模块
-     * @param module
+     * 获取所有拓展项
      * @return
      */
-    Module processModule(Module module);
-    /**
-     * 处理实体
-     * @param entity
-     * @return
-     */
-    Entity processEntity(Entity entity);
+    List<ExpandItem> getExpandItems();
+
+
 }
