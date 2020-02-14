@@ -5,7 +5,7 @@ import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class NeedManage implements ExpandItem<Entity> {
+public class ManageAble implements ExpandItem<Entity> {
     @Override
     public String getName() {
         return "是否需要管理";
@@ -13,7 +13,7 @@ public class NeedManage implements ExpandItem<Entity> {
 
     @Override
     public String getCode() {
-        return "needManage";
+        return "manageAble";
     }
 
     @Override
@@ -28,7 +28,7 @@ public class NeedManage implements ExpandItem<Entity> {
 
     @Override
     public Object getDefaultValue(Entity expandSlot) {
-        return false;
+        return true;
     }
 
     @Override
