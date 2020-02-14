@@ -3,10 +3,7 @@ package com.windf.minimalism.generation.template.java;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.model.template.CodeFileProcessor;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
-import com.windf.minimalism.generation.template.java.expand.ClassCode;
-import com.windf.minimalism.generation.template.java.expand.ClassId;
-import com.windf.minimalism.generation.template.java.expand.TableFieldName;
-import com.windf.minimalism.generation.template.java.expand.TableName;
+import com.windf.minimalism.generation.template.java.expand.*;
 import com.windf.minimalism.generation.template.java.processor.ImportProcessor;
 import com.windf.minimalism.generation.template.java.processor.MultipleLIneProcessor;
 
@@ -24,6 +21,10 @@ public abstract class JavaCodeTemplateHandler implements CodeTemplateHandler {
         result.add(new ClassId());
         result.add(new TableName());
         result.add(new TableFieldName());
+        result.add(new TableAble());
+        result.add(new WebAble());
+        result.add(new WebEntityPath());
+        result.add(new WebMethodPath());
         return result;
     }
 
