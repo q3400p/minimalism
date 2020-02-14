@@ -5,6 +5,8 @@ import com.windf.minimalism.generation.model.template.CodeFileProcessor;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
 import com.windf.minimalism.generation.template.java.expand.ClassCode;
 import com.windf.minimalism.generation.template.java.expand.ClassId;
+import com.windf.minimalism.generation.template.java.expand.TableFieldName;
+import com.windf.minimalism.generation.template.java.expand.TableName;
 import com.windf.minimalism.generation.template.java.processor.ImportProcessor;
 import com.windf.minimalism.generation.template.java.processor.MultipleLIneProcessor;
 
@@ -20,6 +22,8 @@ public abstract class JavaCodeTemplateHandler implements CodeTemplateHandler {
         List<ExpandItem> result = new ArrayList<>();
         result.add(new ClassCode());
         result.add(new ClassId());
+        result.add(new TableName());
+        result.add(new TableFieldName());
         return result;
     }
 

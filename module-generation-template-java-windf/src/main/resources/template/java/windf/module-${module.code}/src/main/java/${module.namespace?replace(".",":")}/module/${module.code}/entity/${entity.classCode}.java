@@ -4,7 +4,7 @@ package ${module.namespace}.module.${entity.code}.entity;
 /**
  * ${entity.description!}
  */
-public class ${entity.classId} {
+public class ${entity.classCode} {
   <#list entity.fields as field>
     /**
      * ${field.name}
