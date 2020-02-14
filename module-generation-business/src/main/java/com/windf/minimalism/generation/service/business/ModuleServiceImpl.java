@@ -1,11 +1,15 @@
 package com.windf.minimalism.generation.service.business;
 
 import com.windf.core.Constant;
+import com.windf.core.exception.CodeException;
 import com.windf.core.repository.ManageRepository;
+import com.windf.core.util.CollectionUtil;
+import com.windf.core.util.FileUtil;
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.model.expand.ExpandItemManagerProcess;
+import com.windf.minimalism.generation.model.template.CodeFileProcessor;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandlerProcess;
 import com.windf.minimalism.generation.repository.ModuleRepository;
@@ -160,18 +164,70 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
-            e.printStackTrace();
+            throw new CodeException(e);
         } finally {
             try {
                 if (out != null) {
                     out.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new CodeException(e);
             }
         }
 
-        handler.processFile(targetFile);
+        try {
+            // 文件转换为行
+            List<String> lineList = FileUtil.readLine(targetFile);
+
+            // 处理文件信息
+            processFile(handler, lineList);
+
+            // 行转换为文件
+            saveFile(targetFile, lineList);
+        } catch (FileNotFoundException e) {
+            throw new CodeException(e);
+        }
+    }
+
+    /**
+     * 处理文件
+     * @param lineList
+     */
+    private void processFile(CodeTemplateHandler handler, List<String> lineList) {
+        List<CodeFileProcessor> codeFileProcessors = handler.getFileProcessor();
+
+        if (CollectionUtil.isNotEmpty(codeFileProcessors)) {
+            for (CodeFileProcessor processor : codeFileProcessors) {
+                processor.process(lineList);
+            }
+        }
+    }
+
+    /**
+     * 保存文件
+     * @param file
+     * @param lineList
+     */
+    private void saveFile(File file, List<String> lineList) {
+        String lines = StringUtil.join(lineList, "\r\n");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            byte[] bytesArray = lines.getBytes();
+            fos.write(bytesArray);
+            fos.flush();
+        } catch (IOException e) {
+            throw new CodeException(e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    throw new CodeException(e);
+                }
+            }
+        }
     }
 
     /**

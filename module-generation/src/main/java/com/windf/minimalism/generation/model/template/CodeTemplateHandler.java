@@ -23,10 +23,10 @@ public interface CodeTemplateHandler {
     List<ExpandItem> getExpandItems();
 
     /**
-     * 处理文件
-     * @param file
+     * 获取处理文件程序
      */
-    default void processFile(File file) {
+    default List<CodeFileProcessor> getFileProcessor() {
         // 什么都不做
+        return null;
     }
 }
