@@ -6,20 +6,20 @@ import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class APIEntityPath implements ExpandItem<Entity> {
+public class TableAble implements ExpandItem<Entity> {
     @Override
     public String getName() {
-        return "api实体的路径名称";
+        return "是否需要对应数据库表";
     }
 
     @Override
     public String getCode() {
-        return "apiEntityPath";
+        return "tableAble";
     }
 
     @Override
     public Type getType() {
-        return LangType.STRING.getType();
+        return LangType.BOOLEAN.getType();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class APIEntityPath implements ExpandItem<Entity> {
 
     @Override
     public Object getDefaultValue(Entity entity) {
-        return "/" + StringUtil.splitCamelCase(entity.getCode(), "/");
+        return true;
     }
 
     @Override

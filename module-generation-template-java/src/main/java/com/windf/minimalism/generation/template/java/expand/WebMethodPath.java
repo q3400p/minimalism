@@ -7,7 +7,7 @@ import com.windf.minimalism.generation.entity.Method;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class APIMethodPath implements ExpandItem<Method> {
+public class WebMethodPath implements ExpandItem<Method> {
     @Override
     public String getName() {
         return "api方法的路径名称";
