@@ -1,5 +1,6 @@
 package com.windf.minimalism.generation.repository.file;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
 import com.windf.core.util.BeanUtil;
@@ -43,7 +44,11 @@ public class ModuleRepositoryImpl extends BaseJSONFileManageRepository<Module> i
 
     @Override
     public Module detail(String id) {
-        return Modules.getInstance().getModule(id);
+        Module module = new Module();
+
+        BeanUtil.copyProperties(module, Modules.getInstance().getModule(id));
+
+        return module;
     }
 
     @Override
