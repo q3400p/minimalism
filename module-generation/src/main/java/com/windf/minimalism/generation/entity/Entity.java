@@ -8,7 +8,6 @@ import java.util.List;
 public class Entity extends BaseModel implements Type {
     private String code;
     private String name;
-    private String layout;
     private Module module;
     private List<Field> fields = new ArrayList<>();
     private List<Method> methods = new ArrayList<>();
@@ -37,14 +36,6 @@ public class Entity extends BaseModel implements Type {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLayout() {
-        return layout;
-    }
-
-    public void setLayout(String layout) {
-        this.layout = layout;
     }
 
     public Module getModule() {
