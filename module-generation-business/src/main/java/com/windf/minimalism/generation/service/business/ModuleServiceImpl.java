@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,18 +58,34 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
     public void commit(String moduleId) {
         Module module = this.getManageRepository().detail(moduleId);
         List<Entity> entities = entityService.getByModuleId(moduleId);
+        List<Entity> newEntities = new ArrayList<>(entities.size());
+        for (Entity entity : entities) {
+            // TODO 需要设置常量到配置文件中
+            entity = entityService.detail(entity.getId().trim());
+            newEntities.add(entity);
+        }
 
         for (CodeTemplateHandler handler : CodeTemplateHandlerProcess.getInstance().getAllCodeTemplateHandler()) {
 
             // 组织数据
             Map<String, Object> data = new HashMap<>();
-            // TODO 添加深度复制，防止污染元数据
-            // TODO 添加属性覆盖方法，使用每个模块自己的属性（属性可以继承原始属性）
             // 获取实体，以及所有扩展值
-            Map<String, Object> entityValues =
+            Map<String, Object> moduleValues =
                     ExpandItemManagerProcess.getInstance().getExpandedMap(handler, module);
-            data.put("module", entityValues);
-            data.put("entities", entities);
+            data.put("module", moduleValues);
+            List<Map<String, Object>> entityList = new ArrayList<>();
+            Map<String, Map<String, Object>> entitiesMap = new HashMap<>();
+            for (Entity entity : newEntities) {
+                Map<String, Object> entityMap = new HashMap<>();
+                // 获取实体，以及所有扩展值
+                Map<String, Object> entityValues =
+                        ExpandItemManagerProcess.getInstance().getExpandedMap(handler, entity);
+                entityMap.put("entity", entityValues);
+                entityList.add(entityValues);
+                entitiesMap.put(entity.getId(), entityValues);
+            }
+            data.put("entities", entityList);
+            data.put("entityMap", entitiesMap);
 
             // 获取目标文件和模板文件
             String templatePath = handler.getTemplatePath();
@@ -125,17 +142,10 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             // 循环所有实体
             for (String entityId : entitiesIds) {
                 // TODO 需要设置常量到配置文件中
-                Map<String, Object> entityMap = new HashMap<>();
-                entityMap.putAll(model);
-                Entity entity = entityService.detail(entityId.trim());
-
-                // 获取实体，以及所有扩展值
-                Map<String, Object> entityValues =
-                        ExpandItemManagerProcess.getInstance().getExpandedMap(handler, entity);
-                entityMap.put("entity", entityValues);
-
+                Map<String, Object> entityMap = (Map<String, Object>) model.get("entityMap");
+                model.put("entity", entityMap.get(entityId.trim()));
                 // 解析模板
-                analyzeFileAndCopy(templatePath, targetFileStr, entityMap, handler);
+                analyzeFileAndCopy(templatePath, targetFileStr, model, handler);
             }
         } else {
             // 如果没有描述文件，直接解析

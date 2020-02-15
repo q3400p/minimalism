@@ -1,6 +1,5 @@
 package com.windf.minimalism.generation.template.java.expand;
 
-import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;

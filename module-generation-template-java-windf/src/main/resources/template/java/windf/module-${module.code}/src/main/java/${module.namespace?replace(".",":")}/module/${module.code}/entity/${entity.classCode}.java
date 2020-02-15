@@ -1,6 +1,5 @@
 package ${module.namespace}.module.${entity.code}.entity;
 
-
 /**
  * ${entity.description!}
  */

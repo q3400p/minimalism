@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ${entity.code?cap_first}ServiceImpl implements ${entity.code?cap_first}Service {
+public class ${entity.classCode}ServiceImpl implements ${entity.classCode}Service {
 
     @Autowired
-    private ${entity.code?cap_first}Repository ${entity.code}Repository;
+    private ${entity.classCode}Repository ${entity.code}Repository;
 
   <#list entity.methods as method>
 

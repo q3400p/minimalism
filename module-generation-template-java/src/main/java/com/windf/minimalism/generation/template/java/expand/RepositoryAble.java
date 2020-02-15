@@ -1,25 +1,25 @@
 package com.windf.minimalism.generation.template.java.expand;
 
-import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class WebEntityPath implements ExpandItem<Entity> {
+public class RepositoryAble implements ExpandItem<Entity> {
+
     @Override
     public String getName() {
-        return "api实体的路径名称";
+        return "是否需要对应数据库操作";
     }
 
     @Override
     public String getCode() {
-        return "webEntityPath";
+        return "repositoryAble";
     }
 
     @Override
     public Type getType() {
-        return LangType.STRING.getType();
+        return LangType.BOOLEAN.getType();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class WebEntityPath implements ExpandItem<Entity> {
 
     @Override
     public Object getDefaultValue(Entity entity) {
-        return "/" + StringUtil.splitCamelCase(entity.getCode(), "/");
+        return true;
     }
 
     @Override

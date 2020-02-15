@@ -1,3 +1,5 @@
 <#list entities as entity>
+  <#if entity.tableAble >
     ${entity.id}
+  </#if>
 </#list>

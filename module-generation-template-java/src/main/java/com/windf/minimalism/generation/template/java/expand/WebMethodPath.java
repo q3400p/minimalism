@@ -15,7 +15,7 @@ public class WebMethodPath implements ExpandItem<Method> {
 
     @Override
     public String getCode() {
-        return "apiFieldPath";
+        return "webMethodPath";
     }
 
     @Override
