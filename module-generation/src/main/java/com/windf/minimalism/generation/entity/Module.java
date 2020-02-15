@@ -1,6 +1,5 @@
 package com.windf.minimalism.generation.entity;
 
-// TODO 这里还是需要把各个实体都装进来，方便获取
 public class Module extends BaseModel {
     private String namespace;
     private String code;
@@ -8,14 +7,6 @@ public class Module extends BaseModel {
     private boolean isInterface;
     private String name;
     private String description;
-
-    public String getId() {
-        String id = super.getId();
-        if (id == null) {
-            id = this.namespace + ID_POINT + this.code;
-        }
-        return id;
-    }
 
     public String getNamespace() {
         return namespace;

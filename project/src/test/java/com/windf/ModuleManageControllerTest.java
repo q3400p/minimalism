@@ -24,6 +24,7 @@ public class ModuleManageControllerTest extends BaseManageControllerTest<Module>
         data.setName("测试模块");
         data.setDescription("测试用的模块，一会就删除了");
         data.setStatus("1");
+        data.setId("com.windf.test");
         modules.add(data);
 
         data = new Module();
@@ -32,6 +33,7 @@ public class ModuleManageControllerTest extends BaseManageControllerTest<Module>
         data.setName("测试模块");
         data.setDescription("测试用的模块，一会就删除了");
         data.setStatus("1");
+        data.setId("com.windf.test2");
         modules.add(data);
 
         data = new Module();
@@ -40,6 +42,7 @@ public class ModuleManageControllerTest extends BaseManageControllerTest<Module>
         data.setName("测试模块");
         data.setDescription("测试用的模块，一会就删除了");
         data.setStatus("1");
+        data.setId("com.windf.test3");
         modules.add(data);
 
         return modules;

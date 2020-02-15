@@ -47,6 +47,13 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
     }
 
     @Override
+    public void create(Module module) {
+        module.setId(module.getNamespace() + Module.ID_POINT + module.getCode());
+
+        super.create(module);
+    }
+
+    @Override
     public void commit(String moduleId) {
         Module module = this.getManageRepository().detail(moduleId);
         List<Entity> entities = entityService.getByModuleId(moduleId);
@@ -107,6 +114,8 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
      * @param handler
      */
     private void analyzeFile(String templatePath, String targetFileStr, Map<String, Object> model, CodeTemplateHandler handler) {
+        System.out.println(templatePath);
+
         // 如果有描述文件，按照描述文件的返回进行循环实体
         ResourceFile defineFile = new ResourceFile(templatePath + codeTemplate.getDefineFileExt(), handler.getClass());
 
