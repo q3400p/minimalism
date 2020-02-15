@@ -127,12 +127,14 @@ public class Modules extends BaseJSONFileRepository {
             modulePO.setEntities(entities);
         }
 
-        // 找到模块
+        // 找到实体
         boolean hasEntity = false;
         for (Entity e : entities) {
             // 如果找到对应的实体，进行修改
             if (e.getId().equals(entity.getId())) {
-                // 复制内容
+                // 复制内容 TODO 更新方法，有问题，会把method等覆盖掉
+                entity.setFields(null);
+                entity.setMethods(null);
                 BeanUtil.copyProperties(e, entity);
                 // 已经找到模块，后面就不用添加了
                 hasEntity = true;
