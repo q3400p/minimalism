@@ -11,7 +11,7 @@ public enum LangType {
     CHARACTER("Character", "字符", "java.lang.Character"),
     BYTE("Byte", "字节", "java.lang.Byte"),
 
-    VOID("void", "空", null),
+    VOID("void", "空", "void"),
 
     DATE("Date", "日期", "java.util.Date"),
     TIME("Time", "时间", "java.util.Date"),

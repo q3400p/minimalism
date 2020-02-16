@@ -8,12 +8,12 @@ public interface Type extends Entitiable {
      * 这个编码，可以用于模板中填写
      * @return
      */
-    String getTypeCode();
+    String getCode();
 
     /**
      * 获取类型的名称
      * 用于识别名称
      * @return
      */
-    String getTypeName();
+    String getName();
 }

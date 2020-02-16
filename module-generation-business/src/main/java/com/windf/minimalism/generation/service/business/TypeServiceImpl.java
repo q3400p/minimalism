@@ -36,13 +36,13 @@ public class TypeServiceImpl implements TypeService {
         List<Type> result = new ArrayList<>();
         for (Type type : types) {
             // code筛选
-            if (type.getTypeCode().indexOf(key) > -1) {
+            if (type.getCode().indexOf(key) > -1) {
                 result.add(type);
                 break;
             }
 
             // name筛选
-            if (type.getTypeName().indexOf(key) > -1) {
+            if (type.getName().indexOf(key) > -1) {
                 result.add(type);
                 break;
             }

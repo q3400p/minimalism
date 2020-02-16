@@ -13,12 +13,12 @@ public abstract class BaseType implements Type {
     }
 
     @Override
-    public String getTypeCode() {
+    public String getCode() {
         return getLangType().getCode();
     }
 
     @Override
-    public String getTypeName() {
+    public String getName() {
         return getLangType().getName();
     }
 }

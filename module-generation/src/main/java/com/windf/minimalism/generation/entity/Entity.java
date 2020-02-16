@@ -1,7 +1,5 @@
 package com.windf.minimalism.generation.entity;
 
-import com.windf.core.util.StringUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +11,6 @@ public class Entity extends BaseModel implements Type {
     private List<Method> methods = new ArrayList<>();
 
     @Override
-    public String getTypeCode() {
-        return StringUtil.firstLetterUppercase(this.code);
-    }
-
-    @Override
-    public String getTypeName() {
-        return this.name;
-    }
-
     public String getCode() {
         return code;
     }
@@ -30,6 +19,7 @@ public class Entity extends BaseModel implements Type {
         this.code = code;
     }
 
+    @Override
     public String getName() {
         return name;
     }
