@@ -1,6 +1,5 @@
 package com.windf.minimalism.generation.repository.file;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.windf.core.entity.Page;
 import com.windf.core.entity.SearchData;
 import com.windf.core.util.BeanUtil;
@@ -44,9 +43,16 @@ public class ModuleRepositoryImpl extends BaseJSONFileManageRepository<Module> i
 
     @Override
     public Module detail(String id) {
-        Module module = new Module();
+        Module sourceModule = Modules.getInstance().getModule(id);
 
-        BeanUtil.copyProperties(module, Modules.getInstance().getModule(id));
+        // 如果找不到模块，返回null
+        if (sourceModule == null) {
+            return null;
+        }
+
+        // 复制模块信息
+        Module module = new Module();
+        BeanUtil.copyProperties(module, sourceModule);
 
         return module;
     }
@@ -62,19 +68,19 @@ public class ModuleRepositoryImpl extends BaseJSONFileManageRepository<Module> i
             if (searchData != null) {
                 // 名称搜索
                 String name = (String) searchData.getCondition().get("name");
-                if (StringUtil.isNotEmpty(name) && module.getName().indexOf(name) == -1) {
+                if (StringUtil.isNotEmpty(name) && !module.getName().contains(name)) {
                     continue;
                 }
 
                 // id搜索
                 String id = (String) searchData.getCondition().get("id");
-                if (StringUtil.isNotEmpty(id) && module.getId().indexOf(id) == -1) {
+                if (StringUtil.isNotEmpty(id) && !module.getId().contains(id)) {
                     continue;
                 }
 
                 // namespace搜索
                 String namespace = (String) searchData.getCondition().get("namespace");
-                if (StringUtil.isNotEmpty(namespace) && module.getNamespace().indexOf(namespace) == -1) {
+                if (StringUtil.isNotEmpty(namespace) && !module.getNamespace().contains(namespace)) {
                     continue;
                 }
             }
