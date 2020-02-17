@@ -36,19 +36,19 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 设置参数
         List<Parameter> parameters = new ArrayList<>();
         Parameter parameter = new Parameter();
-        parameter.setTypeCode("string");
+        parameter.setType(new Type("string"));
         parameter.setCode("id");
         parameter.setVerify("0-20");
         parameters.add(parameter);
         parameter = new Parameter();
-        parameter.setTypeCode("com.windf.test.test");
+        parameter.setType(new Type("com.windf.test.test"));
         parameter.setCode("test");
         parameter.setVerify("not null");
         parameters.add(parameter);
         data.setParameters(parameters);
         // 设置返回值
         Return methodReturn = new Return();
-        methodReturn.setTypeCode("String");
+        methodReturn.setType(new Type("String"));
         data.setMethodReturn(methodReturn);
         methods.add(data);
 
@@ -64,7 +64,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 没有参数
         // 设置返回值
         methodReturn = new Return();
-        methodReturn.setTypeCode("String");
+        methodReturn.setType(new Type("String"));
         data.setMethodReturn(methodReturn);
         methods.add(data);
 
@@ -80,7 +80,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 设置参数
         parameters = new ArrayList<>();
         parameter = new Parameter();
-        parameter.setTypeCode("string");
+        parameter.setType(new Type("String"));
         parameter.setCode("id");
         parameter.setVerify("0-20");
         parameters.add(parameter);

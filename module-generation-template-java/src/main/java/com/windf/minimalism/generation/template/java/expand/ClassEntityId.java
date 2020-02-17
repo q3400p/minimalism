@@ -6,15 +6,15 @@ import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class ClassId implements ExpandItem<Entity> {
+public class ClassEntityId implements ExpandItem<Entity> {
     @Override
     public String getName() {
-        return "类的全名";
+        return "实体类的全名";
     }
 
     @Override
     public String getCode() {
-        return "classId";
+        return "classEntityId";
     }
 
     @Override
@@ -29,7 +29,8 @@ public class ClassId implements ExpandItem<Entity> {
 
     @Override
     public Object getDefaultValue(Entity expandSlot) {
-        return "[package||" + StringUtil.firstLetterUppercase(expandSlot.getCode()) + "]";
+        String classCode = StringUtil.firstLetterUppercase(expandSlot.getCode());
+        return "[package||" + expandSlot.getModule().getId() + ".entity." + classCode + "||" + classCode + "]";
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.windf.minimalism.generation.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity extends BaseModel implements Type {
+public class Entity extends Type {
     private String code;
     private String name;
     private Module module;

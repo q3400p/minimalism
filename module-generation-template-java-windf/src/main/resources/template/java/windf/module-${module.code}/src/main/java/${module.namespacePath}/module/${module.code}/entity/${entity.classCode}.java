@@ -1,4 +1,4 @@
-package ${module.namespace}.module.${entity.code}.entity;
+package ${module.namespace}.module.${module.code}.entity;
 
 /**
  * ${entity.description!}
@@ -9,15 +9,15 @@ public class ${entity.classCode} {
      * ${field.name}
      * ${field.description!}
      */
-    private ${field.type.typeCode} ${field.code};
+    private ${field.type.id} ${field.code};
   </#list>
   <#list entity.fields as field>
 
-    public ${field.type.typeCode} get${field.code?cap_first}() {
+    public ${field.type.code} get${field.code?cap_first}() {
         return username;
     }
 
-    public void set${field.code?cap_first}(${field.type.typeCode} ${field.code}) {
+    public void set${field.code?cap_first}(${field.type.code} ${field.code}) {
         this.${field.code} = ${field.code};
     }
   </#list>

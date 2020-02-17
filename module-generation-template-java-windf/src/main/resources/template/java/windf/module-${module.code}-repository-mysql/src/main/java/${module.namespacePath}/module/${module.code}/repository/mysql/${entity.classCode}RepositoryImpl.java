@@ -13,7 +13,7 @@ public class ${entity.code?cap_first}RepositoryImpl extends BaseMysqlRepository 
     <#list entity.methods as method>
 
     @Override
-    public ${method.methodReturn.type.typeCode} ${method.code}(<#list method.parameters as param >${param.type.typeCode} ${param.code}<#if param_has_next>, </#if></#list>) {
+    public ${method.methodReturn.type.id} ${method.code}(<#list method.parameters as param >${param.type.code} ${param.code}<#if param_has_next>, </#if></#list>) {
         // 数据库操作
     }
     </#list>

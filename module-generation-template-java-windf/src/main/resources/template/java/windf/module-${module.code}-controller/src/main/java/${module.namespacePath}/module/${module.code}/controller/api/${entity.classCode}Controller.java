@@ -18,7 +18,7 @@ public class ${entity.code?cap_first}Controller extends BaseController {
     <#list entity.methods as method>
 
     @Override
-    public ResultData ${method.code}(<#list method.parameters as param >${param.type.typeCode} ${param.code}<#if param_has_next>, </#if></#list>) {
+    public ResultData ${method.code}(<#list method.parameters as param >${param.type.code} ${param.code}<#if param_has_next>, </#if></#list>) {
 
     }
     </#list>

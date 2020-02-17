@@ -18,7 +18,7 @@ public abstract class JavaCodeTemplateHandler implements CodeTemplateHandler {
     public List<ExpandItem> getExpandItems() {
         List<ExpandItem> result = new ArrayList<>();
         result.add(new ClassCode());
-        result.add(new ClassId());
+        result.add(new ClassTypeIdOfMethodParameter());
         result.add(new NamespacePath());
         result.add(new TableName());
         result.add(new TableFieldName());

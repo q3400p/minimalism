@@ -37,11 +37,6 @@ public class FieldServiceImpl extends BaseManageService<Field> implements FieldS
         // 设置id
         field.setId(entityId + Entity.ID_POINT + field.getCode());
 
-        // 设置类型
-        String typeCode = field.getTypeCode();
-        Type type = typeService.detail(typeCode);
-        field.setType(type);
-
         super.create(field);
     }
 
@@ -50,9 +45,8 @@ public class FieldServiceImpl extends BaseManageService<Field> implements FieldS
         Field field = super.detail(id);
 
         // 补全type
-        if (field != null && StringUtil.isNotEmpty(field.getTypeCode())) {
-            String typeCode = field.getTypeCode();
-            Type type = typeService.detail(typeCode);
+        if (field != null && field.getType() != null) {
+            Type type = typeService.detail(field.getType().getId());
             field.setType(type);
         }
 

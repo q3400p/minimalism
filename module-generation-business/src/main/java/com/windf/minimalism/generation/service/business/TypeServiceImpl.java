@@ -74,6 +74,7 @@ public class TypeServiceImpl implements TypeService {
         LangType[] langTypes = LangType.class.getEnumConstants();
         for (LangType langType : langTypes) {
             typeMap.put(langType.getCode(), langType.getType());
+            typeMap.put(langType.getId(), langType.getType());
         }
 
         // 实体类型

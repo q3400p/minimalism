@@ -1,10 +1,7 @@
 package com.windf;
 
 import com.windf.core.entity.ResultData;
-import com.windf.minimalism.generation.entity.Entity;
-import com.windf.minimalism.generation.entity.Field;
-import com.windf.minimalism.generation.entity.Method;
-import com.windf.minimalism.generation.entity.Module;
+import com.windf.minimalism.generation.entity.*;
 import com.windf.plugin.controller.api.BaseManageControllerTest;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
@@ -35,7 +32,7 @@ public class FieldManageControllerTest extends BaseManageControllerTest<Field> {
         data.setName("测试字段");
         data.setDescription("测试用的字段，一会就删除了");
         data.setStatus("1");
-        data.setTypeCode("string");
+        data.setType(new Type("String"));
         Entity entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
@@ -47,7 +44,7 @@ public class FieldManageControllerTest extends BaseManageControllerTest<Field> {
         data.setName("测试字段");
         data.setDescription("测试用的字段，一会就删除了");
         data.setStatus("1");
-        data.setTypeCode("string");
+        data.setType(new Type("String"));
         entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
@@ -59,7 +56,7 @@ public class FieldManageControllerTest extends BaseManageControllerTest<Field> {
         data.setName("测试字段");
         data.setDescription("测试用的字段，一会就删除了");
         data.setStatus("1");
-        data.setTypeCode("com.windf.test.test");
+        data.setType(new Type("com.windf.test.test"));
         entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);

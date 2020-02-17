@@ -1,6 +1,6 @@
 package com.windf.minimalism.generation.entity;
 
-public abstract class BaseType implements Type {
+public abstract class BaseType extends Type {
     /**
      * 获取LangType的类型
      * @return

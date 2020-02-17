@@ -12,7 +12,6 @@ public class Parameter extends BaseModel {
     public static final String PARAM_NUMBER_POINT = "#";
 
     private Type type;
-    private String typeCode;    // 用于存储类型code的
     private String code;
     private String verify;
 
@@ -22,14 +21,6 @@ public class Parameter extends BaseModel {
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
     }
 
     public String getCode() {

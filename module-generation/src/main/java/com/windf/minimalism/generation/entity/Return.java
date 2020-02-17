@@ -6,16 +6,7 @@ public class Return extends BaseModel {
      */
     public static final String ID_POINT = "#return#";
 
-    private String typeCode;
     private Type type;
-
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
-    }
 
     public Type getType() {
         return type;
