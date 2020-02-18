@@ -1,6 +1,6 @@
 package ${module.namespace}.module.${module.code}.repository;
 
-public interface ${entity.code?cap_first}Repository {
+public interface ${entity.classCode}Repository {
   <#list entity.methods as method>
     /**
      * ${method.name!}
@@ -9,6 +9,6 @@ public interface ${entity.code?cap_first}Repository {
      * @param ${param.code} ${param.name!param.description!}
     </#list>
      */
-    ${method.methodReturn.type.id} ${method.code}(<#list method.parameters as param >${param.type.code} ${param.code}<#if param_has_next>, </#if></#list>);
+    ${method.methodReturn.type.classTypeId} ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>);
   </#list>
 }

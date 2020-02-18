@@ -49,7 +49,8 @@ public class BeanUtil {
             String methodName = method.getName();
             result = (methodName.startsWith("get") || methodName.startsWith("is"))
                     && method.getParameterTypes().length == 0
-                    && !"getClass".equals(methodName);
+                    && !"getClass".equals(methodName)
+                    && !method.getDeclaringClass().getName().contains("$");
         }
 
         return result;

@@ -2,11 +2,11 @@ package com.windf.minimalism.generation.template.java.expand;
 
 import com.windf.core.util.StringUtil;
 import com.windf.minimalism.generation.entity.LangType;
-import com.windf.minimalism.generation.entity.Parameter;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
+import com.windf.minimalism.generation.template.java.util.ClassUtil;
 
-public class ClassTypeIdOfMethodReturn implements ExpandItem<Parameter> {
+public class ClassTypeId implements ExpandItem<Type> {
     @Override
     public String getName() {
         return "类型的类全名";
@@ -28,17 +28,13 @@ public class ClassTypeIdOfMethodReturn implements ExpandItem<Parameter> {
     }
 
     @Override
-    public Object getDefaultValue(Parameter expandSlot) {
-        String typeId = expandSlot.getType().getId();
-        String typeNamespace = typeId.substring(0, typeId.lastIndexOf("."));
-        String typeCode = StringUtil.firstLetterUppercase(typeId.substring(typeId.lastIndexOf(".") + 1));
-        String importTypeId = typeNamespace + "." + typeCode;
-
-        return "[package||" + importTypeId + "||" + typeCode + "]";
+    public Object getDefaultValue(Type expandSlot) {
+        String importClassId = ClassUtil.getImportClassId(expandSlot.getId());
+        return "[package||" + importClassId + "||" + StringUtil.firstLetterUppercase(expandSlot.getCode()) + "]";
     }
 
     @Override
-    public Class<Parameter> getExpandType() {
-        return Parameter.class;
+    public Class<Type> getExpandType() {
+        return Type.class;
     }
 }

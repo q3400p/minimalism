@@ -60,7 +60,6 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
         List<Entity> entities = entityService.getByModuleId(moduleId);
         List<Entity> newEntities = new ArrayList<>(entities.size());
         for (Entity entity : entities) {
-            // TODO 需要设置常量到配置文件中
             entity = entityService.detail(entity.getId().trim());
             newEntities.add(entity);
         }
@@ -72,6 +71,7 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
             // 获取实体，以及所有扩展值
             Map<String, Object> moduleValues =
                     ExpandItemManagerProcess.getInstance().getExpandedMap(handler, module);
+            // TODO 需要设置常量到配置文件中
             data.put("module", moduleValues);
             List<Map<String, Object>> entityList = new ArrayList<>();
             Map<String, Map<String, Object>> entitiesMap = new HashMap<>();
@@ -79,7 +79,7 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
                 Map<String, Object> entityMap = new HashMap<>();
                 // 获取实体，以及所有扩展值
                 Map<String, Object> entityValues =
-                        ExpandItemManagerProcess.getInstance().getExpandedMap(handler, entity);
+                        ExpandItemManagerProcess.getInstance().getEntityExpandedMap(handler, entity);
                 entityMap.put("entity", entityValues);
                 entityList.add(entityValues);
                 entitiesMap.put(entity.getId(), entityValues);

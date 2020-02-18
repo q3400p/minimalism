@@ -13,11 +13,11 @@ public class ${entity.classCode} {
   </#list>
   <#list entity.fields as field>
 
-    public ${field.type.code} get${field.code?cap_first}() {
+    public ${field.type.classTypeId} get${field.code?cap_first}() {
         return username;
     }
 
-    public void set${field.code?cap_first}(${field.type.code} ${field.code}) {
+    public void set${field.code?cap_first}(${field.type.classTypeId} ${field.code}) {
         this.${field.code} = ${field.code};
     }
   </#list>

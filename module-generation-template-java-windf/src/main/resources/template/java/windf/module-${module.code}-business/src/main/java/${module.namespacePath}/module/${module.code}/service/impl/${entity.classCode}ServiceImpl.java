@@ -13,7 +13,7 @@ public class ${entity.classCode}ServiceImpl implements ${entity.classCode}Servic
   <#list entity.methods as method>
 
     @Override
-    public ${method.methodReturn.type.id} ${method.code}(<#list method.parameters as param >${param.type.code} ${param.code}<#if param_has_next>, </#if></#list>) {
+    public ${method.methodReturn.type.classTypeId} ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>) {
     }
   </#list>
 }

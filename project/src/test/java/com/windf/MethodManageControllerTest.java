@@ -36,7 +36,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 设置参数
         List<Parameter> parameters = new ArrayList<>();
         Parameter parameter = new Parameter();
-        parameter.setType(new Type("string"));
+        parameter.setType(new Type("String"));
         parameter.setCode("id");
         parameter.setVerify("0-20");
         parameters.add(parameter);

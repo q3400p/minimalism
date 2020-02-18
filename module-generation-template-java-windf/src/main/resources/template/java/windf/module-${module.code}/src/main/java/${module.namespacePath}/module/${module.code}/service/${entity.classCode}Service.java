@@ -12,6 +12,6 @@ public interface ${entity.classCode}Service {
      * @param ${param.code} ${param.name!param.description!}
     </#list>
      */
-    ${method.methodReturn.type.id} ${method.code}(<#list method.parameters as param >${param.type.code} ${param.code}<#if param_has_next>, </#if></#list>);
+    ${method.methodReturn.type.classTypeId} ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>);
   </#list>
 }

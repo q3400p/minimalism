@@ -1,7 +1,10 @@
 package com.windf.minimalism.generation.model.expand;
 
 import com.windf.core.util.BeanUtil;
+import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.Field;
+import com.windf.minimalism.generation.entity.Method;
+import com.windf.minimalism.generation.entity.Parameter;
 import com.windf.minimalism.generation.model.template.CodeTemplateHandler;
 
 import java.util.*;
@@ -56,6 +59,61 @@ public class ExpandItemManagerProcess {
     }
 
     /**
+     * 获取实体以及实体下方法和字段的所有映射关系
+     * @param codeTemplateHandler
+     * @param entity
+     * @return
+     */
+    public Map<String, Object> getEntityExpandedMap(CodeTemplateHandler codeTemplateHandler, Entity entity) {
+        Map<String, Object> entityMap = getExpandedMap(codeTemplateHandler, entity);
+
+        // 实体的方法
+        if (entity.getMethods() != null) {
+            List<Map<String, Object>> methodMaps = new ArrayList<>();
+            for (Method method : entity.getMethods()) {
+                Map<String, Object> methodMap = this.getExpandedMap(codeTemplateHandler, method);
+
+                // 设置方法发返回值
+                Map<String, Object> methodReturn = this.getExpandedMap(codeTemplateHandler, method.getMethodReturn());
+                // 设置返回值类型
+                methodReturn.put("type", this.getExpandedMap(codeTemplateHandler, method.getMethodReturn().getType()));
+                methodMap.put("methodReturn", methodReturn);
+
+                // 设置方法参数
+                List<Map<String, Object>> parameterMaps = new ArrayList<>();
+                for (Parameter parameter : method.getParameters()) {
+                    Map<String, Object> parameterMap = this.getExpandedMap(codeTemplateHandler, parameter);
+
+                    // 设置参数的类型
+                    parameterMap.put("type", this.getExpandedMap(codeTemplateHandler, parameter.getType()));
+
+                    parameterMaps.add(parameterMap);
+                }
+                methodMap.put("parameters", parameterMaps);
+
+                methodMaps.add(methodMap);
+            }
+            entityMap.put("methods", methodMaps);
+        }
+
+        // 实体的字段
+        if (entity.getFields() != null) {
+            List<Map<String, Object>> fieldMaps = new ArrayList<>();
+            for (Field field : entity.getFields()) {
+                Map<String, Object> fieldMap = this.getExpandedMap(codeTemplateHandler, field);
+
+                // 设置字段的类型
+                fieldMap.put("type", this.getExpandedMap(codeTemplateHandler, field.getType()));
+
+                fieldMaps.add(fieldMap);
+            }
+            entityMap.put("fields", fieldMaps);
+        }
+
+        return entityMap;
+    }
+
+    /**
      * 获取所有映射关系
      * @param codeTemplateHandler
      * @param expandSlot
@@ -69,7 +127,8 @@ public class ExpandItemManagerProcess {
 
         for (ExpandItem expandItem : codeTemplateHandler.getExpandItems()) {
             // 只获取特定类型的数据
-            if (expandSlot.getClass() != expandItem.getExpandType()) {
+            if (!expandItem.getExpandType().isAssignableFrom(expandSlot.getClass())) {
+//            if (expandSlot instanceof ) {
                 continue;
             }
 
