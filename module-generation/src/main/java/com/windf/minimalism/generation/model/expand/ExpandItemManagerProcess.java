@@ -128,7 +128,6 @@ public class ExpandItemManagerProcess {
         for (ExpandItem expandItem : codeTemplateHandler.getExpandItems()) {
             // 只获取特定类型的数据
             if (!expandItem.getExpandType().isAssignableFrom(expandSlot.getClass())) {
-//            if (expandSlot instanceof ) {
                 continue;
             }
 

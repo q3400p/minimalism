@@ -1,7 +1,9 @@
 package com.windf.minimalism.generation.template.java.expand;
 
 import com.windf.core.util.StringUtil;
+import com.windf.minimalism.generation.entity.Entity;
 import com.windf.minimalism.generation.entity.LangType;
+import com.windf.minimalism.generation.entity.Module;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 import com.windf.minimalism.generation.template.java.util.ClassUtil;
@@ -29,8 +31,17 @@ public class ClassTypeId implements ExpandItem<Type> {
 
     @Override
     public Object getDefaultValue(Type expandSlot) {
-        String importClassId = ClassUtil.getImportClassId(expandSlot.getId());
-        return "[package||" + importClassId + "||" + StringUtil.firstLetterUppercase(expandSlot.getCode()) + "]";
+        String importClassId;
+        String classCode = StringUtil.firstLetterUppercase(expandSlot.getCode());
+        if (expandSlot instanceof Entity) {
+            Entity entity = ((Entity) expandSlot);
+            Module module = entity.getModule();
+            importClassId = module.getNamespace() + ".module." + module.getCode() + ".entity." + classCode;
+        } else {
+            importClassId = ClassUtil.getImportClassId(expandSlot.getId());
+        }
+
+        return "[package||" + importClassId + "||" + classCode + "]";
     }
 
     @Override

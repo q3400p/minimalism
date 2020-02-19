@@ -169,6 +169,9 @@ public class Modules extends BaseJSONFileRepository {
 
         for (Entity entity : entities) {
             if (entity.getId().equals(id)) {
+                Module module = new Module();
+                BeanUtil.copyProperties(module, modulePO);
+                entity.setModule(module);
                 return entity;
             }
         }
