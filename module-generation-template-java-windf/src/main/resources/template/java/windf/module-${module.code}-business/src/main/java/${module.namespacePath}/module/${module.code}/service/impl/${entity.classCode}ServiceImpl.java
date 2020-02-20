@@ -1,6 +1,7 @@
 package ${module.namespace}.module.${module.code}.service.impl;
 
-import ${module.namespace}.module.${module.code}.repository.${entity.code};
+import com.windf.module.user.repository.${entity.classCode}Repository;
+import com.windf.module.user.service.${entity.classCode}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
