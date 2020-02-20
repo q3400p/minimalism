@@ -42,7 +42,13 @@ public class ImportProcessor implements CodeFileProcessor {
 
         if (packages.size() > 0) {
             for (String s : packages) {
+                // 不导入空
                 if ("void".equalsIgnoreCase(s)) {
+                    continue;
+                }
+
+                // 不导入java.lang
+                if (s.startsWith("java.lang.") && s.split("\\.").length == 3) {
                     continue;
                 }
 
