@@ -36,7 +36,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 设置参数
         List<Parameter> parameters = new ArrayList<>();
         Parameter parameter = new Parameter();
-        parameter.setType(new Type("String"));
+        parameter.setType(new Type("Field"));
         parameter.setCode("id");
         parameter.setVerify("0-20");
         parameters.add(parameter);
@@ -48,7 +48,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         data.setParameters(parameters);
         // 设置返回值
         Return methodReturn = new Return();
-        methodReturn.setType(new Type("String"));
+        methodReturn.setType(new Type("Field"));
         data.setMethodReturn(methodReturn);
         methods.add(data);
 
@@ -64,7 +64,7 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 没有参数
         // 设置返回值
         methodReturn = new Return();
-        methodReturn.setType(new Type("String"));
+        methodReturn.setType(new Type("Field"));
         data.setMethodReturn(methodReturn);
         methods.add(data);
 
@@ -80,7 +80,8 @@ public class MethodManageControllerTest extends BaseManageControllerTest<Method>
         // 设置参数
         parameters = new ArrayList<>();
         parameter = new Parameter();
-        parameter.setType(new Type("String"));
+        parameter.setType(new Type("Field"));
+        parameter.setType(new Type("Field"));
         parameter.setCode("id");
         parameter.setVerify("0-20");
         parameters.add(parameter);

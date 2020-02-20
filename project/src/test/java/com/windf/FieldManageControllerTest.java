@@ -32,7 +32,7 @@ public class FieldManageControllerTest extends BaseManageControllerTest<Field> {
         data.setName("测试字段");
         data.setDescription("测试用的字段，一会就删除了");
         data.setStatus("1");
-        data.setType(new Type("String"));
+        data.setType(new Type("Field"));
         Entity entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);
@@ -44,7 +44,7 @@ public class FieldManageControllerTest extends BaseManageControllerTest<Field> {
         data.setName("测试字段");
         data.setDescription("测试用的字段，一会就删除了");
         data.setStatus("1");
-        data.setType(new Type("String"));
+        data.setType(new Type("Field"));
         entity = new Entity();
         entity.setId("com.windf.test.test");
         data.setEntity(entity);

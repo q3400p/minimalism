@@ -9,15 +9,13 @@ public class ClassUtil {
      * @param classId
      * @return
      */
-    public static String getImportClassId(String classId) {
+    public static String getImportClassCode(String classId) {
         if (!classId.contains(".")) {
             return classId;
         }
 
-        String typeNamespace = classId.substring(0, classId.lastIndexOf("."));
         String typeCode = StringUtil.firstLetterUppercase(classId.substring(classId.lastIndexOf(".") + 1));
-        String importTypeId = typeNamespace + "." + typeCode;
-        return importTypeId;
+        return typeCode;
     }
 
 }

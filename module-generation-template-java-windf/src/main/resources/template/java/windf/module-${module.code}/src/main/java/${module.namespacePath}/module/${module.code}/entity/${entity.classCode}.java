@@ -1,15 +1,21 @@
 package ${module.namespace}.module.${module.code}.entity;
 
+
 /**
+ * ${entity.name}
+ <#if entity.description?? >
  * ${entity.description!}
+ </#if>
  */
 public class ${entity.classCode} {
   <#list entity.fields as field>
     /**
      * ${field.name}
+     <#if field.description?? >
      * ${field.description!}
+     </#if>
      */
-    private ${field.type.id} ${field.code};
+    private ${field.type.classTypeId} ${field.code};
   </#list>
   <#list entity.fields as field>
 

@@ -19,7 +19,7 @@ public class TableName implements ExpandItem<Entity> {
 
     @Override
     public Type getType() {
-        return LangType.STRING.getType();
+        return LangType.Field.getType();
     }
 
     @Override

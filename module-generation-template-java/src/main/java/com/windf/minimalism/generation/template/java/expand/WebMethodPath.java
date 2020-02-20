@@ -20,7 +20,7 @@ public class WebMethodPath implements ExpandItem<Method> {
 
     @Override
     public Type getType() {
-        return LangType.STRING.getType();
+        return LangType.Field.getType();
     }
 
     @Override

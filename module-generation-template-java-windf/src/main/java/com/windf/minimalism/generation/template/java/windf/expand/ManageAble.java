@@ -18,7 +18,7 @@ public class ManageAble implements ExpandItem<Entity> {
 
     @Override
     public Type getType() {
-        return LangType.BOOLEAN.getType();
+        return LangType.Boolean.getType();
     }
 
     @Override

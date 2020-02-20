@@ -19,7 +19,7 @@ public class NamespacePath implements ExpandItem<Module> {
 
     @Override
     public Type getType() {
-        return LangType.STRING.getType();
+        return LangType.Field.getType();
     }
 
     @Override

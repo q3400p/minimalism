@@ -35,11 +35,11 @@ public class TypeControllerTest {
     @Test
     public void listAllBySearch() {
         // TODO 这里的type，是需要改成常量的
-        ResultData resultData = restTemplate.getForObject("/type/?key={key}", ResultData.class, "Set");
+        ResultData resultData = restTemplate.getForObject("/type/?key={key}", ResultData.class, "Field");
         Assert.assertEquals("能正常查询到数据", ResultData.CODE_SUCCESS, resultData.getCode());
 
         JSONArray jsonArray = (JSONArray) resultData.getData();
-        Assert.assertTrue("能查询到类型为set的数据", jsonArray.size() > 0);
+        Assert.assertTrue("能查询到类型为Field的数据", jsonArray.size() > 0);
     }
 
 }
