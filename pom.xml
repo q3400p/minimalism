@@ -27,6 +27,7 @@
         <module>./plugin-service-business</module>
         <module>./plugin-controller-api</module>
         <module>./plugin-repository-file</module>
+        <module>./plugin-repository-mysql</module>
 
         <module>./test-controller-api</module>
 
@@ -34,7 +35,6 @@
         <module>./module-generation-business</module>
         <module>./module-generation-controller</module>
         <module>./module-generation-repository</module>
-        <!--<module>./module-generation-repository-mysql</module>-->
         <!--<module>./client-generation</module>-->
 
         <module>./module-generation-template-java</module>
