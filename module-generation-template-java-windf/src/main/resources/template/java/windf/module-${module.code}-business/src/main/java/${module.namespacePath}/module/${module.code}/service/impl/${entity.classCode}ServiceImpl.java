@@ -15,6 +15,10 @@ public class ${entity.classCode}ServiceImpl implements ${entity.classCode}Servic
 
     @Override
     public ${method.methodReturn.type.classTypeId} ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>) {
+      // TODO 补全方法
+      <#if method.methodReturn.type.code != 'void' >
+        return null;
+      </#if>
     }
   </#list>
 }

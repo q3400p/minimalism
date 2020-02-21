@@ -17,8 +17,9 @@ public class ${entity.classCode}Controller extends BaseController {
 
     <#list entity.methods as method>
 
+    @RequestMapping("/${method.code}")
     public ResultData ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>) {
-
+        return response().success();
     }
     </#list>
 }
