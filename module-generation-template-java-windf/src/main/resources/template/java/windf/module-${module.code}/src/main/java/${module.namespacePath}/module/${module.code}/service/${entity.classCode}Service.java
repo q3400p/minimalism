@@ -1,9 +1,13 @@
 package ${module.namespace}.module.${module.code}.service;
 
+<#if entity.manageAble >
+import com.windf.core.service.ManageService;
+</#if>
+
 /**
  * ${entity.description!}提供的服务
  */
-public interface ${entity.classCode}Service {
+public interface ${entity.classCode}Service <#if entity.manageAble >extends ManageService<${entity.classTypeId}> </#if>{
   <#list entity.methods as method>
     /**
      * ${method.name!}

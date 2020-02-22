@@ -1,6 +1,9 @@
 package ${module.namespace}.module.${module.code}.repository;
+<#if entity.manageAble >
+import com.windf.core.repository.ManageRepository;
+</#if>
 
-public interface ${entity.classCode}Repository {
+public interface ${entity.classCode}Repository <#if entity.manageAble >extends ManageRepository<${entity.classTypeId}> </#if>{
   <#list entity.methods as method>
     /**
      * ${method.name!}
