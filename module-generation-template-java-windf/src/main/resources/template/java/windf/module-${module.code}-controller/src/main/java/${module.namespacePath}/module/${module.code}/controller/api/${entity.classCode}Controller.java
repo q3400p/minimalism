@@ -19,7 +19,15 @@ public class ${entity.classCode}Controller extends BaseController {
 
     @RequestMapping("/${method.code}")
     public ResultData ${method.code}(<#list method.parameters as param >${param.type.classTypeId} ${param.code}<#if param_has_next>, </#if></#list>) {
+      <#if method.methodReturn.type.code == 'void' >
+        ${entity.code}Service.${method.code}(<#list method.parameters as param >${param.code}<#if param_has_next>, </#if></#list>);
+
         return response().success();
+      <#else>
+        ${method.methodReturn.type.classTypeId} data = ${entity.code}Service.${method.code}(<#list method.parameters as param >${param.code}<#if param_has_next>, </#if></#list>);
+
+        return response().successData(data);
+      </#if>
     }
     </#list>
 }
