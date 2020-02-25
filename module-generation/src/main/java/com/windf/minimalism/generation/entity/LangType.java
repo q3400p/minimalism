@@ -21,7 +21,7 @@ public enum LangType {
     Datetime("Date", "日期和时间"),
 
     Field("Field", "普通字符串"),
-    Textarea("Textarea", "多行文本"),
+    Textarea("TextArea", "多行文本"),
     TextEditor("TextEditor", "富文本"),
 
     File("File", "文件"),
