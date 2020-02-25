@@ -29,7 +29,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         sql.append("        status,   ");
         sql.append("        site_code,   ");
       <#list entity.fields as field>
-        sql.append("        ${field.code}<#if field_index + 1 != entity.fields?size >,</#if>   ");
+        sql.append("        ${field.tableFieldName}<#if field_index + 1 != entity.fields?size >,</#if>   ");
       </#list>
         sql.append("  ) VALUES (?, now(), now(), ?, ?, <@compress single_line=true>
                                         <#list entity.fields as field>
@@ -60,7 +60,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         sql.append("   ${entity.tableName}  ");
         sql.append(" SET   ");
       <#list entity.fields as field>
-        sql.append("   ${field.code} = ?,  ");
+        sql.append("   ${field.tableFieldName} = ?,  ");
       </#list>
         sql.append("   update_date = now()   ");
         sql.append(" WHERE id = ? ");
@@ -106,7 +106,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         sql.append(" SELECT " );
         sql.append("   id, " );
       <#list entity.fields as field>
-        sql.append("   ${field.code}, " );
+        sql.append("   ${field.tableFieldName}, " );
       </#list>
         sql.append("   create_date, " );
         sql.append("   update_date, " );

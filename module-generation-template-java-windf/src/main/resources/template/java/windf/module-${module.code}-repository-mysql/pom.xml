@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.windf</groupId>
-    <artifactId>module-user-repository-mysql</artifactId>
-    <version>1.0.0</version>
+    <groupId>${module.namespace}</groupId>
+    <artifactId>module-${module.code}-repository-mysql</artifactId>
+    <version>${module.version}</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,9 +20,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.windf</groupId>
-            <artifactId>module-user</artifactId>
-            <version>1.0.0</version>
+            <groupId>${module.namespace}</groupId>
+            <artifactId>module-${module.code}</artifactId>
+            <version>${module.version}</version>
         </dependency>
 
         <dependency>

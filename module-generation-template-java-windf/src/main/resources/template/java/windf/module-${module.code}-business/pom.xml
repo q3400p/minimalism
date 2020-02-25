@@ -26,7 +26,7 @@
         <dependency>
             <groupId>${module.namespace}</groupId>
             <artifactId>module-${module.code}</artifactId>
-            <version>1.0.0</version>
+            <version>${module.version}</version>
         </dependency>
         <dependency>
             <groupId>com.windf</groupId>

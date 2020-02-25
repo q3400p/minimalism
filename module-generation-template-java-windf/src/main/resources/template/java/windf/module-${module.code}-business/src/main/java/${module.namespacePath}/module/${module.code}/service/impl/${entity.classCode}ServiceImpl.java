@@ -1,9 +1,9 @@
 package ${module.namespace}.module.${module.code}.service.impl;
 
 <#if entity.tableAble >
-import com.windf.module.user.repository.${entity.classCode}Repository;
+import ${module.namespace}.module.${module.code}.repository.${entity.classCode}Repository;
 </#if>
-import com.windf.module.user.service.${entity.classCode}Service;
+import ${module.namespace}.module.${module.code}.service.${entity.classCode}Service;
 <#if entity.tableAble >
 import org.springframework.beans.factory.annotation.Autowired;
 </#if>

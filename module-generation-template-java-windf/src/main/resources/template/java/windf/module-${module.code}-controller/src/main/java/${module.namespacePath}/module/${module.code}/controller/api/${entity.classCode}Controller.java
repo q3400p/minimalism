@@ -1,7 +1,7 @@
 package ${module.namespace}.module.${module.code}.controller.api;
 
 import com.windf.core.entity.ResultData;
-import com.windf.module.user.service.${entity.classCode}Service;
+import ${module.namespace}.module.${module.code}.service.${entity.classCode}Service;
 <#if entity.manageAble >
 import com.windf.core.service.ManageService;
 import com.windf.plugin.controller.api.controller.BaseManageController;
