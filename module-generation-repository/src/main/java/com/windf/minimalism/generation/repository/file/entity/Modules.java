@@ -80,11 +80,8 @@ public class Modules extends BaseJSONFileRepository {
      * @param id
      */
     public ModulePO getModule(String id) {
-        // 从map缓存总获取
-        ModulePO modulePO = modulePOMap.get(id);
-        if (modulePO != null) {
-            return modulePO;
-        }
+        // 不从map缓存总获取
+        ModulePO modulePO;
 
         // 读取文件路径
         String filePath = this.getModuleSavePath(id);
@@ -530,6 +527,7 @@ public class Modules extends BaseJSONFileRepository {
         for (Module module : this.listAllModules()) {
             ModulePO modulePO = this.getModule(module.getId());
             for (Entity entity : modulePO.getEntities()) {
+                entity.setModule(module);
                 entities.add(entity);
             }
         }

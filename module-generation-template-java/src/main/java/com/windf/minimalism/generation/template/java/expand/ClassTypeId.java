@@ -34,7 +34,7 @@ public class ClassTypeId implements ExpandItem<Type> {
         javaTypeMap.put(LangType.Datetime.getCode(), "java.util.Date");
 
         javaTypeMap.put(LangType.Field.getCode(), "java.lang.String");
-        javaTypeMap.put(LangType.Textarea.getCode(), "java.lang.String");
+        javaTypeMap.put(LangType.TextArea.getCode(), "java.lang.String");
         javaTypeMap.put(LangType.TextEditor.getCode(), "java.lang.String");
 
         javaTypeMap.put(LangType.File.getCode(), "java.lang.String");

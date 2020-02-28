@@ -23,7 +23,6 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         StringBuffer sql = new StringBuffer();
         sql.append(" INSERT INTO " );
         sql.append("   ${entity.tableName} ( ");
-        sql.append("        id,   ");
         sql.append("        create_date,   ");
         sql.append("        update_date,   ");
         sql.append("        status,   ");
@@ -31,7 +30,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
       <#list entity.fields as field>
         sql.append("        ${field.tableFieldName}<#if field_index + 1 != entity.fields?size >,</#if>   ");
       </#list>
-        sql.append("  ) VALUES (?, now(), now(), ?, ?, <@compress single_line=true>
+        sql.append("  ) VALUES (now(), now(), ?, ?, <@compress single_line=true>
                                         <#list entity.fields as field>
                                             ?<#if field_index + 1 != entity.fields?size >,</#if>
                                         </#list></@compress>)");
@@ -41,11 +40,20 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
                     @Nullable
                     @Override
                     public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                        ps.setString(1, user.getId());
-                        ps.setString(2, user.getStatus());
-                        ps.setString(3, user.getSiteCode());
+                        ps.setString(1, ${entity.code}.getStatus());
+                        ps.setString(2, ${entity.code}.getSiteCode());
                       <#list entity.fields as field>
-                        ps.set${field.type.classTypeId}(${field_index + 4}, ${entity.code}.get${field.code?cap_first}());
+                       <#if field.type.isEntity >
+                        ps.setObject(${field_index + 3}, ${entity.code}.get${field.code?cap_first}());
+                       <#elseif field.type.code == 'DateTime' >
+                        ps.setTimestamp(${field_index + 3}, new [package||java.sql.Timestamp||Timestamp](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#elseif field.type.code == 'Date' >
+                        ps.setData(${field_index + 3}, new [package||java.sql.Date||Date](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#elseif field.type.code == 'Time' >
+                        ps.setTime(${field_index + 3}, new [package||java.sql.Time||Time](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#else>
+                        ps.set${field.type.classTypeId}(${field_index + 3}, ${entity.code}.get${field.code?cap_first}());
+                       </#if>
                       </#list>
                         return ps.executeUpdate() > 0;
                     }
@@ -53,7 +61,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
     }
 
     @Override
-    public void update(User user) {
+    public void update(final ${entity.classCode} ${entity.code}) {
 
         StringBuffer sql = new StringBuffer();
         sql.append(" UPDATE " );
@@ -70,25 +78,20 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
                     @Nullable
                     @Override
                     public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                        ps.setString(1, user.getId());
-                        ps.setString(2, user.getStatus());
-                        ps.setString(3, user.getSiteCode());
                       <#list entity.fields as field>
-                        ps.set${field.type.classTypeId}(${field_index + 4}, ${entity.code}.get${field.code?cap_first}());
-                      </#list>
-                    return ps.executeUpdate() > 0;
-                }
-        });
-
-        jdbcTemplate.execute(sql.toString(),
-                new PreparedStatementCallback<Boolean>() {
-                    @Nullable
-                    @Override
-                    public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-                      <#list entity.fields as field>
+                       <#if field.type.isEntity >
+                        ps.setString(${field_index + 1}, ${entity.code}.get${field.code?cap_first}().getId());
+                       <#elseif field.type.code == 'DateTime' >
+                        ps.setTimestamp(${field_index + 1}, new [package||java.sql.Timestamp||Timestamp](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#elseif field.type.code == 'Date' >
+                        ps.setData(${field_index + 1}, new [package||java.sql.Date||Date](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#elseif field.type.code == 'Time' >
+                        ps.setTime(${field_index + 1}, new [package||java.sql.Time||Time](${entity.code}.get${field.code?cap_first}().getTime()));
+                       <#else>
                         ps.set${field.type.classTypeId}(${field_index + 1}, ${entity.code}.get${field.code?cap_first}());
+                       </#if>
                       </#list>
-                        ps.setString(${entity.fields?size + 1}, user.getId());
+                        ps.setString(${entity.fields?size + 1}, ${entity.code}.getId());
                         return ps.executeUpdate() > 0;
                     }
                 });
@@ -100,7 +103,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
     }
 
     @Override
-    public User detail(String id) {
+    public ${entity.classCode} detail(String id) {
 
         StringBuffer sql = new StringBuffer();
         sql.append(" SELECT " );
@@ -115,15 +118,15 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         sql.append("  FROM ${entity.tableName} " );
         sql.append(" WHERE id = ? " );
 
-        List<User> users = jdbcTemplate.query(sql.toString(),
-                new BeanPropertyRowMapper<>(User.class),
+        List<${entity.classCode}> ${entity.code}s = jdbcTemplate.query(sql.toString(),
+                new BeanPropertyRowMapper<>(${entity.classCode}.class),
                 new Object[]{id});
 
-        return users == null || users.size() == 0? null: users.get(0);
+        return ${entity.code}s == null || ${entity.code}s.size() == 0? null: ${entity.code}s.get(0);
     }
 
     @Override
-    public Page<User> search(SearchData searchData) {
+    public Page<${entity.classCode}> search(SearchData searchData) {
         return null;
     }
 

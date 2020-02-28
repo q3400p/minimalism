@@ -21,7 +21,9 @@ public abstract class JavaCodeTemplateHandler implements CodeTemplateHandler {
         result.add(new ClassTypeId());
         result.add(new NamespacePath());
         result.add(new TableName());
+        result.add(new TableFieldLength());
         result.add(new TableFieldName());
+        result.add(new TableFieldType());
         result.add(new TableAble());
         result.add(new WebAble());
         result.add(new WebEntityPath());

@@ -14,6 +14,10 @@ public class Type extends BaseModel {
         this.id = id;
     }
 
+    public boolean getIsEntity() {
+        return false;
+    }
+
     public String getCode() {
         return code;
     }

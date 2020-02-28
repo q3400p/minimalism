@@ -11,6 +11,11 @@ public class Entity extends Type {
     private List<Method> methods = new ArrayList<>();
 
     @Override
+    public boolean getIsEntity() {
+        return true;
+    }
+
+    @Override
     public String getCode() {
         return code;
     }

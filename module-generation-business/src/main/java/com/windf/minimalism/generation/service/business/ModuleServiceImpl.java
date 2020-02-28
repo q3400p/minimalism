@@ -23,6 +23,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ import java.util.Map;
 
 @Service
 public class ModuleServiceImpl extends BaseManageService<Module> implements ModuleService {
+    private static final Logger logger = Logger.getLogger(ModuleServiceImpl.class);
+
     private static final String DEFAULT_TEMPLATE_NAME = "default";
 
     @Autowired
@@ -131,7 +134,7 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
      * @param handler
      */
     private void analyzeFile(String templatePath, String targetFileStr, Map<String, Object> model, CodeTemplateHandler handler) {
-        System.out.println(templatePath);
+        logger.info(templatePath);
 
         // 如果有描述文件，按照描述文件的返回进行循环实体
         ResourceFile defineFile = new ResourceFile(templatePath + codeTemplate.getDefineFileExt(), handler.getClass());

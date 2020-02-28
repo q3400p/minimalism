@@ -7,7 +7,7 @@ import com.windf.minimalism.generation.entity.LangType;
 import com.windf.minimalism.generation.entity.Type;
 import com.windf.minimalism.generation.model.expand.ExpandItem;
 
-public class TableFieldName implements ExpandItem<Entity> {
+public class TableFieldName implements ExpandItem<Field> {
     @Override
     public String getName() {
         return "数据库表名";
@@ -29,12 +29,22 @@ public class TableFieldName implements ExpandItem<Entity> {
     }
 
     @Override
-    public Object getDefaultValue(Entity entity) {
-        return StringUtil.splitCamelCase(entity.getCode(), "_");
+    public Object getDefaultValue(Field field) {
+        String typeId;
+
+        // 如果是实体，生成外键名称
+        if (field.getType() instanceof Entity) {
+            String entityCode = field.getType().getCode();
+            entityCode = StringUtil.splitCamelCase(entityCode, "_");
+            typeId = "fk_" + entityCode + "_id";
+        } else {
+            typeId = StringUtil.splitCamelCase(field.getCode(), "_");
+        }
+        return typeId;
     }
 
     @Override
-    public Class<Entity> getExpandType() {
-        return Entity.class;
+    public Class<Field> getExpandType() {
+        return Field.class;
     }
 }
