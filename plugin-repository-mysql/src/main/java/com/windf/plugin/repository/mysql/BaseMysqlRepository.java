@@ -1,6 +1,7 @@
 package com.windf.plugin.repository.mysql;
 
 import com.windf.core.entity.OrderItem;
+import com.windf.core.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,7 @@ public abstract class BaseMysqlRepository {
     protected String getOrderSql(List<OrderItem> orderList) {
         StringBuffer orderSql = new StringBuffer();
 
-        if (orderList != null) {
+        if (CollectionUtil.isNotEmpty(orderList)) {
             Map<String, String> fieldMap = getFieldMap();
             for (int i = 0; i < orderList.size(); i++) {
                 OrderItem orderItem = orderList.get(i);
