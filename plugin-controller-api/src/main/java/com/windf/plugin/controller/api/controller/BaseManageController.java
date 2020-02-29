@@ -50,7 +50,7 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @param searchData    搜索信息
      * @return
      */
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     public ResultData<Page<T>> search(@RequestBody(required = false) SearchData searchData) {
         Page<T> data = this.getManageService().search(searchData);
 
