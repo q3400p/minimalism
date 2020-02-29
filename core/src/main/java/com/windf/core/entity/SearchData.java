@@ -11,6 +11,17 @@ import java.util.Map;
  * 自动计算一些分页信息
  */
 public class SearchData extends PageParameter implements Serializable {
+
+	private static final SearchData emptySearchData = new SearchData();
+
+	/**
+	 * 获取空的搜索对象
+	 * @return
+	 */
+	public static SearchData getEmptySearchData() {
+		return emptySearchData;
+	}
+
 	/**
 	 * 要查询的列信息
 	 * 如果为空，就查出所有的

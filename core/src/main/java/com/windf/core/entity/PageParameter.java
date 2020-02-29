@@ -10,10 +10,18 @@ public class PageParameter implements Serializable {
     private static final long default_index = 1L;
     private static final int default_size = 10;
 
-    public static PageParameter getNeedNotPageInstance() {
-        PageParameter pageParameter = new PageParameter();
+
+    private static PageParameter pageParameter = new PageParameter();
+    static {
         pageParameter.setIndex(-1L);
         pageParameter.setSize(-1);
+    }
+
+    /**
+     * 获取不需要分页的对象
+     * @return
+     */
+    public static PageParameter getNeedNotPageInstance() {
         return pageParameter;
     }
 
