@@ -2,6 +2,7 @@ package ${module.namespace}.module.${module.code}.controller.api;
 
 import com.windf.core.entity.ResultData;
 import ${module.namespace}.module.${module.code}.service.${entity.classCode}Service;
+import ${module.namespace}.module.${module.code}.util.ApiUtil;
 <#if entity.manageAble >
 import com.windf.core.service.ManageService;
 import com.windf.plugin.controller.api.controller.BaseManageController;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(${entity.classCode}Controller.API_PATH)
 public class ${entity.classCode}Controller extends <#if entity.manageAble >BaseManageController<${entity.classTypeId}><#else>BaseController</#if> {
-    public static final String API_PATH = BASE_API_PATH + "/${entity.code}";
+    public static final String API_PATH = BASE_API_PATH + ApiUtil.MODULE_PATH + "/${entity.code}";
 
     @Autowired
     private ${entity.classCode}Service ${entity.code}Service;
