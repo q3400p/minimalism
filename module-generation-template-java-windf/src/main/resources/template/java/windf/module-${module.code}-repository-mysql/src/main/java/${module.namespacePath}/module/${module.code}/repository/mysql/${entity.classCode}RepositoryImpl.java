@@ -52,7 +52,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
                         ps.setString(2, ${entity.code}.getSiteCode());
                       <#list entity.fields as field>
                        <#if field.type.isEntity >
-                        ps.setObject(${field_index + 3}, ${entity.code}.get${field.code?cap_first}());
+                        ps.setString(${field_index + 3}, ${entity.code}.get${field.code?cap_first}().getId());
                        <#elseif field.type.code == 'DateTime' >
                         ps.setTimestamp(${field_index + 3}, new [package||java.sql.Timestamp||Timestamp](${entity.code}.get${field.code?cap_first}().getTime()));
                        <#elseif field.type.code == 'Date' >
@@ -60,7 +60,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
                        <#elseif field.type.code == 'Time' >
                         ps.setTime(${field_index + 3}, new [package||java.sql.Time||Time](${entity.code}.get${field.code?cap_first}().getTime()));
                        <#elseif field.type.code == 'Integer' >
-                        ps.setInt(${field_index + 1}, ${entity.code}.get${field.code?cap_first}());
+                        ps.setInt(${field_index + 3}, ${entity.code}.get${field.code?cap_first}());
                        <#else>
                         ps.set${field.type.classTypeId}(${field_index + 3}, ${entity.code}.get${field.code?cap_first}());
                        </#if>
@@ -111,7 +111,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
 
     @Override
     public void delete(List<String> ids) {
-        jdbcTemplate.update("delete from ${entity.tableName} where id in (?)", new Object[]{ids});
+        jdbcTemplate.update("delete from ${entity.tableName} where id in (?)", ids.toArray());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         sql.append(" WHERE id = ? " );
 
         List<${entity.classCode}> ${entity.code}s = jdbcTemplate.query(sql.toString(),
-                new BeanPropertyRowMapper<>(${entity.classCode}.class),
+                new ${entity.classCode}RowMapper(),
                 new Object[]{id});
 
         return ${entity.code}s == null || ${entity.code}s.size() == 0? null: ${entity.code}s.get(0);
@@ -181,7 +181,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
             listSql.append(" LIMIT ?,?");
         }
         List<${entity.classCode}> trains = jdbcTemplate.query(listSql.toString(),
-                new BeanPropertyRowMapper<>(${entity.classCode}.class),
+                new ${entity.classCode}RowMapper(),
                 paramList.toArray());
         page.setData(trains);
 
@@ -239,7 +239,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
     /**
      * 设置映射关系
      */
-    private class TrainRowMapper implements RowMapper<${entity.classCode}> {
+    private class ${entity.classCode}RowMapper implements RowMapper<${entity.classCode}> {
 
         @Override
         public ${entity.classCode} mapRow(ResultSet resultSet, int i) throws SQLException {
