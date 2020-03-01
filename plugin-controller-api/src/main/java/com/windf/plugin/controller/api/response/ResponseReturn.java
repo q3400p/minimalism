@@ -1,6 +1,5 @@
 package com.windf.plugin.controller.api.response;
 
-import com.windf.core.entity.BaseEntity;
 import com.windf.core.entity.ResultData;
 
 public interface ResponseReturn {
@@ -36,7 +35,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    <T> ResultData<T> successData(T data);
+    ResultData successData(Object data);
 
     /**
      * 返回通用的错误信息
@@ -66,7 +65,7 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    <T> ResultData<T> returnData(String code, String message, T data);
+    ResultData returnData(String code, String message, Object data);
 
     /**
      * 重定向到某个页面
@@ -75,7 +74,7 @@ public interface ResponseReturn {
      * @param url
      * @return
      */
-    ResultData<String> redirect(String url);
+    ResultData redirect(String url);
 
     /**
      * 重定向到某个页面,携带参数
@@ -85,5 +84,5 @@ public interface ResponseReturn {
      * @param data
      * @return
      */
-    ResultData<String> redirectData(String url, Object data);
+    ResultData redirectData(String url, Object data);
 }

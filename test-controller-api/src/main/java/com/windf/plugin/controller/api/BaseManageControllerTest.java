@@ -143,13 +143,12 @@ public abstract class BaseManageControllerTest<T extends BaseEntity> {
      * 解析结果数据
      * @param resultData
      * @param clazz
-     * @param <T>
      * @return
      */
-    protected <T> ResultData<T> analyzeResultData(ResultData resultData, Class<T> clazz) {
+    protected ResultData analyzeResultData(ResultData resultData, Class clazz) {
         JSONObject jsonData = (JSONObject) resultData.getData();
         if (jsonData != null) {
-            T data = jsonData.toJavaObject(clazz);
+            Object data = jsonData.toJavaObject(clazz);
             resultData.setData(data);
         }
 

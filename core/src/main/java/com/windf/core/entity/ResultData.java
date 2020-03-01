@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 返回值，用于接口返回的json格式
  */
 // TODO 要删除泛型
-public class ResultData<T> implements Serializable {
+public class ResultData implements Serializable {
 
     /**
      * 正常的返回结果code
@@ -40,13 +40,13 @@ public class ResultData<T> implements Serializable {
 
     private String code; // 0: 失败，1：成功
     private String message; //提示信息
-    private T data;// 结果数据
+    private Object data;// 结果数据
 
     public ResultData() {
 
     }
 
-    public ResultData(String code, String message, T data) {
+    public ResultData(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -68,11 +68,11 @@ public class ResultData<T> implements Serializable {
         this.message = message;
     }
 
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

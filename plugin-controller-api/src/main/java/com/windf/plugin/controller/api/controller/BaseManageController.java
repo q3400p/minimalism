@@ -33,7 +33,7 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @return
      */
     @GetMapping("/{id}")
-    public ResultData<T> detail(@PathVariable String id) {
+    public ResultData detail(@PathVariable String id) {
         ParameterUtil.assertNotEmpty(id);
 
         T data = this.getManageService().detail(id);
@@ -51,7 +51,7 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * @return
      */
     @GetMapping({"/", ""})
-    public ResultData<Page<T>> search(@RequestBody(required = false) SearchData searchData) {
+    public ResultData search(@RequestBody(required = false) SearchData searchData) {
         Page<T> data = this.getManageService().search(searchData);
 
         return response().successData(data);
@@ -61,8 +61,8 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * 创建
      * @param entity    要添加的信息
      */
-    @PostMapping("/")
-    public ResultData<T> create(@RequestBody T entity) {
+    @PostMapping({"/", ""})
+    public ResultData create(@RequestBody T entity) {
         ParameterUtil.assertNotEmpty(entity);
 
         this.getManageService().create(entity);
@@ -74,8 +74,8 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * 修改
      * @param entity    要修改的信息
      */
-    @PutMapping("/")
-    public ResultData<T> update(@RequestBody T entity) {
+    @PutMapping({"/", ""})
+    public ResultData update(@RequestBody T entity) {
         ParameterUtil.assertNotEmpty(entity);
 
         this.getManageService().update(entity);
@@ -88,7 +88,7 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
      * 删除
      */
     @DeleteMapping("/{id}")
-    public ResultData<T> delete(@PathVariable String id) {
+    public ResultData delete(@PathVariable String id) {
         ParameterUtil.assertNotEmpty(id);
 
         List<String> idList = CollectionUtil.asList(id);
@@ -101,8 +101,8 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
     /**
      * 删除,多个删除
      */
-    @DeleteMapping("/")
-    public ResultData<T> deleteByIds(@RequestParam String ids) {
+    @DeleteMapping({"/", ""})
+    public ResultData deleteByIds(@RequestParam String ids) {
         ParameterUtil.assertNotEmpty(ids);
 
         List<String> idList = ParameterUtil.ids(ids);
