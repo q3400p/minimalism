@@ -140,10 +140,10 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         }
 
         // 分页设置
-        if (searchData.getPageParameter() != null) {
-            page = new Page<>(searchData.getPageParameter());
+        if (searchData.getPage() != null) {
+            page = new Page<${entity.classCode}>(searchData.getPage());
         } else {
-            page = new Page<>();
+            page = new Page<${entity.classCode}>();
         }
 
         // 查询参数

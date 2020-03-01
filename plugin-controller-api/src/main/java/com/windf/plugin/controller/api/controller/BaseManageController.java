@@ -1,9 +1,6 @@
 package com.windf.plugin.controller.api.controller;
 
-import com.windf.core.entity.BaseEntity;
-import com.windf.core.entity.Page;
-import com.windf.core.entity.ResultData;
-import com.windf.core.entity.SearchData;
+import com.windf.core.entity.*;
 import com.windf.core.service.ManageService;
 import com.windf.core.util.CollectionUtil;
 import com.windf.core.util.ParameterUtil;
@@ -47,11 +44,22 @@ public abstract class BaseManageController<T extends BaseEntity> extends BaseCon
 
     /**
      * 搜索
-     * @param searchData    搜索信息
      * @return
      */
     @GetMapping({"/", ""})
-    public ResultData search(@RequestBody(required = false) SearchData searchData) {
+    public ResultData search(SearchData searchData) {
+        Page<T> data = this.getManageService().search(searchData);
+
+        return response().successData(data);
+    }
+
+    /**
+     * 搜索
+     * @param searchData    搜索信息
+     * @return
+     */
+    @RequestMapping("/search")
+    public ResultData searchByPost(@RequestBody(required = false) SearchData searchData) {
         Page<T> data = this.getManageService().search(searchData);
 
         return response().successData(data);

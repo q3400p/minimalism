@@ -10,7 +10,7 @@ import java.util.Map;
  * 分页对象
  * 自动计算一些分页信息
  */
-public class SearchData extends PageParameter implements Serializable {
+public class SearchData implements Serializable {
 
 	private static final SearchData emptySearchData = new SearchData();
 
@@ -27,7 +27,7 @@ public class SearchData extends PageParameter implements Serializable {
 	 * 如果为空，就查出所有的
 	 * 不是查出所有的列，需要某些列，就不用所有的查出来了
 	 */
-	private Map<String, Object> fieldMap = new HashMap<>();
+	private Map<String, Object> field = new HashMap<>();
 	/**
 	 * 排序方式
      * 如果没有，不进行排序
@@ -42,14 +42,14 @@ public class SearchData extends PageParameter implements Serializable {
 	 * 分页信息
 	 * 如果没有，进行分页
 	 */
-	private PageParameter pageParameter = new PageParameter();
+	private PageParameter page = new PageParameter();
 
-	public Map<String, Object> getFieldMap() {
-		return fieldMap;
+	public Map<String, Object> getField() {
+		return field;
 	}
 
-	public void setFieldMap(Map<String, Object> fieldMap) {
-		this.fieldMap = fieldMap;
+	public void setField(Map<String, Object> field) {
+		this.field = field;
 	}
 
 	public List<OrderItem> getOrder() {
@@ -68,11 +68,19 @@ public class SearchData extends PageParameter implements Serializable {
 		this.condition = condition;
 	}
 
-	public PageParameter getPageParameter() {
-		return pageParameter;
+	public Map<String, Object> getCon() {
+		return condition;
 	}
 
-	public void setPageParameter(PageParameter pageParameter) {
-		this.pageParameter = pageParameter;
+	public void setCon(Map<String, Object> condition) {
+		this.condition = condition;
+	}
+
+	public PageParameter getPage() {
+		return page;
+	}
+
+	public void setPage(PageParameter page) {
+		this.page = page;
 	}
 }
