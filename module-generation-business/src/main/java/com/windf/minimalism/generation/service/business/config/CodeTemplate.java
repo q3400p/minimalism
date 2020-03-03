@@ -6,7 +6,7 @@ public class CodeTemplate {
      * 代码的生成位置
      */
 //    private String targetPath = System.getProperty("user.home") + "/.windf/target";
-    private String targetPath = "/Development/workspace/work/jkkc_java";
+    private String targetPath = "/Development/workspace/work/jkkc2020/server";
 
     /**
      * 定义文件的结尾符号
