@@ -42,7 +42,7 @@ public abstract class BaseMysqlRepository {
                 }
             }
         } else {
-            orderSql.append(" update_date desc, id desc ");
+            orderSql.append(" t.update_date desc, t.id desc ");
         }
 
         return orderSql.toString();

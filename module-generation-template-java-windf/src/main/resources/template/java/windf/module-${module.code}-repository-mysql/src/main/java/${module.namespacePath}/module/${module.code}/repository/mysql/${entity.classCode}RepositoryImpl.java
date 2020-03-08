@@ -155,8 +155,9 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         // 查询总数
         StringBuffer countSql = new StringBuffer();
         countSql.append(" SELECT ");
-        countSql.append("   count(id) ");
-        countSql.append(" FROM ${entity.tableName} " );
+        countSql.append("   count(t.id) ");
+        countSql.append(" FROM ${entity.tableName} t " );
+        countSql.append(this.getJoinSql());
         countSql.append(" WHERE 1=1" ).append(whereSql);
         Long totalCount = jdbcTemplate.queryForObject(countSql.toString(), paramList.toArray(), Long.class);
         page.setTotal(totalCount);
@@ -174,7 +175,8 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         StringBuffer listSql = new StringBuffer();
         listSql.append(" SELECT ");
         listSql.append(this.getSelectSql());
-        listSql.append(" FROM ${entity.tableName} ");
+        listSql.append(" FROM ${entity.tableName} t ");
+        listSql.append(this.getJoinSql());
         listSql.append(" WHERE 1=1").append(whereSql);
         listSql.append(" ORDER BY ").append(orderSql);
         if (!page.needNotPage()) {
@@ -192,15 +194,47 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
      * 拼接select参数
      */
     private String getSelectSql() {
+  <#macro selectSql entity, entityAlias>
+        sql.append("   ${entityAlias}.id, " );
+        sql.append("   ${entityAlias}.create_date, " );
+        sql.append("   ${entityAlias}.update_date, " );
+        sql.append("   ${entityAlias}.site_code, " );
+        sql.append("   ${entityAlias}.status, " );
+   <#list entity.fields as field>
+    <#if field.type.isEntity>
+     <#assign fieldCode = ((entityAlias == 't')?string(field.code, entityAlias + field.code?cap_first))>
+     <@selectSql field.type, fieldCode />
+    <#else>
+        sql.append("   ${entityAlias}.${field.tableFieldName}, " );
+    </#if>
+   </#list>
+  </#macro>
+
         StringBuffer sql = new StringBuffer();
-        sql.append("   id, " );
+        <@selectSql entity, 't' />
+        sql.append("   '' " );
+        return sql.toString();
+    }
+
+    private String getJoinSql() {
+        StringBuffer sql = new StringBuffer();
+      <#macro joinSql entity,parentAlias, parentTableFieldName>
+        <#-- entityCode设置 -->
+        <#assign entityCode = ((parentAlias == 't')?string(entity.code, parentAlias + entity.code?cap_first))>
+        sql.append(" left join ${entity.tableName} ${entityCode} on ${entityCode}.id = ${parentAlias}.${parentTableFieldName} " );
+        <#list entity.fields as field>
+        <#if field.type.isEntity >
+          <@joinSql field.type, entityCode, field.tableFieldName />
+        </#if>
+       </#list>
+      </#macro>
+
       <#list entity.fields as field>
-        sql.append("   ${field.tableFieldName}, " );
+       <#if field.type.isEntity >
+        <@joinSql field.type, 't', field.tableFieldName />
+       </#if>
       </#list>
-        sql.append("   create_date, " );
-        sql.append("   update_date, " );
-        sql.append("   site_code, " );
-        sql.append("   status " );
+
         return sql.toString();
     }
 
@@ -216,7 +250,7 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
           <#list entity.fields as field>
             String ${field.code} = (String) condition.get("${field.code}");
             if (StringUtil.isNotBlank(${field.code})) {
-                whereSql.append(" AND ${field.tableFieldName} = ? ");
+                whereSql.append(" AND t.${field.tableFieldName} = ? ");
                 paramList.add(${field.code});
             }
           </#list>
@@ -241,31 +275,49 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
      */
     private class ${entity.classCode}RowMapper implements RowMapper<${entity.classCode}> {
 
+        <#macro mapRow entity, alias, parentAlias>
+        <#-- 创建对象，设置基本属性 -->
+            ${entity.classTypeId} ${alias} = new ${entity.classCode}();
+            ${alias}.setId(resultSet.getString("${parentAlias}.id"));
+            ${alias}.setCreateDate(resultSet.getTimestamp("${parentAlias}.create_date"));
+            ${alias}.setUpdateDate(resultSet.getTimestamp("${parentAlias}.update_date"));
+            ${alias}.setStatus(resultSet.getString("${parentAlias}.status"));
+            ${alias}.setSiteCode(resultSet.getString("${parentAlias}.site_code"));
+         <#-- 先输出非实体属性 -->
+         <#list entity.fields as field>
+          <#if field.type.isEntity >
+          <#elseif field.type.code == 'DateTime' >
+            ${alias}.set${field.code?cap_first}(resultSet.getTimestamp("${parentAlias}.${field.tableFieldName}"));
+          <#elseif field.type.code == 'Date' >
+            ${alias}.set${field.code?cap_first}(resultSet.getDate("${parentAlias}.${field.tableFieldName}"));
+          <#elseif field.type.code == 'Time' >
+            ${alias}.set${field.code?cap_first}(resultSet.getTime("${parentAlias}.${field.tableFieldName}"));
+          <#elseif field.type.code == 'Integer' >
+            ${alias}.set${field.code?cap_first}(resultSet.getInt("${parentAlias}.${field.tableFieldName}"));
+          <#else>
+            ${alias}.set${field.code?cap_first}(resultSet.get${field.type.classTypeId}("${parentAlias}.${field.tableFieldName}"));
+          </#if>
+        </#list>
+        <#-- 实体属性 -->
+        <#list entity.fields as field>
+          <#if field.type.isEntity >
+
+            // 设置${field.name}
+            <#-- 设置fieldCode -->
+            <#assign fieldCode = ((parentAlias == 't')?string(field.code, parentAlias + field.code?cap_first))>
+            <@mapRow field.type, fieldCode, fieldCode />
+            <#-- fieldCode重置，防止fieldCode被改变 -->
+            <#assign fieldCode = ((parentAlias == 't')?string(field.code, parentAlias + field.code?cap_first))>
+
+            ${alias}.set${field.code?cap_first}(${fieldCode});
+          </#if>
+        </#list>
+        </#macro>
+
+
         @Override
         public ${entity.classCode} mapRow(ResultSet resultSet, int i) throws SQLException {
-            ${entity.classCode} ${entity.code} = new ${entity.classCode}();
-            ${entity.code}.setId(resultSet.getString("id"));
-          <#list entity.fields as field>
-           <#if field.type.isEntity >
-            ${field.type.classTypeId} ${field.code} = new ${field.code?cap_first}();
-            ${field.code}.setId(resultSet.getString("${field.tableFieldName}"));
-            ${entity.code}.set${field.code?cap_first}(${field.code});
-           <#elseif field.type.code == 'DateTime' >
-            ${entity.code}.set${field.code?cap_first}(resultSet.getTimestamp("${field.tableFieldName}"));
-           <#elseif field.type.code == 'Date' >
-            ${entity.code}.set${field.code?cap_first}(resultSet.getDate("${field.tableFieldName}"));
-           <#elseif field.type.code == 'Time' >
-            ${entity.code}.set${field.code?cap_first}(resultSet.getTime("${field.tableFieldName}"));
-           <#elseif field.type.code == 'Integer' >
-            ${entity.code}.set${field.code?cap_first}(resultSet.getInt("${field.tableFieldName}"));
-           <#else>
-            ${entity.code}.set${field.code?cap_first}(resultSet.get${field.type.classTypeId}("${field.tableFieldName}"));
-           </#if>
-          </#list>
-            ${entity.code}.setCreateDate(resultSet.getTimestamp("create_date"));
-            ${entity.code}.setUpdateDate(resultSet.getTimestamp("update_date"));
-            ${entity.code}.setStatus(resultSet.getString("status"));
-            ${entity.code}.setSiteCode(resultSet.getString("site_code"));
+            <@mapRow entity, entity.code, 't' />
             return ${entity.code};
         }
     }

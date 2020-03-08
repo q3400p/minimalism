@@ -64,8 +64,12 @@ public class ExpandItemManagerProcess {
      * @param entity
      * @return
      */
-    public Map<String, Object> getEntityExpandedMap(CodeTemplateHandler codeTemplateHandler, Entity entity) {
-        Map<String, Object> entityMap = getExpandedMap(codeTemplateHandler, entity);
+    public Map<String, Object> getEntityExpandedMap(CodeTemplateHandler codeTemplateHandler, Entity entity, Map<String, Map<String, Object>> entitiesMap) {
+        // 取出entityMap
+        Map<String, Object> entityMap = entitiesMap.get(entity.getId());
+
+        // entity的属性
+        entityMap.putAll(this.getExpandedMap(codeTemplateHandler, entity));
 
         // 实体的方法
         if (entity.getMethods() != null) {
@@ -84,12 +88,23 @@ public class ExpandItemManagerProcess {
                 for (Parameter parameter : method.getParameters()) {
                     Map<String, Object> parameterMap = this.getExpandedMap(codeTemplateHandler, parameter);
 
+                    // 获取类型的属性
+                    Map<String, Object> typeMap = this.getExpandedMap(codeTemplateHandler, parameter.getType());
+
+                    // 如果参数的类型是entity，从entitiesMap中获取
+                    if (parameter.getType().getIsEntity()) {
+                        typeMap.putAll(entitiesMap.get(parameter.getType().getId()));
+                    }
+
                     // 设置参数的类型
-                    parameterMap.put("type", this.getExpandedMap(codeTemplateHandler, parameter.getType()));
+                    parameterMap.put("type", typeMap);
 
                     parameterMaps.add(parameterMap);
                 }
                 methodMap.put("parameters", parameterMaps);
+
+                // 设置方法的实体
+                methodMap.put("entity", entityMap);
 
                 methodMaps.add(methodMap);
             }
@@ -102,8 +117,19 @@ public class ExpandItemManagerProcess {
             for (Field field : entity.getFields()) {
                 Map<String, Object> fieldMap = this.getExpandedMap(codeTemplateHandler, field);
 
+                // 获取类型的属性
+                Map<String, Object> typeMap = this.getExpandedMap(codeTemplateHandler, field.getType());
+
+                // 如果参数的类型是entity，从entitiesMap中获取
+                if (field.getType().getIsEntity()) {
+                    typeMap.putAll(entitiesMap.get(field.getType().getId()));
+                }
+
                 // 设置字段的类型
-                fieldMap.put("type", this.getExpandedMap(codeTemplateHandler, field.getType()));
+                fieldMap.put("type", typeMap);
+
+                // 设置字段的实体
+                fieldMap.put("entity", entityMap);
 
                 fieldMaps.add(fieldMap);
             }

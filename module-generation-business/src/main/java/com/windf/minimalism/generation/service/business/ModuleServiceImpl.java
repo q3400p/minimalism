@@ -59,33 +59,36 @@ public class ModuleServiceImpl extends BaseManageService<Module> implements Modu
 
     @Override
     public void commit(String moduleId) {
+        // 获取要生成的模块
         Module module = this.getManageRepository().detail(moduleId);
+
+        // 获取实体信息，重新复制到newEntities中，同时生成实体的map(entitiesMap)
+        Map<String, Map<String, Object>> entitiesMap = new HashMap<>();
         List<Entity> entities = entityService.getByModuleId(moduleId);
         List<Entity> newEntities = new ArrayList<>(entities.size());
         for (Entity entity : entities) {
             entity = entityService.detail(entity.getId().trim());
             newEntities.add(entity);
+            entitiesMap.put(entity.getId(), new HashMap<>());
         }
 
+        // 依次遍历每个模板，进行生成和提交
         for (CodeTemplateHandler handler : CodeTemplateHandlerProcess.getInstance().getAllCodeTemplateHandler()) {
-
-            // 组织数据
+            /*
+             * 组织数据
+             */
             Map<String, Object> data = new HashMap<>();
-            // 获取实体，以及所有扩展值
+            // 组织模块，以及所有扩展值
             Map<String, Object> moduleValues =
                     ExpandItemManagerProcess.getInstance().getExpandedMap(handler, module);
-            // TODO 需要设置常量到配置文件中
-            data.put("module", moduleValues);
+            data.put("module", moduleValues);   // TODO 需要设置常量到配置文件中
+            // 组织各个实体信息，以及所有扩展值
             List<Map<String, Object>> entityList = new ArrayList<>();
-            Map<String, Map<String, Object>> entitiesMap = new HashMap<>();
             for (Entity entity : newEntities) {
-                Map<String, Object> entityMap = new HashMap<>();
                 // 获取实体，以及所有扩展值
                 Map<String, Object> entityValues =
-                        ExpandItemManagerProcess.getInstance().getEntityExpandedMap(handler, entity);
-                entityMap.put("entity", entityValues);
+                        ExpandItemManagerProcess.getInstance().getEntityExpandedMap(handler, entity, entitiesMap);
                 entityList.add(entityValues);
-                entitiesMap.put(entity.getId(), entityValues);
             }
             data.put("entities", entityList);
             data.put("entityMap", entitiesMap);
