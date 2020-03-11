@@ -1,5 +1,7 @@
 package com.windf.plugin.controller.api.session;
 
+import com.windf.core.session.Session;
+
 import javax.servlet.http.HttpSession;
 
 public class WebSession implements Session {
@@ -32,6 +34,11 @@ public class WebSession implements Session {
     @Override
     public void invalidate() {
         session.invalidate();
+    }
+
+    @Override
+    public String getSessionId() {
+        return session.getId();
     }
 
 }
