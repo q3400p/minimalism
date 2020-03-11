@@ -13,6 +13,13 @@ public class BaseEntity implements Entitiable {
     protected String status;
     protected String siteCode;
 
+    public BaseEntity() {
+    }
+
+    public BaseEntity(String id) {
+        this.id = id;
+    }
+
     @Override
     public String getId() {
         return id;
