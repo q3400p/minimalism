@@ -120,8 +120,9 @@ public class ${entity.classCode}RepositoryImpl extends BaseMysqlRepository imple
         StringBuffer sql = new StringBuffer();
         sql.append(" SELECT " );
         sql.append(this.getSelectSql());
-        sql.append("  FROM ${entity.tableName} " );
-        sql.append(" WHERE id = ? " );
+        sql.append("  FROM ${entity.tableName} t " );
+        sql.append(this.getJoinSql());
+        sql.append(" WHERE t.id = ? " );
 
         List<${entity.classCode}> ${entity.code}s = jdbcTemplate.query(sql.toString(),
                 new ${entity.classCode}RowMapper(),
