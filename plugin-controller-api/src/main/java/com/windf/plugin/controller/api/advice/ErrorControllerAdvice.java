@@ -18,7 +18,7 @@ public class ErrorControllerAdvice {
      * @return
      */
     @ExceptionHandler(value = {UserException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public ResultData handleUserException(UserException e) {
         ResultData resultData = new ResultData();
         // 设置错误编号，如果没有异常编号，设置为500
